@@ -16,7 +16,7 @@
   --line-cream:rgba(236,224,203,.18);
   --f-display:"Cormorant Garamond",Georgia,serif;
   --f-script:"Pinyon Script",cursive;
-  --f-sans:"Jost",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --f-sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --ease:cubic-bezier(.22,1,.36,1);
   --pad:clamp(1.4rem,5vw,7rem);
 }
@@ -30,7 +30,8 @@ body{
   background:var(--cream);
   color:var(--ink);
   font-family:var(--f-sans);
-  font-weight:300;
+  font-weight:400;
+  letter-spacing:-0.005em;
   overflow-x:hidden;
   cursor:none;
 }
@@ -117,7 +118,7 @@ a{color:inherit;text-decoration:none}
 .hero__title .line:first-child span{font-family:var(--f-display);font-weight:300;font-size:clamp(3.6rem,15vw,15rem);letter-spacing:.02em;text-transform:uppercase}
 .hero__title .line.script{overflow:visible;padding-bottom:.14em}
 .hero__title .script{font-family:var(--f-script);font-size:clamp(4.5rem,19vw,19rem);color:var(--gold-2);margin-top:-.16em;margin-left:-.02em;line-height:1}
-.hero__tag{max-width:34ch;font-size:clamp(1rem,1.5vw,1.28rem);line-height:1.6;color:rgba(236,224,203,.82);font-weight:300}
+.hero__tag{max-width:36ch;font-size:clamp(1rem,1.5vw,1.24rem);line-height:1.65;color:rgba(236,224,203,.88);font-weight:400}
 .hero__scroll{position:absolute;left:var(--pad);bottom:2.4rem;z-index:5;display:flex;align-items:center;gap:.8rem;color:var(--cream)}
 .hero__scroll span{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase}
 .hero__scroll i{display:block;width:1px;height:46px;background:linear-gradient(var(--gold),transparent);position:relative;overflow:hidden}
