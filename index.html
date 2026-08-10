@@ -32,10 +32,22 @@
     <span class="nav__name">Studio&nbsp;Logan</span>
   </a>
   <nav class="nav__menu">
-    <a href="#studio" data-cursor>Studio</a>
-    <a href="#expertise" data-cursor>Expertise</a>
-    <a href="#work" data-cursor>Work</a>
-    <a href="#vision" data-cursor>Vision</a>
+    <div class="nav__item has-dropdown">
+      <a href="studio.html" data-cursor>Studio</a>
+      <div class="nav__dropdown">
+        <a href="studio.html#brand-philosophy" data-cursor>Brand Philosophy</a>
+        <a href="studio.html#about-founder" data-cursor>About the Founder</a>
+        <a href="studio.html#awards" data-cursor>Awards &amp; Associations</a>
+      </div>
+    </div>
+    <div class="nav__item has-dropdown">
+      <a href="projects.html" data-cursor>Projects</a>
+      <div class="nav__dropdown">
+        <a href="projects.html#completed" data-cursor>Completed</a>
+        <a href="projects.html#upcoming" data-cursor>Upcoming</a>
+      </div>
+    </div>
+    <a href="services.html" data-cursor>Our Services</a>
     <a href="#contact" class="nav__cta" data-cursor>Contact</a>
   </nav>
   <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span></button>
@@ -43,16 +55,31 @@
 
 <!-- ===== MOBILE MENU ===== -->
 <div class="menu" id="menu">
-  <a href="#studio">Studio</a>
-  <a href="#expertise">Expertise</a>
-  <a href="#work">Work</a>
-  <a href="#vision">Vision</a>
+  <a href="studio.html">Studio</a>
+  <a href="projects.html">Projects</a>
+  <a href="services.html">Our Services</a>
   <a href="#contact">Contact</a>
 </div>
 
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <main id="top" data-scroll-container>
+
+  <!-- ===== SCROLL-BUILD ===== -->
+  <div id="scroll-build-outer">
+    <section class="sbuild" id="scroll-build">
+      <canvas class="sbuild__canvas" id="buildCanvas"></canvas>
+      <div class="sbuild__tagline" id="buildTagline">We create experiences</div>
+      <div class="sbuild__captions" id="buildCaptions">
+        <p class="sbuild__cap is-active" data-stage="0">Scroll to reveal the space.</p>
+        <p class="sbuild__cap" data-stage="1">Structure, floor to ceiling.</p>
+        <p class="sbuild__cap" data-stage="2">Every surface, considered.</p>
+        <p class="sbuild__cap" data-stage="3">Warmth finds its form.</p>
+        <p class="sbuild__cap" data-stage="4">Studio Logan — Architecture &amp; Interiors.</p>
+      </div>
+      <div class="sbuild__hint" id="buildHint"><span>Scroll</span><i></i></div>
+    </section>
+  </div>
 
   <!-- ===== HERO ===== -->
   <section class="hero" id="hero">
@@ -68,7 +95,7 @@
       </h1>
       <p class="hero__tag reveal-up">Crafting spaces where heritage converges with vision —<br>where global sophistication meets tradition.</p>
     </div>
-    <a href="#studio" class="hero__scroll" data-cursor>
+    <a href="#collab" class="hero__scroll" data-cursor>
       <span>Scroll</span><i></i>
     </a>
     <div class="hero__meta reveal-up">
@@ -76,63 +103,9 @@
     </div>
   </section>
 
-  <!-- ===== MANIFESTO ===== -->
-  <section class="manifesto" id="studio">
-    <div class="manifesto__text">
-      <p class="lead reveal-lines">
-        We design spaces for the life you're building, not the one you're leaving behind.
-        Rooted in culture, refined by experience — your spaces should feel like the future
-        you're creating for yourself: elevated, authentic and unmistakably yours.
-      </p>
-    </div>
-    <div class="manifesto__figure">
-      <div class="reveal-img"><img loading="lazy" decoding="async" src="assets/img/statement-bar.jpg" alt="Interior by Studio Logan" data-parallax="0.12"></div>
-      <span class="manifesto__cap">Rooted in culture · Refined by experience</span>
-    </div>
-  </section>
-
-  <!-- ===== EXPERTISE ===== -->
-  <section class="expertise" id="expertise">
-    <div class="expertise__head">
-      <span class="eyebrow reveal-up">01 — Our Expertise</span>
-      <h2 class="script-h reveal-up">Our Expertise</h2>
-    </div>
-    <div class="expertise__grid">
-      <div class="expertise__media reveal-img">
-        <img loading="lazy" decoding="async" src="assets/img/expertise-horse.jpg" alt="" data-parallax="0.14">
-      </div>
-      <ul class="expertise__list">
-        <li data-cursor><span class="num">/01</span><span class="name">Residential</span><span class="desc">Deeply personal homes designed for how people actually live.</span></li>
-        <li data-cursor><span class="num">/02</span><span class="name">Commercial</span><span class="desc">Workplaces and environments with strategic rigor and warmth.</span></li>
-        <li data-cursor><span class="num">/03</span><span class="name">Hospitality</span><span class="desc">Luxury experiences shaped across three continents.</span></li>
-        <li data-cursor><span class="num">/04</span><span class="name">Branded Environments</span><span class="desc">Spaces that carry a story from threshold to detail.</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ===== FOUNDER ===== -->
-  <section class="founder">
-    <div class="founder__portrait reveal-img">
-      <img loading="lazy" decoding="async" src="assets/img/founder.jpg" alt="Yeswanth Loganathan" data-parallax="0.1">
-    </div>
-    <div class="founder__body">
-      <span class="eyebrow reveal-up">The Principal</span>
-      <h3 class="founder__name script reveal-up">Yeswanth Loganathan</h3>
-      <p class="founder__role reveal-up">Founder &amp; Principal Designer</p>
-      <blockquote class="founder__quote reveal-lines">"Design, at its essence, is about how a space makes you feel and the experience it creates."</blockquote>
-      <p class="founder__bio reveal-up">With years shaping luxury experiences across three continents, Yeswanth brings the strategic rigor of coordinating over <em>$2 billion</em> in global hospitality and commercial projects with the intimate attention required for creating deeply personal homes. Trained at Pratt Institute, New York, and refined through Jeffrey Beers International, BOKA Powell and Studio Fauve — with work for Marriott, Ritz-Carlton, Hard Rock and Disney.</p>
-      <ul class="awards">
-        <li class="reveal-up"><span>2025</span> NEWH Top Interior Designer</li>
-        <li class="reveal-up"><span>2024</span> David Saylor Interior Design Award</li>
-        <li class="reveal-up"><span>2023</span> David Saylor Interior Design Award</li>
-        <li class="reveal-up"><span>2023</span> NYC × Wanted Design</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ===== COLLABORATORS MARQUEE ===== -->
-  <section class="collab">
-    <span class="collab__label">Trusted collaborators</span>
+  <!-- ===== ASSOCIATIONS MARQUEE ===== -->
+  <section class="collab" id="collab">
+    <span class="collab__label">Associations &amp; Collaborators</span>
     <div class="marquee" id="marquee">
       <div class="marquee__row">
         <span>Ritz-Carlton</span><i>✦</i><span>Marriott</span><i>✦</i><span>Disney</span><i>✦</i><span>Hyatt</span><i>✦</i><span>Auberge Resorts</span><i>✦</i>
@@ -143,15 +116,16 @@
 
   <!-- ===== SELECTED PROJECTS INTRO ===== -->
   <section class="work-intro" id="work">
-    <span class="eyebrow reveal-up">02 — Selected Work</span>
+    <span class="eyebrow reveal-up">02 — Projects</span>
     <h2 class="work-intro__title">
       <span class="line"><span>Selected</span></span>
       <span class="line script">Projects</span>
     </h2>
     <p class="work-intro__sub reveal-up">Five environments across hospitality, residential and commercial — each a study in how heritage and vision hold together.</p>
+    <a href="projects.html" class="section-cta reveal-up" style="margin-top:2.4rem">View all projects &nbsp;→</a>
   </section>
 
-  <!-- ===== HORIZONTAL PROJECT RAIL (image-into-image) ===== -->
+  <!-- ===== HORIZONTAL PROJECT RAIL ===== -->
   <section class="hwork" id="rail">
     <div class="hwork__pin">
       <div class="hwork__track" id="hTrack">
@@ -216,53 +190,41 @@
     <span class="hwork__hint">Scroll →</span>
   </section>
 
-  <!-- ===== FRAGMENTED MOSAIC ===== -->
-  <section class="mosaic">
-    <div class="mosaic__head">
-      <span class="eyebrow reveal-up">Inside the work</span>
-      <p class="mosaic__note reveal-up">Rooms, textures and light — assembled frame by frame.</p>
+  <!-- ===== OUR EXPERTISE ===== -->
+  <section class="expertise" id="expertise">
+    <div class="expertise__head">
+      <span class="eyebrow reveal-up">03 — Our Expertise</span>
+      <h2 class="script-h reveal-up">Our Expertise</h2>
     </div>
-    <div class="mosaic__grid">
-      <figure class="frag-img wide" data-cols="7"><img loading="lazy" decoding="async" src="assets/img/manhattan-2.jpg" alt="Manhattan living room"></figure>
-      <figure class="frag-img tall" data-cols="4"><img loading="lazy" decoding="async" src="assets/img/brooklyn-3.jpg" alt="Brooklyn bedroom"></figure>
-      <figure class="frag-img" data-cols="5"><img loading="lazy" decoding="async" src="assets/img/canter-4.jpg" alt="Canter guestroom"></figure>
-      <figure class="frag-img" data-cols="5"><img loading="lazy" decoding="async" src="assets/img/hardrock-3.jpg" alt="Hard Rock dining"></figure>
-      <figure class="frag-img wide" data-cols="7"><img loading="lazy" decoding="async" src="assets/img/hardrock-2.jpg" alt="Hard Rock steakhouse"></figure>
-      <figure class="frag-img" data-cols="5"><img loading="lazy" decoding="async" src="assets/img/brooklyn-2.jpg" alt="Brooklyn kitchen"></figure>
-      <figure class="frag-img" data-cols="5"><img loading="lazy" decoding="async" src="assets/img/manhattan-3.jpg" alt="Manhattan dining"></figure>
-      <figure class="frag-img tall" data-cols="4"><img loading="lazy" decoding="async" src="assets/img/canter-2.jpg" alt="Canter lobby"></figure>
-      <figure class="frag-img wide" data-cols="7"><img loading="lazy" decoding="async" src="assets/img/hardrock-4.jpg" alt="Hard Rock guestroom"></figure>
-      <figure class="frag-img" data-cols="5"><img loading="lazy" decoding="async" src="assets/img/klein-2.jpg" alt="Klein Tools atrium"></figure>
-      <figure class="frag-img" data-cols="5"><img loading="lazy" decoding="async" src="assets/img/brooklyn-5.jpg" alt="Brooklyn terrace"></figure>
+    <div class="expertise__grid">
+      <div class="expertise__media reveal-img">
+        <img loading="lazy" decoding="async" src="assets/img/expertise-horse.jpg" alt="" data-parallax="0.14">
+      </div>
+      <ul class="expertise__list">
+        <li data-cursor><span class="num">/01</span><span class="name">Residential</span><span class="desc">Deeply personal homes designed for how people actually live.</span></li>
+        <li data-cursor><span class="num">/02</span><span class="name">Commercial</span><span class="desc">Workplaces and environments with strategic rigor and warmth.</span></li>
+        <li data-cursor><span class="num">/03</span><span class="name">Hospitality</span><span class="desc">Luxury experiences shaped across three continents.</span></li>
+        <li data-cursor><span class="num">/04</span><span class="name">Branded Environments</span><span class="desc">Spaces that carry a story from threshold to detail.</span></li>
+      </ul>
     </div>
-  </section>
-
-  <!-- ===== SIGNATURE DETAILS (Bocci-style hover lights) ===== -->
-  <section class="details">
-    <div class="details__head">
-      <span class="eyebrow reveal-up">Signature Details</span>
-      <p class="details__note reveal-up">Hover to bring each moment to light.</p>
-    </div>
-    <div class="details__row" id="detailsRow">
-      <figure class="slat" data-cursor><img loading="lazy" decoding="async" src="assets/img/hardrock-3.jpg" alt=""><figcaption>Cascading canopy</figcaption></figure>
-      <figure class="slat" data-cursor><img loading="lazy" decoding="async" src="assets/img/canter-1.jpg" alt=""><figcaption>Layered metalwork</figcaption></figure>
-      <figure class="slat" data-cursor><img loading="lazy" decoding="async" src="assets/img/collab-bar.jpg" alt=""><figcaption>Pleated glow</figcaption></figure>
-      <figure class="slat" data-cursor><img loading="lazy" decoding="async" src="assets/img/manhattan-3.jpg" alt=""><figcaption>Suspended light</figcaption></figure>
-      <figure class="slat" data-cursor><img loading="lazy" decoding="async" src="assets/img/hardrock-5.jpg" alt=""><figcaption>Warm restraint</figcaption></figure>
-      <figure class="slat" data-cursor><img loading="lazy" decoding="async" src="assets/img/canter-2.jpg" alt=""><figcaption>Stone &amp; timber</figcaption></figure>
+    <div class="expertise__cta reveal-up">
+      <a href="services.html" class="section-cta">Explore our services &nbsp;→</a>
     </div>
   </section>
 
-  <!-- ===== VISION ===== -->
-  <section class="vision" id="vision">
+  <!-- ===== OUR CULTURE ===== -->
+  <section class="vision" id="culture">
     <div class="vision__head">
-      <h2 class="vision__title script">Vision</h2>
+      <h2 class="vision__title script">Our Culture</h2>
       <div class="vision__equation reveal-up">
         <span>Dravidian Foundations</span>
         <em>×</em>
         <span>Colonial Elegance</span>
       </div>
-      <p class="vision__text reveal-lines">Our design approach honors the extraordinary cultural layering that defines Tamil Nadu — centuries of architectural influence creating a vocabulary uniquely our own.</p>
+      <p class="vision__text reveal-lines">Our design approach honours the extraordinary cultural layering that defines Tamil Nadu — centuries of architectural influence creating a vocabulary uniquely our own. Every project carries this inheritance forward into the contemporary world.</p>
+      <div class="vision__cta reveal-up">
+        <a href="studio.html" class="section-cta section-cta--light">Explore Studio Logan &nbsp;→</a>
+      </div>
     </div>
     <div class="vision__gallery">
       <figure class="reveal-img"><img loading="lazy" decoding="async" src="assets/img/vision-1.jpg" alt="" data-parallax="0.12"></figure>
@@ -279,6 +241,27 @@
       <span class="eyebrow reveal-up">Let's begin</span>
       <h2 class="contact__title script">contact</h2>
       <p class="contact__line reveal-up">Tell us about the space you're building.</p>
+      <form class="contact__form reveal-up" id="contactForm" novalidate>
+        <div class="cform__row">
+          <label class="cform__field">
+            <span class="cform__label">Name</span>
+            <input type="text" name="name" placeholder="Your name" autocomplete="name">
+          </label>
+          <label class="cform__field">
+            <span class="cform__label">Phone</span>
+            <input type="tel" name="phone" placeholder="+1 000 000 0000" autocomplete="tel">
+          </label>
+        </div>
+        <label class="cform__field">
+          <span class="cform__label">Email</span>
+          <input type="email" name="email" placeholder="your@email.com" autocomplete="email">
+        </label>
+        <label class="cform__field">
+          <span class="cform__label">Enquiry</span>
+          <textarea name="message" rows="4" placeholder="Tell us about your project…"></textarea>
+        </label>
+        <button type="submit" class="cform__submit">Send enquiry &nbsp;→</button>
+      </form>
       <div class="contact__links">
         <a href="mailto:loganathanyeswanth@gmail.com" class="contact__link reveal-up" data-cursor><span>Email</span>loganathanyeswanth@gmail.com</a>
         <a href="tel:+917305082466" class="contact__link reveal-up" data-cursor><span>Phone</span>+91 73050 82466</a>
