@@ -234,10 +234,12 @@
           updateCaptions(p);
         },
         onLeave() {
+          scrollBuildActive = false;
           const nav = document.getElementById('nav');
           if (nav) { nav.classList.remove('is-hidden'); nav.classList.add('is-solid'); }
         },
         onEnterBack() {
+          scrollBuildActive = true;
           const nav = document.getElementById('nav');
           if (nav) { nav.classList.remove('is-solid'); nav.classList.add('is-hidden'); }
         }
@@ -381,19 +383,25 @@
   }
 
   /* ---------- Nav behavior ---------- */
+  // True while the scroll-build canvas section is active — nav is hidden then.
+  let scrollBuildActive = true;
+
   function initNav(){
     const nav = document.getElementById('nav');
     const burger = document.getElementById('burger');
     const menu = document.getElementById('menu');
     let last = 0;
     const onScroll = (y) => {
+      // Progress bar always updates
+      const doc = document.documentElement;
+      const p = y / (doc.scrollHeight - innerHeight);
+      document.getElementById('scrollProgress').style.width = (p*100)+'%';
+      // Nav state is owned by initScrollBuild while its section is active
+      if (scrollBuildActive) { last = y; return; }
       nav.classList.toggle('is-solid', y > innerHeight*0.7);
       if (y > last && y > innerHeight && !menu.classList.contains('is-open')) nav.classList.add('is-hidden');
       else nav.classList.remove('is-hidden');
       last = y;
-      const doc = document.documentElement;
-      const p = y / (doc.scrollHeight - innerHeight);
-      document.getElementById('scrollProgress').style.width = (p*100)+'%';
     };
     if (lenis) lenis.on('scroll', ({ scroll }) => onScroll(scroll));
     else addEventListener('scroll', () => onScroll(scrollY), { passive:true });
