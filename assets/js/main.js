@@ -115,6 +115,156 @@
     });
   }
 
+  /* ---------- Scroll-build canvas scrubber ---------- */
+  function initScrollBuild(){
+    const canvas  = document.getElementById('buildCanvas');
+    const hint    = document.getElementById('buildHint');
+    const tagline = document.getElementById('buildTagline');
+    const caps    = document.querySelectorAll('.sbuild__cap');
+    if (!canvas || !hasGSAP || reduce) {
+      // reduced-motion: just show the final frame statically
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        canvas.width  = innerWidth;
+        canvas.height = innerHeight;
+        const img = new Image();
+        img.src = 'assets/img/seq/frame0150.jpg';
+        img.onload = () => drawFrame(ctx, img, canvas.width, canvas.height);
+      }
+      return;
+    }
+
+    const TOTAL = 150;
+    const frames = new Array(TOTAL);
+    let loadedCount = 0;
+    let currentIdx  = 0;
+
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
+    // CSS logical dimensions — shared between resize() and onUpdate
+    let cssW = 0, cssH = 0;
+
+    function resize(){
+      // Set --vh so CSS calc(var(--vh)*100) equals true window.innerHeight on all platforms
+      document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+      const sec = canvas.parentElement;
+      cssW = sec.offsetWidth  || window.innerWidth;
+      cssH = window.innerHeight; // always the true visible viewport height
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width  = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      if (frames[currentIdx] && frames[currentIdx].complete) {
+        drawFrame(ctx, frames[currentIdx], cssW, cssH);
+      }
+    }
+
+    function drawFrame(context, img, w, h){
+      const portrait = h > w * 1.1; // portrait viewport (mobile)
+      let scale, dx, dy;
+      if (portrait) {
+        // contain on portrait: show full room, black bars top/bottom (cinematic)
+        scale = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+        dx = (w - img.naturalWidth  * scale) * 0.5;
+        dy = (h - img.naturalHeight * scale) * 0.5;
+      } else {
+        // cover on landscape/desktop: fill edge-to-edge, bottom-anchored so floor/chairs always visible
+        scale = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+        dx = (w - img.naturalWidth  * scale) * 0.5;
+        dy = h - img.naturalHeight * scale; // bottom-anchor: floor flush with canvas bottom
+      }
+      context.clearRect(0, 0, w, h);
+      context.drawImage(img, dx, dy, img.naturalWidth * scale, img.naturalHeight * scale);
+    }
+
+    // caption logic — 5 stages across 0-1 progress
+    const STAGES = [
+      { from: 0,    to: 0.18 },
+      { from: 0.18, to: 0.36 },
+      { from: 0.36, to: 0.58 },
+      { from: 0.58, to: 0.78 },
+      { from: 0.78, to: 1.00 },
+    ];
+    let activeStage = 0;
+    function updateCaptions(progress){
+      let next = 0;
+      for (let i = STAGES.length - 1; i >= 0; i--) {
+        if (progress >= STAGES[i].from) { next = i; break; }
+      }
+      if (next !== activeStage) {
+        caps[activeStage].classList.remove('is-active');
+        caps[next].classList.add('is-active');
+        activeStage = next;
+      }
+    }
+
+    // Size the section + canvas BEFORE ScrollTrigger captures dimensions
+    resize();
+
+    // Preload all frames; draw frame 0 as soon as it arrives
+    for (let i = 0; i < TOTAL; i++) {
+      const img = new Image();
+      img.src = `assets/img/seq/frame${String(i + 1).padStart(4, '0')}.jpg`;
+      img.onload = () => {
+        loadedCount++;
+        if (i === 0) { currentIdx = 0; drawFrame(ctx, img, cssW, cssH); }
+      };
+      frames[i] = img;
+    }
+
+    // Drive the sequence from the sticky container's scroll. No GSAP pin —
+    // CSS position:sticky (on #scroll-build-outer, height 500vh) does the pinning,
+    // so we avoid the double-pin/spacer conflict. Scrubbed proxy = smooth stepping.
+    const state = { f: 0 };
+    gsap.to(state, {
+      f: TOTAL - 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#scroll-build-outer',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1.2,
+        invalidateOnRefresh: true,
+        onUpdate(self) {
+          const p = self.progress;
+          if (hint)    hint.classList.toggle('is-hidden', p > 0.05);
+          if (tagline) tagline.classList.toggle('is-visible', p > 0.08);
+          updateCaptions(p);
+        },
+        onLeave() {
+          const nav = document.getElementById('nav');
+          if (nav) { nav.classList.remove('is-hidden'); nav.classList.add('is-solid'); }
+        },
+        onEnterBack() {
+          const nav = document.getElementById('nav');
+          if (nav) { nav.classList.remove('is-solid'); nav.classList.add('is-hidden'); }
+        }
+      },
+      onUpdate() {
+        const idx = Math.min(TOTAL - 1, Math.max(0, Math.round(state.f)));
+        if (idx !== currentIdx && frames[idx] && frames[idx].complete) {
+          currentIdx = idx;
+          drawFrame(ctx, frames[idx], cssW, cssH);
+        }
+      }
+    });
+
+    // On resize: update canvas and pin spacer
+    window.addEventListener('resize', () => { resize(); ScrollTrigger.refresh(); });
+    // After full page load (fonts, images settled, mobile viewport finalised)
+    if (document.readyState === 'complete') {
+      resize(); ScrollTrigger.refresh();
+    } else {
+      window.addEventListener('load', () => { resize(); ScrollTrigger.refresh(); });
+    }
+    // Extra pass after any rAF-delayed layout
+    requestAnimationFrame(() => { resize(); ScrollTrigger.refresh(); });
+  }
+
   /* ---------- Horizontal project rail (image-into-image) ---------- */
   function initHorizontal(){
     const sec = document.querySelector('.hwork');
@@ -275,6 +425,7 @@
   function boot(){
     initNav();
     runPreloader(() => {
+      initScrollBuild();
       heroIntro();
       initScroll();
       initHorizontal();
