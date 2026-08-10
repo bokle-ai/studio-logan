@@ -54,11 +54,16 @@
     const finish = () => { if (finished) return; finished = true; gsap.set(pre,{display:'none'}); done(); };
     // safety: never trap the user if rAF is throttled/paused
     const guard = setTimeout(finish, 6000);
+    const morphWord = document.getElementById('preMorphWord');
     const tl = gsap.timeline({ onComplete: () => { clearTimeout(guard); finish(); } });
     tl.to(letters, { opacity:1, y:0, stagger:.05, duration:.6, ease:'power3.out' }, .1)
       .to(fill, { width:'100%', duration:1.1, ease:'power2.inOut' }, .2)
       .to('.preloader__lion', { scale:1.08, duration:.6, ease:'power2.out' }, '-=.4')
-      .to(pre, { yPercent:-100, duration:.9, ease:'power4.inOut' }, '+=.15')
+      .to('.preloader__tagline', { opacity:1, duration:.6, ease:'power3.out' }, '-=.5')
+      .to(morphWord, { opacity:0, filter:'blur(6px)', y:-6, duration:.35, ease:'power2.in' }, '+=.35')
+      .call(() => { if (morphWord) morphWord.textContent = 'memories'; })
+      .to(morphWord, { opacity:1, filter:'blur(0px)', y:0, duration:.45, ease:'power2.out' })
+      .to(pre, { yPercent:-100, duration:.9, ease:'power4.inOut' }, '+=.5')
       .set(pre, { display:'none' });
   }
 
