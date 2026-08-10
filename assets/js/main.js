@@ -138,6 +138,7 @@
     const frames = new Array(TOTAL);
     let loadedCount = 0;
     let currentIdx  = 0;
+    let currentProgress = 0; // tracks scroll progress so resize can redraw correctly
 
     const ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = true;
@@ -159,18 +160,21 @@
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
       if (frames[currentIdx] && frames[currentIdx].complete) {
-        drawFrame(ctx, frames[currentIdx], cssW, cssH);
+        drawFrame(ctx, frames[currentIdx], cssW, cssH, currentProgress);
       }
     }
 
-    function drawFrame(context, img, w, h){
-      // Contain: always show the full image — no cropping on any side.
-      // Dark espresso bars appear on left/right (landscape) or top/bottom (portrait).
-      const scale = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+    // progress: 0 = start of sequence, 1 = end
+    function drawFrame(context, img, w, h, progress){
+      // Cover-fill: always full-bleed, zero bars.
+      // Vertical position pans with progress so the "camera" drifts from top → bottom
+      // as the room builds — ceiling/structure first, chairs/floor last.
+      const p = (progress === undefined) ? 0.5 : Math.max(0, Math.min(1, progress));
+      const scale = Math.max(w / img.naturalWidth, h / img.naturalHeight);
       const dw = img.naturalWidth  * scale;
       const dh = img.naturalHeight * scale;
-      const dx = (w - dw) * 0.5;
-      const dy = (h - dh) * 0.5;
+      const dx = (w - dw) * 0.5;                        // always centered horizontally
+      const dy = dh > h ? (h - dh) * p : (h - dh) * 0.5; // pan top→bottom with scroll
       context.clearRect(0, 0, w, h);
       context.drawImage(img, dx, dy, dw, dh);
     }
@@ -205,7 +209,7 @@
       img.src = `assets/img/seq/frame${String(i + 1).padStart(4, '0')}.jpg`;
       img.onload = () => {
         loadedCount++;
-        if (i === 0) { currentIdx = 0; drawFrame(ctx, img, cssW, cssH); }
+        if (i === 0) { currentIdx = 0; drawFrame(ctx, img, cssW, cssH, 0); }
       };
       frames[i] = img;
     }
@@ -240,9 +244,10 @@
       },
       onUpdate() {
         const idx = Math.min(TOTAL - 1, Math.max(0, Math.round(state.f)));
+        currentProgress = state.f / (TOTAL - 1);
         if (idx !== currentIdx && frames[idx] && frames[idx].complete) {
           currentIdx = idx;
-          drawFrame(ctx, frames[idx], cssW, cssH);
+          drawFrame(ctx, frames[idx], cssW, cssH, currentProgress);
         }
       }
     });
