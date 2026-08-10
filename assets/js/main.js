@@ -121,60 +121,51 @@
     const hint    = document.getElementById('buildHint');
     const tagline = document.getElementById('buildTagline');
     const caps    = document.querySelectorAll('.sbuild__cap');
-    if (!canvas || !hasGSAP || reduce) {
-      // reduced-motion: just show the final frame statically
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        canvas.width  = innerWidth;
-        canvas.height = innerHeight;
-        const img = new Image();
-        img.src = 'assets/img/seq/frame0150.jpg';
-        img.onload = () => drawFrame(ctx, img, canvas.width, canvas.height);
-      }
-      return;
-    }
 
-    const TOTAL = 150;
-    const frames = new Array(TOTAL);
-    let loadedCount = 0;
-    let currentIdx  = 0;
+    if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
+    const TOTAL = 150;
+    const dpr   = Math.min(window.devicePixelRatio || 1, 2);
 
-    // CSS logical dimensions — shared between resize() and onUpdate
-    let cssW = 0, cssH = 0;
+    // Size canvas to physical pixels
+    function sizeCanvas() {
+      canvas.width  = canvas.offsetWidth  * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+    }
+    sizeCanvas();
 
-    function resize(){
-      // Set --vh so CSS calc(var(--vh)*100) equals true window.innerHeight on all platforms
-      document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
-      const sec = canvas.parentElement;
-      cssW = sec.offsetWidth  || window.innerWidth;
-      cssH = window.innerHeight; // always the true visible viewport height
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width  = Math.round(cssW * dpr);
-      canvas.height = Math.round(cssH * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
-      if (frames[currentIdx] && frames[currentIdx].complete) {
-        drawFrame(ctx, frames[currentIdx], cssW, cssH);
-      }
+    // Cover-fit draw: anchored to top-center
+    function drawImg(img) {
+      if (!img || !img.complete || !img.naturalWidth) return;
+      const cw = canvas.width, ch = canvas.height;
+      const iw = img.naturalWidth, ih = img.naturalHeight;
+      const scale = Math.max(cw / iw, ch / ih);
+      const sw = iw * scale, sh = ih * scale;
+      const dx = (cw - sw) / 2;
+      const dy = 0; // top-anchor (empty room ceiling stays at top)
+      ctx.drawImage(img, dx, dy, sw, sh);
     }
 
-    // Contain-fit: entire image always visible, centred, dark bars in letterbox area
-    function drawFrame(context, img, w, h){
-      const scale = Math.min(w / img.naturalWidth, h / img.naturalHeight);
-      const dw = img.naturalWidth  * scale;
-      const dh = img.naturalHeight * scale;
-      const dx = (w - dw) * 0.5;
-      const dy = (h - dh) * 0.5;
-      context.clearRect(0, 0, w, h);
-      context.drawImage(img, dx, dy, dw, dh);
+    // Preload all frames — fire drawImg as each arrives
+    const imgs = new Array(TOTAL + 1);
+    let currentIdx = 1;
+    function pad(n) { return String(n).padStart(4, '0'); }
+
+    for (let i = 1; i <= TOTAL; i++) {
+      const img = new Image();
+      img.src = 'assets/img/seq/frame' + pad(i) + '.jpg';
+      img.onload = () => {
+        imgs[i] = img;
+        if (i === 1) drawImg(img); // paint first frame immediately on load
+        if (i === currentIdx) drawImg(img); // catch up if scroll already moved
+      };
+      imgs[i] = img;
     }
 
-    // caption logic — 5 stages across 0-1 progress
+    // Reduced motion: just show first frame, no scroll hook
+    if (reduce || !hasGSAP) return;
+
     const STAGES = [
       { from: 0,    to: 0.18 },
       { from: 0.18, to: 0.36 },
@@ -183,10 +174,10 @@
       { from: 0.78, to: 1.00 },
     ];
     let activeStage = 0;
-    function updateCaptions(progress){
+    function updateCaptions(p) {
       let next = 0;
       for (let i = STAGES.length - 1; i >= 0; i--) {
-        if (progress >= STAGES[i].from) { next = i; break; }
+        if (p >= STAGES[i].from) { next = i; break; }
       }
       if (next !== activeStage) {
         caps[activeStage].classList.remove('is-active');
@@ -195,69 +186,42 @@
       }
     }
 
-    // Size the section + canvas BEFORE ScrollTrigger captures dimensions
-    resize();
-
-    // Preload all frames; draw frame 0 as soon as it arrives
-    for (let i = 0; i < TOTAL; i++) {
-      const img = new Image();
-      img.src = `assets/img/seq/frame${String(i + 1).padStart(4, '0')}.jpg`;
-      img.onload = () => {
-        loadedCount++;
-        if (i === 0) { currentIdx = 0; drawFrame(ctx, img, cssW, cssH); }
-      };
-      frames[i] = img;
-    }
-
-    // Drive the sequence from the sticky container's scroll. No GSAP pin —
-    // CSS position:sticky (on #scroll-build-outer, height 500vh) does the pinning,
-    // so we avoid the double-pin/spacer conflict. Scrubbed proxy = smooth stepping.
-    const state = { f: 0 };
-    gsap.to(state, {
-      f: TOTAL - 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#scroll-build-outer',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1.2,
-        invalidateOnRefresh: true,
-        onUpdate(self) {
-          const p = self.progress;
-          if (hint)    hint.classList.toggle('is-hidden', p > 0.05);
-          if (tagline) tagline.classList.toggle('is-visible', p > 0.08);
-          updateCaptions(p);
-        },
-        onLeave() {
-          scrollBuildActive = false;
-          const nav = document.getElementById('nav');
-          if (nav) { nav.classList.remove('is-hidden'); nav.classList.add('is-solid'); }
-        },
-        onEnterBack() {
-          scrollBuildActive = true;
-          const nav = document.getElementById('nav');
-          if (nav) { nav.classList.remove('is-solid'); nav.classList.add('is-hidden'); }
-        }
-      },
-      onUpdate() {
-        const idx = Math.min(TOTAL - 1, Math.max(0, Math.round(state.f)));
-        if (idx !== currentIdx && frames[idx] && frames[idx].complete) {
+    ScrollTrigger.create({
+      trigger: '#scroll-build-outer',
+      start: 'top top',
+      end: 'bottom bottom',
+      invalidateOnRefresh: true,
+      onUpdate(self) {
+        const p   = self.progress;
+        const idx = Math.max(1, Math.min(TOTAL, Math.round(p * (TOTAL - 1)) + 1));
+        if (idx !== currentIdx) {
           currentIdx = idx;
-          drawFrame(ctx, frames[idx], cssW, cssH);
+          drawImg(imgs[idx]);
         }
+        if (hint)    hint.classList.toggle('is-hidden', p > 0.05);
+        if (tagline) tagline.classList.toggle('is-visible', p > 0.08);
+        updateCaptions(p);
+      },
+      onLeave() {
+        scrollBuildActive = false;
+        const nav = document.getElementById('nav');
+        if (nav) { nav.classList.remove('is-hidden'); nav.classList.add('is-solid'); }
+      },
+      onEnterBack() {
+        scrollBuildActive = true;
+        const nav = document.getElementById('nav');
+        if (nav) { nav.classList.remove('is-solid'); nav.classList.add('is-hidden'); }
       }
     });
 
-    // On resize: update canvas and pin spacer
-    window.addEventListener('resize', () => { resize(); ScrollTrigger.refresh(); });
-    // After full page load (fonts, images settled, mobile viewport finalised)
-    if (document.readyState === 'complete') {
-      resize(); ScrollTrigger.refresh();
-    } else {
-      window.addEventListener('load', () => { resize(); ScrollTrigger.refresh(); });
-    }
-    // Extra pass after any rAF-delayed layout
-    requestAnimationFrame(() => { resize(); ScrollTrigger.refresh(); });
+    window.addEventListener('resize', () => {
+      sizeCanvas();
+      drawImg(imgs[currentIdx]);
+      ScrollTrigger.refresh();
+    });
+
+    if (document.readyState === 'complete') { ScrollTrigger.refresh(); }
+    else { window.addEventListener('load', () => ScrollTrigger.refresh()); }
   }
 
   /* ---------- Horizontal project rail (image-into-image) ---------- */
