@@ -164,21 +164,15 @@
     }
 
     function drawFrame(context, img, w, h){
-      const portrait = h > w * 1.1; // portrait viewport (mobile)
-      let scale, dx, dy;
-      if (portrait) {
-        // contain on portrait: show full room, black bars top/bottom (cinematic)
-        scale = Math.min(w / img.naturalWidth, h / img.naturalHeight);
-        dx = (w - img.naturalWidth  * scale) * 0.5;
-        dy = (h - img.naturalHeight * scale) * 0.5;
-      } else {
-        // cover on landscape/desktop: fill edge-to-edge, bottom-anchored so floor/chairs always visible
-        scale = Math.max(w / img.naturalWidth, h / img.naturalHeight);
-        dx = (w - img.naturalWidth  * scale) * 0.5;
-        dy = h - img.naturalHeight * scale; // bottom-anchor: floor flush with canvas bottom
-      }
+      // Contain: always show the full image — no cropping on any side.
+      // Dark espresso bars appear on left/right (landscape) or top/bottom (portrait).
+      const scale = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+      const dw = img.naturalWidth  * scale;
+      const dh = img.naturalHeight * scale;
+      const dx = (w - dw) * 0.5;
+      const dy = (h - dh) * 0.5;
       context.clearRect(0, 0, w, h);
-      context.drawImage(img, dx, dy, img.naturalWidth * scale, img.naturalHeight * scale);
+      context.drawImage(img, dx, dy, dw, dh);
     }
 
     // caption logic — 5 stages across 0-1 progress
