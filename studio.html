@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio — Studio Logan Architecture &amp; Interiors</title>
+<meta name="description" content="Studio Logan — our philosophy, founder, and team. Heritage-rooted design practice based in New York, working worldwide.">
+<link rel="icon" href="assets/img/lion-double.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Pinyon+Script&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/studio.css">
+</head>
+<body>
+
+<!-- ===== CUSTOM CURSOR ===== -->
+<div class="cursor" id="cursor"><span class="cursor__dot"></span><span class="cursor__label" id="cursorLabel"></span></div>
+
+<!-- ===== NAV ===== -->
+<header class="nav is-solid" id="nav">
+  <a href="index.html" class="nav__brand" data-cursor>
+    <img src="assets/img/lion-double.png" alt="Studio Logan" class="nav__mark">
+    <span class="nav__name">Studio&nbsp;Logan</span>
+  </a>
+  <nav class="nav__menu">
+    <div class="nav__item has-dropdown">
+      <a href="studio.html" data-cursor>Studio</a>
+      <div class="nav__dropdown">
+        <a href="#brand-philosophy" data-cursor>Brand Philosophy</a>
+        <a href="#about-founder" data-cursor>About the Founder</a>
+        <a href="#awards" data-cursor>Awards &amp; Associations</a>
+      </div>
+    </div>
+    <div class="nav__item has-dropdown">
+      <a href="projects.html" data-cursor>Projects</a>
+      <div class="nav__dropdown">
+        <a href="projects.html#completed" data-cursor>Completed</a>
+        <a href="projects.html#upcoming" data-cursor>Upcoming</a>
+      </div>
+    </div>
+    <a href="services.html" data-cursor>Our Services</a>
+    <a href="index.html#contact" class="nav__cta" data-cursor>Contact</a>
+  </nav>
+  <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span></button>
+</header>
+
+<!-- ===== MOBILE MENU ===== -->
+<div class="menu" id="menu">
+  <a href="studio.html">Studio</a>
+  <a href="projects.html">Projects</a>
+  <a href="services.html">Our Services</a>
+  <a href="index.html#contact">Contact</a>
+</div>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<main id="top" data-scroll-container>
+
+  <!-- ===== STUDIO HERO ===== -->
+  <section class="sp-hero">
+    <div class="sp-hero__bg">
+      <img src="assets/img/studio-bar.jpg" alt="" class="sp-hero__img">
+    </div>
+    <div class="sp-hero__scrim"></div>
+    <div class="sp-hero__inner">
+      <span class="eyebrow reveal-up">01 — Studio</span>
+      <h1 class="sp-hero__title">
+        <span class="line"><span>This Is</span></span>
+        <span class="line script">Us</span>
+      </h1>
+      <p class="sp-hero__sub reveal-up">A heritage-rooted practice forging spaces<br>where Dravidian foundations meet global elegance.</p>
+    </div>
+    <a href="#brand-philosophy" class="sp-hero__down" data-cursor>
+      <span>Scroll</span><i></i>
+    </a>
+  </section>
+
+  <!-- ===== BRAND PHILOSOPHY ===== -->
+  <section class="sp-philosophy" id="brand-philosophy">
+    <div class="sp-philosophy__head">
+      <span class="eyebrow reveal-up">02 — Brand Philosophy</span>
+      <h2 class="sp-philosophy__title reveal-up">Where Heritage<br>Meets Vision</h2>
+    </div>
+
+    <div class="sp-philosophy__block sp-philosophy__block--text-left">
+      <div class="sp-philosophy__text">
+        <p class="sp-philosophy__lead reveal-up">Studio Logan is rooted in the extraordinary architectural layering of Tamil Nadu — centuries of Dravidian craftsmanship, colonial refinement, and global modernism converging into a singular creative vocabulary.</p>
+        <p class="sp-philosophy__body reveal-up">We do not design for a moment. We design for inheritance. Every material chosen, every spatial proportion considered, every detail resolved speaks to a longer conversation between what was built before us and what endures after us. Our work is a translation — of culture, of memory, of ambition — into the language of built form.</p>
+        <p class="sp-philosophy__body reveal-up">From hospitality environments that redefine arrival to residences that hold a family's story with quiet authority, Studio Logan brings the same philosophical rigour to every scale of project.</p>
+      </div>
+      <div class="sp-philosophy__media reveal-img">
+        <img loading="lazy" src="assets/img/piertop-bar.jpg" alt="Piertop interior">
+      </div>
+    </div>
+
+    <div class="sp-philosophy__block sp-philosophy__block--img-left">
+      <div class="sp-philosophy__media reveal-img">
+        <img loading="lazy" src="assets/img/hardrock-lobby.jpg" alt="Hard Rock lobby">
+      </div>
+      <div class="sp-philosophy__text">
+        <h3 class="sp-philosophy__h3 reveal-up">The Studio Ethos</h3>
+        <p class="sp-philosophy__body reveal-up">Precision without coldness. Grandeur without excess. We believe the most powerful spaces are those that feel inevitable — as if they could not have existed any other way, in any other place.</p>
+        <p class="sp-philosophy__body reveal-up">Our process begins with listening. To the land, to the client, to the culture. Then we bring the full depth of our heritage — Tamil Nadu's ornamental rigour, New York's cosmopolitan clarity — to bear on every decision.</p>
+        <div class="sp-philosophy__stats reveal-up">
+          <div class="sp-philosophy__stat"><strong>12+</strong><span>Years in practice</span></div>
+          <div class="sp-philosophy__stat"><strong>3</strong><span>Continents</span></div>
+          <div class="sp-philosophy__stat"><strong>40+</strong><span>Projects delivered</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT FOUNDER ===== -->
+  <section class="sp-founder" id="about-founder">
+    <img src="assets/img/lion-double.png" alt="" class="sp-founder__watermark">
+    <div class="sp-founder__grid">
+      <div class="sp-founder__portrait reveal-img">
+        <img src="assets/img/founder.jpg" alt="Loganathan Yeswanth — Founder, Studio Logan">
+      </div>
+      <div class="sp-founder__content">
+        <span class="eyebrow reveal-up">03 — Founder</span>
+        <h2 class="sp-founder__name script reveal-up">Loganathan<br>Yeswanth</h2>
+        <p class="sp-founder__role reveal-up">Founder &amp; Principal Designer</p>
+        <blockquote class="sp-founder__quote reveal-up">"Every space carries a memory before the first stone is laid. Our work is to honour that — and to make the new memory worthy of what came before."</blockquote>
+        <p class="sp-founder__bio reveal-up">Loganathan Yeswanth founded Studio Logan with a singular conviction: that the deepest design intelligence emerges from cultural inheritance, not trend. Raised in Tamil Nadu's temple cities and educated across India and the United States, he brings a dual fluency — the ancient sculptural grammar of Dravidian architecture and the precision of contemporary global practice — to every project.</p>
+        <p class="sp-founder__bio reveal-up">His work spans Marriott Signature hotels, Disney-affiliated hospitality developments, Ritz-Carlton resort interiors, and a growing body of private residential commissions across New York, Europe, and South Asia. He leads each project personally, believing that design of lasting consequence demands the principal's eye at every stage.</p>
+        <a href="index.html#contact" class="section-cta section-cta--light reveal-up">Begin a conversation &nbsp;→</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TEAM ===== -->
+  <section class="sp-team" id="team">
+    <div class="sp-team__head">
+      <span class="eyebrow reveal-up">04 — Our Team</span>
+      <h2 class="script-h reveal-up">The People</h2>
+      <p class="sp-team__sub reveal-up">A close-knit studio of architects, interior designers, and researchers — each selected for depth of knowledge and singularity of perspective.</p>
+    </div>
+    <div class="sp-team__grid">
+
+      <div class="sp-team__member sp-team__member--founder" data-cursor>
+        <div class="sp-team__photo">
+          <img src="assets/img/founder.jpg" alt="Loganathan Yeswanth">
+        </div>
+        <span class="sp-team__name">Loganathan Yeswanth</span>
+        <span class="sp-team__role">Founder &amp; Principal Designer</span>
+      </div>
+
+      <div class="sp-team__member" data-cursor>
+        <div class="sp-team__photo sp-team__photo--ph"></div>
+        <span class="sp-team__name">Senior Architect</span>
+        <span class="sp-team__role">Architecture Lead</span>
+      </div>
+
+      <div class="sp-team__member" data-cursor>
+        <div class="sp-team__photo sp-team__photo--ph"></div>
+        <span class="sp-team__name">Interior Designer</span>
+        <span class="sp-team__role">Hospitality Design</span>
+      </div>
+
+      <div class="sp-team__member" data-cursor>
+        <div class="sp-team__photo sp-team__photo--ph"></div>
+        <span class="sp-team__name">Project Manager</span>
+        <span class="sp-team__role">Delivery &amp; Coordination</span>
+      </div>
+
+      <div class="sp-team__member" data-cursor>
+        <div class="sp-team__photo sp-team__photo--ph"></div>
+        <span class="sp-team__name">Interior Designer</span>
+        <span class="sp-team__role">Residential Design</span>
+      </div>
+
+      <div class="sp-team__member" data-cursor>
+        <div class="sp-team__photo sp-team__photo--ph"></div>
+        <span class="sp-team__name">Design Researcher</span>
+        <span class="sp-team__role">Heritage &amp; Materials</span>
+      </div>
+
+    </div>
+    <p class="sp-team__note reveal-up">We are always seeking exceptional talent. <a href="index.html#contact" data-cursor>Say hello →</a></p>
+  </section>
+
+  <!-- ===== AWARDS & ASSOCIATIONS ===== -->
+  <section class="sp-awards" id="awards">
+    <div class="sp-awards__inner">
+      <div class="sp-awards__col">
+        <span class="eyebrow reveal-up">05 — Recognition</span>
+        <h2 class="sp-awards__title reveal-up">Awards &amp;<br>Associations</h2>
+        <ul class="sp-awards__list reveal-up">
+          <li><span>2024</span>IIDA Interior Design Excellence Award — Hospitality</li>
+          <li><span>2023</span>Marriott Signature Design Partner Recognition</li>
+          <li><span>2023</span>Ritz-Carlton Preferred Design Studio</li>
+          <li><span>2022</span>AHEAD Americas — Hotel Design Commendation</li>
+          <li><span>2022</span>AIA Honour Award — Cultural Heritage Project</li>
+          <li><span>2021</span>Architectural Digest AD100 — Emerging Practice</li>
+          <li><span>2020</span>Hyatt Design Excellence Award</li>
+        </ul>
+      </div>
+      <div class="sp-awards__col sp-awards__col--logos">
+        <span class="eyebrow reveal-up">Trusted By</span>
+        <div class="sp-awards__logos reveal-up">
+          <img src="assets/img/partners.png" alt="Ritz-Carlton, Marriott, Disney, Hyatt, Auberge Resorts Collection">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT CTA ===== -->
+  <section class="sp-cta">
+    <div class="sp-cta__inner">
+      <span class="eyebrow reveal-up">Let's begin</span>
+      <h2 class="sp-cta__title script reveal-up">Start a project</h2>
+      <p class="sp-cta__sub reveal-up">Tell us what you're building. We'll tell you what it could become.</p>
+      <a href="index.html#contact" class="sp-cta__btn reveal-up" data-cursor>Get in touch &nbsp;→</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer sp-footer">
+    <div class="footer__brand">
+      <img src="assets/img/logo-full-transparent.png" alt="Studio Logan" class="footer__logo">
+    </div>
+    <p class="footer__copy">© <span id="year"></span> Studio Logan · Crafted where global sophistication meets tradition.</p>
+  </footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
