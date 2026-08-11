@@ -130,7 +130,7 @@
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    const TOTAL = 150;
+    const TOTAL = 100;
     const dpr   = Math.min(window.devicePixelRatio || 1, 2);
 
     // Size canvas to physical pixels
@@ -162,8 +162,11 @@
       img.src = 'assets/img/seq/frame' + pad(i) + '.jpg';
       img.onload = () => {
         imgs[i] = img;
-        if (i === 1) drawImg(img); // paint first frame immediately on load
-        if (i === currentIdx) drawImg(img); // catch up if scroll already moved
+        if (i === 1) {
+          drawImg(img);
+          if (tagline) tagline.classList.add('is-visible'); // show from plain wall immediately
+        }
+        if (i === currentIdx) drawImg(img);
       };
       imgs[i] = img;
     }
@@ -204,7 +207,6 @@
           drawImg(imgs[idx]);
         }
         if (hint)    hint.classList.toggle('is-hidden', p > 0.05);
-        if (tagline) tagline.classList.toggle('is-visible', p > 0.08);
         updateCaptions(p);
       },
       onLeave() {
