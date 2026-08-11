@@ -130,7 +130,7 @@
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    const TOTAL = 100;
+    const TOTAL = 150;
     const dpr   = Math.min(window.devicePixelRatio || 1, 2);
 
     // Size canvas to physical pixels
