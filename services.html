@@ -64,7 +64,7 @@
     </div>
     <div class="sv-hero__scrim"></div>
     <div class="sv-hero__inner">
-      <span class="eyebrow reveal-up">Studio Logan</span>
+
       <h1 class="sv-hero__title reveal-up">Our Services</h1>
       <p class="sv-hero__sub reveal-up">From inception to opening and beyond — our services fully surround every stage of a project. Consistency, quality, and a singular creative intelligence at every scale.</p>
     </div>
@@ -82,8 +82,9 @@
 
   <!-- ===== SERVICE: INTERIOR DESIGN ===== -->
   <section class="sv-service" id="interior-design">
-    <div class="sv-service__media reveal-img">
-      <img loading="lazy" src="assets/img/studio-bar.jpg" alt="Interior Design">
+    <div class="sv-service__media reveal-img sv-media--crossfade">
+      <img loading="lazy" src="assets/img/studio-bar.jpg" alt="Interior Design" class="sv-media__base">
+      <img loading="lazy" src="assets/img/studio-bar-lit.webp" alt="" class="sv-media__lit" aria-hidden="true">
     </div>
     <div class="sv-service__content">
       <span class="sv-service__num">01</span>
@@ -124,8 +125,8 @@
 
   <!-- ===== SERVICE: HOSPITALITY ===== -->
   <section class="sv-service" id="hospitality">
-    <div class="sv-service__media reveal-img">
-      <img loading="lazy" src="assets/img/piertop-bar.jpg" alt="Hospitality Design">
+    <div class="sv-service__media reveal-img sv-media--video">
+      <video class="sv-media__video" src="assets/img/piertop-bar-lights.mp4" muted playsinline preload="metadata" poster="assets/img/piertop-bar.jpg"></video>
     </div>
     <div class="sv-service__content">
       <span class="sv-service__num">03</span>
@@ -207,7 +208,7 @@
   <section class="sv-additional">
     <div class="sv-additional__inner">
       <div class="sv-additional__text">
-        <span class="eyebrow reveal-up">Also Available</span>
+
         <h2 class="sv-additional__title reveal-up">Additional<br>Services</h2>
         <p class="sv-additional__body reveal-up">Beyond our core disciplines, we offer a range of supporting services that complete the project cycle — from early feasibility through post-opening refinement.</p>
       </div>
@@ -238,7 +239,7 @@
 
   <!-- ===== CTA ===== -->
   <section class="sv-cta">
-    <span class="eyebrow reveal-up">Let's Begin</span>
+
     <h2 class="sv-cta__title script reveal-up">Start a project</h2>
     <p class="sv-cta__sub reveal-up">Tell us about the space you're building. We'll bring the depth, rigour, and heritage it deserves.</p>
     <a href="index.html#contact" class="sv-cta__btn reveal-up" data-cursor>Get in touch &nbsp;→</a>
@@ -254,6 +255,14 @@
 
 </main>
 
+<script>
+document.querySelectorAll('.sv-media--video').forEach(function(wrap){
+  var vid=wrap.querySelector('.sv-media__video');
+  var section=wrap.closest('.sv-service');
+  section.addEventListener('mouseenter',function(){vid.play()});
+  section.addEventListener('mouseleave',function(){vid.pause();vid.currentTime=0});
+});
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
