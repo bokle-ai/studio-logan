@@ -49,7 +49,6 @@
 /* ===== ADDITIONAL SERVICES ===== */
 .sv-additional{background:var(--espresso);color:var(--cream);padding:clamp(5rem,10vw,9rem) var(--pad)}
 .sv-additional__inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,7vw,8rem);align-items:start}
-.sv-additional__text .eyebrow{margin-bottom:1rem}
 .sv-additional__title{font-family:var(--f-display);font-weight:300;font-size:clamp(2.4rem,5vw,4.4rem);line-height:1.04;color:var(--gold-2);margin-bottom:1.6rem}
 .sv-additional__body{font-size:1.04rem;line-height:1.8;color:rgba(236,224,203,.65);max-width:44ch}
 .sv-additional__list{list-style:none;padding-top:1rem}
@@ -67,27 +66,10 @@
 
 /* ===== CTA ===== */
 .sv-cta{background:var(--cream-2);padding:clamp(6rem,13vw,12rem) var(--pad);text-align:center}
-.sv-cta .eyebrow{margin-bottom:1.2rem}
 .sv-cta__title{font-family:var(--f-script);font-size:clamp(5rem,14vw,13rem);color:var(--gold-2);line-height:.85;margin-bottom:1.4rem}
 .sv-cta__sub{font-family:var(--f-display);font-size:clamp(1.1rem,2vw,1.6rem);color:rgba(43,31,22,.62);margin-bottom:2.8rem;max-width:48ch;margin-left:auto;margin-right:auto}
 .sv-cta__btn{display:inline-flex;align-items:center;gap:.7rem;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--espresso);background:var(--gold);padding:1rem 2.8rem;border-radius:40px;transition:background .4s,letter-spacing .4s}
 .sv-cta__btn:hover{background:var(--gold-2);letter-spacing:.28em}
-
-/* ===== HOVER LIGHT EFFECTS ===== */
-/* Path B — crossfade to relighted image */
-.sv-media--crossfade{position:relative}
-.sv-media--crossfade .sv-media__base,.sv-media--crossfade .sv-media__lit{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.sv-media--crossfade .sv-media__lit{opacity:0;transition:opacity .7s ease}
-.sv-service:hover .sv-media--crossfade .sv-media__lit{opacity:1}
-
-/* Path C — video plays on hover */
-.sv-media--video{position:relative;overflow:hidden}
-.sv-media__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-
-/* ===== HOVER LIGHT EFFECTS ===== */
-.sv-media--crossfade{position:relative}
-.sv-media--crossfade .sv-media__base,.sv-media--crossfade .sv-media__lit{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.sv-media--crossfade .sv-media__lit{opacity:0;transition:opacity .7s ease}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:1024px){

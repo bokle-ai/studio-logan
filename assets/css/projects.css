@@ -33,7 +33,7 @@
 .pj-section-group{background:var(--cream)}
 
 /* ===== PROJECT ===== */
-.pj-project{transition:opacity .5s,max-height .6s}
+.pj-project{transition:opacity .5s}
 .pj-project.is-hidden{opacity:0;pointer-events:none;max-height:0;overflow:hidden}
 
 /* Hero wrap — image fills left, text overlay floats */

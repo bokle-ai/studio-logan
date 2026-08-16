@@ -77,11 +77,11 @@
   <!-- ===== FILTER ===== -->
   <div class="pj-filter" id="pj-filter">
     <div class="pj-filter__inner">
-      <button class="pj-filter__btn is-active" data-filter="all">All</button>
+      <button class="pj-filter__btn is-active" data-filter="all" aria-pressed="true">All</button>
       <span class="pj-filter__div">/</span>
-      <button class="pj-filter__btn" data-filter="hospitality">Hospitality</button>
+      <button class="pj-filter__btn" data-filter="hospitality" aria-pressed="false">Hospitality</button>
       <span class="pj-filter__div">/</span>
-      <button class="pj-filter__btn" data-filter="residential">Residential</button>
+      <button class="pj-filter__btn" data-filter="residential" aria-pressed="false">Residential</button>
     </div>
   </div>
 
@@ -304,8 +304,9 @@
 /* Filter */
 document.querySelectorAll('.pj-filter__btn').forEach(function(btn){
   btn.addEventListener('click', function(){
-    document.querySelectorAll('.pj-filter__btn').forEach(function(b){b.classList.remove('is-active');});
+    document.querySelectorAll('.pj-filter__btn').forEach(function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false');});
     btn.classList.add('is-active');
+    btn.setAttribute('aria-pressed','true');
     var f = btn.dataset.filter;
     document.querySelectorAll('.pj-project').forEach(function(p){
       if(f === 'all' || p.dataset.cat === f){

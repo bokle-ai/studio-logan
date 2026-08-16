@@ -263,27 +263,22 @@
     const backdrop = document.getElementById('drawerBackdrop');
     if (!drawer || !backdrop) return;
     const PROJECTS = {
-      canter: { idx:'01 / 05', name:'Canter Hotel', where:'Marriott Signature · Oklahoma · 180 keys', img:'assets/img/canter-1.jpg',
+      canter: { idx:'01 / 04', name:'Canter Hotel', where:'Marriott Signature · Oklahoma · 180 keys', img:'assets/img/canter-1.jpg',
         brief:[
           "A celebration of ranch heritage reimagined for contemporary hospitality. Drawing from Oklahoma's singing-cowboy legacy and vernacular ranch architecture, the design honours regional authenticity while delivering refined comfort.",
           "Stone, reclaimed timber and handcrafted metalwork create layered textures throughout — from the double-height lobby fireplace to intimate bar nooks — balancing rustic warmth with sophisticated restraint."
         ] },
-      hardrock: { idx:'02 / 05', name:'Hard Rock', where:'Athens, Greece · 1,100 keys', img:'assets/img/hardrock-1.jpg',
+      hardrock: { idx:'02 / 04', name:'Hard Rock', where:'Athens, Greece · 1,100 keys', img:'assets/img/hardrock-1.jpg',
         brief:[
           "A bold entertainment destination blending luxury and heritage. Transforming the historic Hellinikon Airport, it becomes the first integrated resort of its kind in continental Europe.",
           "The central tower's fluid form harmonises with the landscape — modern luxury rooted in ancient heritage — embracing the Mediterranean climate with more than 200,000 m² of green open space."
         ] },
-      brooklyn: { idx:'03 / 05', name:'Private Residence', where:'Brooklyn, New York', img:'assets/img/brooklyn-1.jpg',
-        brief:[
-          "The design honours the brownstone's 1880s bones while inserting contemporary ease. French sensibility provides discipline: edited palettes, quality over quantity, timeless over trendy.",
-          "A home for morning coffee in filtered light and dinners that linger past midnight — spaces designed for how people actually live, not how shelter magazines say they should."
-        ] },
-      manhattan: { idx:'04 / 05', name:'Private Residence', where:'Manhattan · 432 Park Avenue', img:'assets/img/manhattan-1.jpg',
+      manhattan: { idx:'03 / 04', name:'Private Residence', where:'Manhattan · 432 Park Avenue', img:'assets/img/manhattan-1.jpg',
         brief:[
           "Designed as private observatories suspended in the sky. Floor-to-ceiling glass dissolves boundaries — Central Park unfolds below, the Manhattan skyline extends infinitely.",
           "Materials respond to daylight: stone warms to gold at sunrise, plaster glows silver at dusk. Sublime vertical living that feels less like an apartment than inhabiting the air above New York."
         ] },
-      klein: { idx:'05 / 05', name:'Klein Tools', where:'Office & Workplace · Texas', img:'assets/img/klein-1.jpg',
+      klein: { idx:'04 / 04', name:'Klein Tools', where:'Office & Workplace · Texas', img:'assets/img/klein-1.jpg',
         brief:[
           "An industrial heritage reframed as a warm, human workplace. Exposed brick, reclaimed timber and steel are softened into a space that invites people to gather, linger and work.",
           "Layered textures, generous daylight and a double-height atrium give the everyday a sense of occasion — sophisticated restraint standing in for nostalgia."
