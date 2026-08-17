@@ -451,9 +451,8 @@ a{color:inherit;text-decoration:none}
 /* ============ HORIZONTAL SCROLL RAIL ============ */
 .hwork{position:relative;background:var(--espresso)}
 .hwork__pin{height:100svh;overflow:hidden}
-.hwork__track{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
-.hwork__track::-webkit-scrollbar{display:none}
-.hpanel{position:relative;flex:0 0 82vw;height:100%;overflow:hidden;cursor:pointer;border-right:1px solid rgba(236,224,203,.06);scroll-snap-align:start}
+.hwork__track{display:flex;width:100%;height:100%;will-change:transform}
+.hpanel{position:relative;flex:0 0 82vw;height:100%;overflow:hidden;cursor:pointer;border-right:1px solid rgba(236,224,203,.06)}
 .hpanel:last-child{border-right:none;flex:0 0 100vw}
 .hpanel__media{position:absolute;inset:0;overflow:hidden}
 .hpanel__media img{width:110%;height:112%;margin:-6% 0 0 -5%;object-fit:cover}
@@ -514,8 +513,8 @@ a{color:inherit;text-decoration:none}
   .cform__row{grid-template-columns:1fr}
   /* rail becomes vertical stack on mobile */
   .hwork__pin{height:auto;overflow:visible}
-  .hwork__track{flex-direction:column;overflow-x:visible;scroll-snap-type:none;padding:clamp(1.4rem,5vw,5rem);gap:1.2rem}
-  .hpanel{flex:none!important;width:100%!important;height:80svh;border-right:none;border-bottom:1px solid rgba(236,224,203,.06);scroll-snap-align:none}
+  .hwork__track{flex-direction:column;padding:clamp(1.4rem,5vw,5rem);gap:1.2rem;will-change:auto}
+  .hpanel{flex:none!important;width:100%!important;height:80svh;border-right:none;border-bottom:1px solid rgba(236,224,203,.06)}
   .hpanel.is-active .hpanel__body{opacity:1;pointer-events:auto}
   .hpanel__detail{display:none}
   .hpanel__desc{display:block;margin-top:.7rem;font-size:.88rem;line-height:1.6;color:rgba(236,224,203,.72)}

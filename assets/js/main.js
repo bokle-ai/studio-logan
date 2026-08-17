@@ -238,7 +238,26 @@
   }
 
   /* ---------- Horizontal project rail — replaced by accordion ---------- */
-  function initHorizontal(){ /* no-op: rail uses CSS scroll */ }
+  function initHorizontal(){
+    if (!hasGSAP || reduce) return;
+    if (window.matchMedia('(max-width:767px)').matches) return;
+    const track = document.getElementById('hTrack');
+    const pin   = document.querySelector('.hwork__pin');
+    if (!track || !pin) return;
+    gsap.to(track, {
+      x: () => -(track.scrollWidth - window.innerWidth),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: pin,
+        start: 'top top',
+        end: () => `+=${track.scrollWidth - window.innerWidth}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      }
+    });
+  }
 
   /* ---------- Horizontal scroll rail — click to reveal detail inline ---------- */
   function initDrawer(){
@@ -297,7 +316,6 @@
           if (active) active.classList.remove('is-active');
           panel.classList.add('is-active');
           active = panel;
-          panel.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
           if (hasGSAP && !reduce){
             const targets = det.querySelectorAll('.hpanel__det-num,.hpanel__det-name,.hpanel__det-where,.hpanel__det-brief,.hpanel__det-cta');
             gsap.killTweensOf(targets);
