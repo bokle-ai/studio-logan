@@ -50,12 +50,17 @@
     const letters = pre.querySelectorAll('.preloader__word span:not(.sp)');
     const fill = document.getElementById('preFill');
     if (!hasGSAP || reduce){ pre.style.display='none'; done(); return; }
+    // Pre-warm frame 1 during preloader — ensures it hits cache before the split
+    new Image().src = 'assets/img/seq/frame0001.jpg';
+    const curtL = document.getElementById('curtainL');
+    const curtR = document.getElementById('curtainR');
+    gsap.set(curtL, {xPercent:0, visibility:'hidden'});
+    gsap.set(curtR, {xPercent:0, visibility:'hidden'});
     let finished = false;
     const finish = () => { if (finished) return; finished = true; gsap.set(pre,{display:'none'}); done(); };
-    // safety: never trap the user if rAF is throttled/paused
-    const guard = setTimeout(finish, 6000);
+    const guard = setTimeout(finish, 9000);
     const morphWord = document.getElementById('preMorphWord');
-    const tl = gsap.timeline({ onComplete: () => { clearTimeout(guard); finish(); } });
+    const tl = gsap.timeline({ onComplete: () => { clearTimeout(guard); finished = true; gsap.set([curtL,curtR],{visibility:'hidden'}); } });
     tl.to(letters, { opacity:1, y:0, stagger:.05, duration:.6, ease:'power3.out' }, .1)
       .to(fill, { width:'100%', duration:1.1, ease:'power2.inOut' }, .2)
       .to('.preloader__lion', { scale:1.08, duration:.6, ease:'power2.out' }, '-=.4')
@@ -63,8 +68,9 @@
       .to(morphWord, { opacity:0, filter:'blur(6px)', y:-6, duration:.35, ease:'power2.in' }, '+=.35')
       .call(() => { if (morphWord) morphWord.textContent = 'memories'; })
       .to(morphWord, { opacity:1, filter:'blur(0px)', y:0, duration:.45, ease:'power2.out' })
-      .to(pre, { yPercent:-100, duration:.9, ease:'power4.inOut' }, '+=.5')
-      .set(pre, { display:'none' });
+      .call(() => { gsap.set([curtL,curtR],{visibility:'visible'}); gsap.set(pre,{display:'none'}); setTimeout(finish, 0); })
+      .to(curtL, { xPercent:-100, duration:1.1, ease:'power4.inOut' })
+      .to(curtR, { xPercent:100, duration:1.1, ease:'power4.inOut' }, '<');
   }
 
   /* ---------- Hero intro ---------- */
@@ -217,7 +223,7 @@
       onEnterBack() {
         scrollBuildActive = true;
         const nav = document.getElementById('nav');
-        if (nav) { nav.classList.remove('is-solid'); nav.classList.add('is-hidden'); }
+        if (nav) { nav.classList.remove('is-solid'); }
       }
     });
 
@@ -392,6 +398,8 @@
   function boot(){
     initNav();
     runPreloader(() => {
+      const nav = document.getElementById('nav');
+      if (nav) nav.classList.remove('is-hidden');
       initScrollBuild();
       heroIntro();
       initScroll();

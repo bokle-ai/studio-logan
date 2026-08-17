@@ -61,6 +61,11 @@ a{color:inherit;text-decoration:none}
 #preMorphWord{display:inline-block}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
+/* ============ CURTAIN PANELS ============ */
+.curtain{position:fixed;top:0;bottom:0;width:50%;background:var(--espresso);z-index:10000;pointer-events:none;visibility:hidden}
+.curtain--l{left:0}
+.curtain--r{right:0}
+
 /* ============ SCROLL-BUILD ============ */
 #scroll-build-outer{
   height:300vh;
@@ -72,7 +77,7 @@ a{color:inherit;text-decoration:none}
   width:100vw;
   height:100svh;
   overflow:hidden;
-  background:#0e0a07;
+  background:var(--espresso);
   z-index:2;
 }
 @media(max-width:767px){
