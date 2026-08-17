@@ -237,98 +237,78 @@
     else { window.addEventListener('load', () => ScrollTrigger.refresh()); }
   }
 
-  /* ---------- Horizontal project rail (image-into-image) ---------- */
-  function initHorizontal(){
-    const sec = document.querySelector('.hwork');
-    const track = document.getElementById('hTrack');
-    if (!sec || !track || !hasGSAP || reduce) return;
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 768px)', () => {
-      const len = () => Math.max(0, track.scrollWidth - innerWidth);
-      const drive = gsap.to(track, {
-        x: () => -len(), ease: 'none',
-        scrollTrigger: {
-          trigger: sec, start: 'top top', end: () => '+=' + len(),
-          pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1
+  /* ---------- Horizontal project rail — replaced by accordion ---------- */
+  function initHorizontal(){ /* no-op: rail is now an accordion */ }
+
+  /* ---------- Accordion expand (click → expand card, flank with detail panels) ---------- */
+  function initDrawer(){
+    const PROJECTS = {
+      canter: { brief:[
+        "A celebration of ranch heritage reimagined for contemporary hospitality. Drawing from Oklahoma's singing-cowboy legacy and vernacular ranch architecture, the design honours regional authenticity while delivering refined comfort.",
+        "Stone, reclaimed timber and handcrafted metalwork create layered textures throughout — from the double-height lobby fireplace to intimate bar nooks — balancing rustic warmth with sophisticated restraint."
+      ]},
+      hardrock: { brief:[
+        "A bold entertainment destination blending luxury and heritage. Transforming the historic Hellinikon Airport, it becomes the first integrated resort of its kind in continental Europe.",
+        "The central tower's fluid form harmonises with the landscape — modern luxury rooted in ancient heritage — embracing the Mediterranean climate with more than 200,000 m² of green open space."
+      ]},
+      manhattan: { brief:[
+        "Designed as private observatories suspended in the sky. Floor-to-ceiling glass dissolves boundaries — Central Park unfolds below, the Manhattan skyline extends infinitely.",
+        "Materials respond to daylight: stone warms to gold at sunrise, plaster glows silver at dusk. Sublime vertical living that feels less like an apartment than inhabiting the air above New York."
+      ]},
+      klein: { brief:[
+        "An industrial heritage reframed as a warm, human workplace. Exposed brick, reclaimed timber and steel are softened into a space that invites people to gather, linger and work.",
+        "Layered textures, generous daylight and a double-height atrium give the everyday a sense of occasion — sophisticated restraint standing in for nostalgia."
+      ]}
+    };
+
+    let active = null;
+    const allPanels = document.querySelectorAll('.hpanel');
+
+    allPanels.forEach(panel => {
+      const p = PROJECTS[panel.id];
+      if (!p) return;
+
+      // Read meta from the already-rendered DOM
+      const num  = (panel.querySelector('.hpanel__idx')?.textContent || '').split(' ')[0];
+      const name = panel.querySelector('.hpanel__name')?.textContent || '';
+      const where = panel.querySelector('.hpanel__where')?.textContent || '';
+
+      // Inject detail overlay
+      const det = document.createElement('div');
+      det.className = 'hpanel__detail';
+      det.innerHTML =
+        `<div>
+           <div class="hpanel__det-num">${num}</div>
+           <div class="hpanel__det-name script">${name}</div>
+           <div class="hpanel__det-where">${where.replace(/\s·\s/g,'<br>')}</div>
+         </div>
+         <div class="hpanel__det-rule"></div>
+         <div class="hpanel__det-right">
+           ${p.brief.map(t=>`<p class="hpanel__det-brief">${t}</p>`).join('')}
+           <a class="hpanel__det-cta" href="projects.html">View all projects &nbsp;→</a>
+         </div>`;
+      panel.appendChild(det);
+
+      panel.addEventListener('click', () => {
+        if (panel.classList.contains('is-expand')) {
+          // collapse
+          panel.classList.remove('is-expand');
+          allPanels.forEach(p2 => p2.classList.remove('is-shrink'));
+          active = null;
+        } else {
+          // collapse previous
+          if (active) { active.classList.remove('is-expand'); }
+          allPanels.forEach(p2 => p2.classList.remove('is-shrink'));
+          panel.classList.add('is-expand');
+          allPanels.forEach(p2 => { if (p2 !== panel) p2.classList.add('is-shrink'); });
+          active = panel;
+          // stagger in the detail content
+          if (hasGSAP && !reduce){
+            gsap.from(det.querySelectorAll('.hpanel__det-num,.hpanel__det-name,.hpanel__det-where,.hpanel__det-brief,.hpanel__det-cta'),
+              { y:18, opacity:0, duration:.44, ease:'power2.out', stagger:.055, delay:.42, clearProps:'all' });
+          }
         }
       });
-      // gentle counter-parallax on each panel image for depth
-      track.querySelectorAll('.hpanel__media img').forEach(im => {
-        gsap.fromTo(im, { xPercent: -6 }, {
-          xPercent: 6, ease: 'none',
-          scrollTrigger: { containerAnimation: drive, trigger: im.closest('.hpanel'), start: 'left right', end: 'right left', scrub: true }
-        });
-      });
-      return () => gsap.set(track, { x: 0 });
-    });
-  }
-
-  /* ---------- Project drawer (click a project → slide-in brief) ---------- */
-  function initDrawer(){
-    const drawer = document.getElementById('drawer');
-    const backdrop = document.getElementById('drawerBackdrop');
-    if (!drawer || !backdrop) return;
-    const PROJECTS = {
-      canter: { idx:'01 / 04', name:'Canter Hotel', where:'Marriott Signature · Oklahoma · 180 keys', img:'assets/img/canter-1.jpg',
-        brief:[
-          "A celebration of ranch heritage reimagined for contemporary hospitality. Drawing from Oklahoma's singing-cowboy legacy and vernacular ranch architecture, the design honours regional authenticity while delivering refined comfort.",
-          "Stone, reclaimed timber and handcrafted metalwork create layered textures throughout — from the double-height lobby fireplace to intimate bar nooks — balancing rustic warmth with sophisticated restraint."
-        ] },
-      hardrock: { idx:'02 / 04', name:'Hard Rock', where:'Athens, Greece · 1,100 keys', img:'assets/img/hardrock-1.jpg',
-        brief:[
-          "A bold entertainment destination blending luxury and heritage. Transforming the historic Hellinikon Airport, it becomes the first integrated resort of its kind in continental Europe.",
-          "The central tower's fluid form harmonises with the landscape — modern luxury rooted in ancient heritage — embracing the Mediterranean climate with more than 200,000 m² of green open space."
-        ] },
-      manhattan: { idx:'03 / 04', name:'Private Residence', where:'Manhattan · 432 Park Avenue', img:'assets/img/manhattan-1.jpg',
-        brief:[
-          "Designed as private observatories suspended in the sky. Floor-to-ceiling glass dissolves boundaries — Central Park unfolds below, the Manhattan skyline extends infinitely.",
-          "Materials respond to daylight: stone warms to gold at sunrise, plaster glows silver at dusk. Sublime vertical living that feels less like an apartment than inhabiting the air above New York."
-        ] },
-      klein: { idx:'04 / 04', name:'Klein Tools', where:'Office & Workplace · Texas', img:'assets/img/klein-1.jpg',
-        brief:[
-          "An industrial heritage reframed as a warm, human workplace. Exposed brick, reclaimed timber and steel are softened into a space that invites people to gather, linger and work.",
-          "Layered textures, generous daylight and a double-height atrium give the everyday a sense of occasion — sophisticated restraint standing in for nostalgia."
-        ] }
-    };
-    const el = {
-      img: document.getElementById('drawerImg'), idx: document.getElementById('drawerIdx'),
-      name: document.getElementById('drawerName'), where: document.getElementById('drawerWhere'),
-      brief: document.getElementById('drawerBrief')
-    };
-    let isOpen = false;
-    function open(id){
-      const p = PROJECTS[id]; if (!p) return;
-      el.img.src = p.img; el.img.alt = p.name;
-      el.idx.textContent = p.idx; el.name.textContent = p.name; el.where.textContent = p.where;
-      el.brief.innerHTML = p.brief.map(t => `<p>${t}</p>`).join('');
-      drawer.classList.add('is-open'); backdrop.classList.add('is-open');
-      drawer.setAttribute('aria-hidden','false'); isOpen = true;
-      stop(); if (!lenis) document.body.style.overflow = 'hidden';
-      if (hasGSAP && !reduce){
-        gsap.from(drawer.querySelectorAll('.drawer__media,.drawer__idx,.drawer__name,.drawer__where,.drawer__brief,.drawer__cta'),
-          { y:28, duration:.7, ease:'power3.out', stagger:.06, delay:.2, clearProps:'transform' });
-      }
-    }
-    function close(){
-      if (!isOpen) return;
-      drawer.classList.remove('is-open'); backdrop.classList.remove('is-open');
-      drawer.setAttribute('aria-hidden','true'); isOpen = false;
-      start(); if (!lenis) document.body.style.overflow = '';
-    }
-    document.getElementById('drawerClose').addEventListener('click', close);
-    backdrop.addEventListener('click', close);
-    addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-    const cta = document.getElementById('drawerCta');
-    if (cta) cta.addEventListener('click', () => close());
-    document.querySelectorAll('.hpanel').forEach(panel => {
-      const body = panel.querySelector('.hpanel__body');
-      if (body && !body.querySelector('.hpanel__more')){
-        const b = document.createElement('button');
-        b.type = 'button'; b.className = 'hpanel__more';
-        b.innerHTML = 'View brief <span>＋</span>';
-        body.appendChild(b);
-      }
-      panel.addEventListener('click', () => open(panel.id));
     });
   }
 
