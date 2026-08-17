@@ -238,9 +238,9 @@
   }
 
   /* ---------- Horizontal project rail — replaced by accordion ---------- */
-  function initHorizontal(){ /* no-op: rail is now an accordion */ }
+  function initHorizontal(){ /* no-op: rail uses CSS scroll */ }
 
-  /* ---------- Accordion expand (click → expand card, flank with detail panels) ---------- */
+  /* ---------- Horizontal scroll rail — click to reveal detail inline ---------- */
   function initDrawer(){
     const PROJECTS = {
       canter: { brief:[
@@ -290,22 +290,18 @@
       panel.appendChild(det);
 
       panel.addEventListener('click', () => {
-        if (panel.classList.contains('is-expand')) {
-          // collapse
-          panel.classList.remove('is-expand');
-          allPanels.forEach(p2 => p2.classList.remove('is-shrink'));
+        if (panel.classList.contains('is-active')) {
+          panel.classList.remove('is-active');
           active = null;
         } else {
-          // collapse previous
-          if (active) { active.classList.remove('is-expand'); }
-          allPanels.forEach(p2 => p2.classList.remove('is-shrink'));
-          panel.classList.add('is-expand');
-          allPanels.forEach(p2 => { if (p2 !== panel) p2.classList.add('is-shrink'); });
+          if (active) active.classList.remove('is-active');
+          panel.classList.add('is-active');
           active = panel;
-          // stagger in the detail content
+          panel.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
           if (hasGSAP && !reduce){
-            gsap.from(det.querySelectorAll('.hpanel__det-num,.hpanel__det-name,.hpanel__det-where,.hpanel__det-brief,.hpanel__det-cta'),
-              { y:18, opacity:0, duration:.44, ease:'power2.out', stagger:.055, delay:.42, clearProps:'all' });
+            const targets = det.querySelectorAll('.hpanel__det-num,.hpanel__det-name,.hpanel__det-where,.hpanel__det-brief,.hpanel__det-cta');
+            gsap.killTweensOf(targets);
+            gsap.from(targets, { y:18, opacity:0, duration:.44, ease:'power2.out', stagger:.055, delay:.12, clearProps:'all', immediateRender:false });
           }
         }
       });

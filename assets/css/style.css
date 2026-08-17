@@ -448,29 +448,27 @@ a{color:inherit;text-decoration:none}
 .frag-img,.reveal-img{position:relative;overflow:hidden;background:var(--espresso-2)}
 .reveal-img img,.frag-img img{width:100%;height:100%;object-fit:cover;display:block;will-change:transform}
 
-/* ============ ACCORDION RAIL ============ */
+/* ============ HORIZONTAL SCROLL RAIL ============ */
 .hwork{position:relative;background:var(--espresso)}
-.hwork__pin{height:100svh;display:flex;align-items:stretch;overflow:hidden}
-.hwork__track{display:flex;width:100%;padding:0;transform:none!important}
-.hpanel{position:relative;flex:1;height:100%;overflow:hidden;cursor:pointer;border-right:1px solid rgba(236,224,203,.06);transition:flex .65s cubic-bezier(.4,0,.2,1)}
-.hpanel:last-child{border-right:none}
-.hpanel.is-expand{flex:0 0 58%}
-.hpanel.is-shrink{flex:0 0 7%}
+.hwork__pin{height:100svh;overflow:hidden}
+.hwork__track{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+.hwork__track::-webkit-scrollbar{display:none}
+.hpanel{position:relative;flex:0 0 82vw;height:100%;overflow:hidden;cursor:pointer;border-right:1px solid rgba(236,224,203,.06);scroll-snap-align:start}
+.hpanel:last-child{border-right:none;flex:0 0 100vw}
 .hpanel__media{position:absolute;inset:0;overflow:hidden}
-.hpanel__media img{width:110%;height:112%;margin:-6% 0 0 -5%;object-fit:cover;transition:filter .5s}
-.hpanel.is-shrink .hpanel__media img{filter:brightness(.45)}
+.hpanel__media img{width:110%;height:112%;margin:-6% 0 0 -5%;object-fit:cover}
 .hpanel__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,26,18,.04),rgba(36,26,18,.16) 45%,rgba(36,26,18,.88));transition:background .5s}
-.hpanel.is-expand .hpanel__scrim{background:linear-gradient(180deg,rgba(36,26,18,.1),rgba(36,26,18,.55) 45%,rgba(36,26,18,.96))}
+.hpanel.is-active .hpanel__scrim{background:linear-gradient(180deg,rgba(36,26,18,.1),rgba(36,26,18,.55) 45%,rgba(36,26,18,.96))}
 .hpanel__body{position:absolute;left:clamp(1rem,2.4vw,2.4rem);right:clamp(1rem,2.4vw,2.4rem);bottom:clamp(1.4rem,3vw,3rem);color:var(--cream-3);z-index:2;transition:opacity .22s}
-.hpanel.is-expand .hpanel__body,.hpanel.is-shrink .hpanel__body{opacity:0;pointer-events:none}
+.hpanel.is-active .hpanel__body{opacity:0;pointer-events:none}
 .hpanel__idx{font-size:.68rem;letter-spacing:.3em;color:var(--gold-2)}
 .hpanel__name{font-size:clamp(1.5rem,2.6vw,3.4rem);line-height:.94;margin:.3rem 0 .5rem}
 .hpanel__where{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(236,224,203,.72)}
 .hpanel__desc{display:none}
 .hwork__hint{display:none}
-/* ---- expanded detail overlay ---- */
-.hpanel__detail{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1px 1fr;align-items:end;padding:clamp(1.8rem,2.8vw,3.2rem);padding-bottom:clamp(2.4rem,4vw,4.2rem);opacity:0;pointer-events:none;transition:opacity .38s .3s;z-index:3}
-.hpanel.is-expand .hpanel__detail{opacity:1;pointer-events:auto}
+/* ---- detail overlay (click to reveal, no resize) ---- */
+.hpanel__detail{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1px 1fr;align-items:end;padding:clamp(1.8rem,2.8vw,3.2rem);padding-bottom:clamp(2.4rem,4vw,4.2rem);opacity:0;pointer-events:none;transition:opacity .38s .08s;z-index:3}
+.hpanel.is-active .hpanel__detail{opacity:1;pointer-events:auto}
 .hpanel__det-rule{background:rgba(236,224,203,.28);align-self:stretch;margin:1.6rem 2rem}
 .hpanel__det-right{padding-left:clamp(1rem,1.6vw,2rem)}
 .hpanel__det-num{font-family:var(--f-display);font-size:4rem;line-height:1;color:rgba(182,137,63,.22);margin-bottom:.4rem}
@@ -514,11 +512,11 @@ a{color:inherit;text-decoration:none}
   .slat{height:64vw;filter:grayscale(0) brightness(.95)}
   .slat figcaption{opacity:1;transform:none}
   .cform__row{grid-template-columns:1fr}
-  /* accordion becomes vertical stack on mobile */
-  .hwork__pin{height:auto;display:block;overflow:visible}
-  .hwork__track{flex-direction:column;padding:clamp(1.4rem,5vw,5rem);gap:1.2rem}
-  .hpanel{flex:none!important;width:100%;height:80svh;border-right:none;border-bottom:1px solid rgba(236,224,203,.06)}
-  .hpanel.is-expand .hpanel__body,.hpanel.is-shrink .hpanel__body{opacity:1;pointer-events:auto}
+  /* rail becomes vertical stack on mobile */
+  .hwork__pin{height:auto;overflow:visible}
+  .hwork__track{flex-direction:column;overflow-x:visible;scroll-snap-type:none;padding:clamp(1.4rem,5vw,5rem);gap:1.2rem}
+  .hpanel{flex:none!important;width:100%!important;height:80svh;border-right:none;border-bottom:1px solid rgba(236,224,203,.06);scroll-snap-align:none}
+  .hpanel.is-active .hpanel__body{opacity:1;pointer-events:auto}
   .hpanel__detail{display:none}
   .hpanel__desc{display:block;margin-top:.7rem;font-size:.88rem;line-height:1.6;color:rgba(236,224,203,.72)}
   /* mosaic to two columns */
