@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Pinyon+Script&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css?v=9">
+<link rel="stylesheet" href="assets/css/projects.css?v=2">
 </head>
 <body>
 
@@ -96,58 +97,95 @@
     <a href="projects.html" class="section-cta reveal-up" style="margin-top:2.4rem">View all projects &nbsp;→</a>
   </section>
 
-  <!-- ===== HORIZONTAL PROJECT RAIL ===== -->
-  <section class="hwork" id="rail">
-    <div class="hwork__pin">
-      <div class="hwork__track" id="hTrack">
+  <!-- ===== SELECTED PROJECT SCENES ===== -->
+  <div class="pj-scene-group" id="rail">
 
-        <article class="hpanel" id="canter" data-cursor>
-          <div class="hpanel__media"><img decoding="async" src="assets/img/canter-1.jpg" alt="Canter Hotel"></div>
-          <div class="hpanel__scrim"></div>
-          <div class="hpanel__body">
-            <span class="hpanel__idx">01 / 04</span>
-            <h3 class="hpanel__name script">Canter Hotel</h3>
-            <span class="hpanel__where">Marriott Signature · Oklahoma · 180 keys</span>
-            <p class="hpanel__desc">Ranch heritage reimagined for contemporary hospitality — stone, reclaimed timber and handcrafted metalwork, rustic warmth held with sophisticated restraint.</p>
-          </div>
-        </article>
-
-        <article class="hpanel" id="hardrock" data-cursor>
-          <div class="hpanel__media"><img decoding="async" src="assets/img/hardrock-1.jpg" alt="Hard Rock Athens"></div>
-          <div class="hpanel__scrim"></div>
-          <div class="hpanel__body">
-            <span class="hpanel__idx">02 / 04</span>
-            <h3 class="hpanel__name script">Hard Rock</h3>
-            <span class="hpanel__where">Athens, Greece · 1,100 keys</span>
-            <p class="hpanel__desc">On the historic Hellinikon site — the first integrated resort of its kind in continental Europe. A fluid tower where modern luxury is rooted in ancient heritage.</p>
-          </div>
-        </article>
-
-        <article class="hpanel" id="manhattan" data-cursor>
-          <div class="hpanel__media"><img decoding="async" src="assets/img/manhattan-1.jpg" alt="Manhattan residence"></div>
-          <div class="hpanel__scrim"></div>
-          <div class="hpanel__body">
-            <span class="hpanel__idx">03 / 04</span>
-            <h3 class="hpanel__name script">Private Residence</h3>
-            <span class="hpanel__where">Manhattan · 432 Park Avenue</span>
-            <p class="hpanel__desc">Private observatories suspended in the sky. Materials respond to daylight — stone warms to gold at sunrise, plaster glows silver at dusk.</p>
-          </div>
-        </article>
-
-        <article class="hpanel" id="klein" data-cursor>
-          <div class="hpanel__media"><img decoding="async" src="assets/img/klein-1.jpg" alt="Klein Tools office"></div>
-          <div class="hpanel__scrim"></div>
-          <div class="hpanel__body">
-            <span class="hpanel__idx">04 / 04</span>
-            <h3 class="hpanel__name script">Klein Tools</h3>
-            <span class="hpanel__where">Office &amp; Workplace · Texas</span>
-            <p class="hpanel__desc">Industrial heritage reframed as a warm, human workplace — exposed brick and steel softened around a double-height atrium.</p>
-          </div>
-        </article>
-
+    <section class="pj-scene" id="hp-canter" data-cat="hospitality">
+      <div class="pj-scene__stage">
+        <img class="pj-scene__img is-active" src="assets/img/canter-1.jpg" alt="Canter Hotel exterior">
+        <img class="pj-scene__img" src="assets/img/canter-checkin.webp" alt="Canter Hotel check-in">
+        <img class="pj-scene__img" src="assets/img/canter-suite.jpg" alt="Canter Hotel suite">
+        <div class="pj-scene__scrim"></div>
+        <div class="pj-scene__meta">
+          <span class="pj-scene__num">01 / 03</span>
+          <span class="pj-scene__tag">Hospitality</span>
+        </div>
       </div>
-    </div>
-  </section>
+      <div class="pj-scene__scroll">
+        <div class="pj-chapter" data-img="0">
+          <span class="pj-chapter__eyebrow">Marriott Signature · Oklahoma · 180 Keys</span>
+          <h2 class="pj-chapter__name script">Canter Hotel</h2>
+          <span class="pj-chapter__loc">Oklahoma City · United States</span>
+        </div>
+        <div class="pj-chapter" data-img="1">
+          <p class="pj-chapter__body">Ranch heritage reimagined for contemporary hospitality — stone, reclaimed timber and handcrafted metalwork. Rustic warmth held with the sophisticated restraint of a global brand that knows exactly who it is.</p>
+        </div>
+        <div class="pj-chapter pj-chapter--cta" data-img="2">
+          <p class="pj-chapter__cta-quote">Every material carries memory. Every detail earns its place.</p>
+          <a href="projects.html#canter" class="pj-chapter__cta">View full project &nbsp;→</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="pj-scene-div"></div>
+
+    <section class="pj-scene pj-scene--flip pj-scene--dark" id="hp-hardrock" data-cat="hospitality">
+      <div class="pj-scene__stage">
+        <img class="pj-scene__img is-active" src="assets/img/hardrock-1.jpg" alt="Hard Rock Athens exterior">
+        <img class="pj-scene__img" src="assets/img/hardrock-lobby.jpg" alt="Hard Rock lobby">
+        <img class="pj-scene__img" src="assets/img/hardrock-restaurant.jpg" alt="Hard Rock restaurant">
+        <div class="pj-scene__scrim"></div>
+        <div class="pj-scene__meta">
+          <span class="pj-scene__num">02 / 03</span>
+          <span class="pj-scene__tag">Hospitality</span>
+        </div>
+      </div>
+      <div class="pj-scene__scroll">
+        <div class="pj-chapter" data-img="0">
+          <span class="pj-chapter__eyebrow">Hard Rock International · 1,100 Keys</span>
+          <h2 class="pj-chapter__name script">Hard Rock</h2>
+          <span class="pj-chapter__loc">Athens · Greece</span>
+        </div>
+        <div class="pj-chapter" data-img="1">
+          <p class="pj-chapter__body">On the historic Hellinikon site — the first integrated resort of its kind in continental Europe. A fluid tower where modern luxury is rooted in ancient heritage, where spectacle meets stillness.</p>
+        </div>
+        <div class="pj-chapter pj-chapter--cta" data-img="2">
+          <p class="pj-chapter__cta-quote">A landmark that belongs to its city as much as to its guests.</p>
+          <a href="projects.html#hardrock" class="pj-chapter__cta pj-chapter__cta--light">View full project &nbsp;→</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="pj-scene-div"></div>
+
+    <section class="pj-scene" id="hp-manhattan" data-cat="residential">
+      <div class="pj-scene__stage">
+        <img class="pj-scene__img is-active" src="assets/img/manhattan-1.jpg" alt="432 Park exterior">
+        <img class="pj-scene__img" src="assets/img/manhattan-living.jpg" alt="432 Park living area">
+        <img class="pj-scene__img" src="assets/img/manhattan-detail.jpg" alt="432 Park material detail">
+        <div class="pj-scene__scrim"></div>
+        <div class="pj-scene__meta">
+          <span class="pj-scene__num">03 / 03</span>
+          <span class="pj-scene__tag">Residential</span>
+        </div>
+      </div>
+      <div class="pj-scene__scroll">
+        <div class="pj-chapter" data-img="0">
+          <span class="pj-chapter__eyebrow">Private Residence · Penthouse</span>
+          <h2 class="pj-chapter__name script">432 Park Avenue</h2>
+          <span class="pj-chapter__loc">Manhattan · New York</span>
+        </div>
+        <div class="pj-chapter" data-img="1">
+          <p class="pj-chapter__body">Private observatories suspended in the sky. Stone warms to gold at sunrise; plaster glows silver at dusk. Every material responds to daylight, making the apartment a living instrument of time.</p>
+        </div>
+        <div class="pj-chapter pj-chapter--cta" data-img="2">
+          <p class="pj-chapter__cta-quote">Luxury is not what you see. It is what you feel when no one is watching.</p>
+          <a href="projects.html#park432" class="pj-chapter__cta">View full project &nbsp;→</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
 
   <!-- ===== OUR EXPERTISE ===== -->
   <section class="xp" id="expertise">
