@@ -381,7 +381,7 @@
       document.getElementById('scrollProgress').style.width = (p*100)+'%';
       // Nav state is owned by initScrollBuild while its section is active
       if (scrollBuildActive) { last = y; return; }
-      nav.classList.toggle('is-solid', y > innerHeight*0.7);
+      nav.classList.add('is-solid');
       if (y > last && y > innerHeight && !menu.classList.contains('is-open')) nav.classList.add('is-hidden');
       else nav.classList.remove('is-hidden');
       last = y;
