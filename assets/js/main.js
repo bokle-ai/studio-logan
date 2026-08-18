@@ -411,6 +411,30 @@
     });
   }
 
+  /* ---------- Page-exit curtain transition ---------- */
+  function pageLeave(href){
+    if (!hasGSAP || reduce){ window.location.href = href; return; }
+    stop();
+    const curtL = document.getElementById('curtainL');
+    const curtR = document.getElementById('curtainR');
+    if (!curtL || !curtR){ window.location.href = href; return; }
+    gsap.set([curtL,curtR],{visibility:'visible'});
+    gsap.timeline({ onComplete:()=>{ window.location.href = href; } })
+      .fromTo(curtL,{xPercent:-100},{xPercent:0,duration:.75,ease:'power3.inOut'})
+      .fromTo(curtR,{xPercent:100},{xPercent:0,duration:.75,ease:'power3.inOut'},'<');
+  }
+
+  function initPageTransitions(){
+    document.querySelectorAll('[data-page-transition]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
+        e.preventDefault();
+        pageLeave(href);
+      });
+    });
+  }
+
   /* ---------- Boot ---------- */
   function boot(){
     initNav();
@@ -424,6 +448,7 @@
       initDrawer();
       initProjectScenes();
       initMarquee();
+      initPageTransitions();
       if (hasGSAP) ScrollTrigger.refresh();
     });
     // recalc once late-loading images settle

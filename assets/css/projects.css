@@ -143,6 +143,11 @@
 .pj-scene--dark .pj-chapter__dl dd{color:rgba(236,224,203,.7)}
 
 .pj-chapter--cta{justify-content:flex-end;padding-bottom:clamp(4rem,8vw,7rem);gap:1.8rem}
+
+/* Homepage simplified scenes: 2 chapters per scene */
+.hp-chapter{min-height:90svh;gap:1.2rem}
+.hp-chapter--img{min-height:52svh}
+.hp-cta{margin-top:1.6rem}
 .pj-chapter__cta-quote{font-family:var(--f-display);font-size:clamp(1.18rem,1.85vw,1.5rem);font-style:italic;color:rgba(43,31,22,.48);max-width:36ch;line-height:1.68;margin:0}
 .pj-scene--dark .pj-chapter__cta-quote{color:rgba(236,224,203,.44)}
 .pj-chapter__cta{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--espresso);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:.22rem;width:fit-content;transition:color .3s,border-color .3s,letter-spacing .32s}
