@@ -411,6 +411,68 @@
     });
   }
 
+  /* ---------- HP feature scenes: parallax + image-fill text ---------- */
+  function initHPFeatures(){
+    var feats = document.querySelectorAll('.hp-feat');
+    if (!feats.length) return;
+
+    feats.forEach(function(feat){
+      var img1 = feat.querySelector('.hp-feat__img--1');
+      var img2 = feat.querySelector('.hp-feat__img--2');
+      var name = feat.querySelector('.hp-feat__name');
+
+      // Assign background-image to name for background-clip: text fill
+      if (name && name.dataset.bg) {
+        name.style.backgroundImage = 'url(' + name.dataset.bg + ')';
+      }
+
+      if (!hasGSAP || reduce) return;
+
+      // Parallax: images drift upward at half the scroll speed
+      [img1, img2].forEach(function(img){
+        if (!img) return;
+        gsap.fromTo(img,
+          { yPercent: 0 },
+          { yPercent: -18, ease: 'none',
+            scrollTrigger: { trigger: feat, start: 'top top', end: 'bottom bottom', scrub: true } }
+        );
+      });
+
+      // Image-fill text: background-position moves slower than page = fluid parallax inside letters
+      if (name && name.dataset.bg) {
+        ScrollTrigger.create({
+          trigger: feat,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true,
+          onUpdate: function(self){
+            var y = 20 + self.progress * 55; // 20% → 75%
+            name.style.backgroundPositionY = y + '%';
+          }
+        });
+      }
+
+      // Crossfade: swap images at 50% scroll progress
+      if (img1 && img2) {
+        ScrollTrigger.create({
+          trigger: feat,
+          start: 'top top',
+          end: 'bottom bottom',
+          onUpdate: function(self){
+            var swapped = self.progress >= 0.5;
+            img1.classList.toggle('is-active', !swapped);
+            img2.classList.toggle('is-active', swapped);
+            // also update name bg
+            if (name) {
+              var src = swapped ? feat.querySelector('.hp-feat__img--2').src : feat.querySelector('.hp-feat__img--1').src;
+              name.style.backgroundImage = 'url(' + src + ')';
+            }
+          }
+        });
+      }
+    });
+  }
+
   /* ---------- Page-exit curtain transition ---------- */
   function pageLeave(href){
     if (!hasGSAP || reduce){ window.location.href = href; return; }
@@ -447,6 +509,7 @@
       initHorizontal();
       initDrawer();
       initProjectScenes();
+      initHPFeatures();
       initMarquee();
       initPageTransitions();
       if (hasGSAP) ScrollTrigger.refresh();
