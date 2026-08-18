@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Pinyon+Script&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=8">
+<link rel="stylesheet" href="assets/css/style.css?v=9">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
 <div class="cursor" id="cursor"><span class="cursor__dot"></span><span class="cursor__label" id="cursorLabel"></span></div>
 
 <!-- ===== NAV ===== -->
-<header class="nav is-hidden" id="nav">
+<header class="nav" id="nav">
   <a href="#top" class="nav__brand" data-cursor>
     <img src="assets/img/lion-double.png" alt="Studio Logan" class="nav__mark">
     <span class="nav__name">Studio&nbsp;Logan</span>
@@ -150,23 +150,49 @@
   </section>
 
   <!-- ===== OUR EXPERTISE ===== -->
-  <section class="expertise" id="expertise">
-    <div class="expertise__head">
-
-      <h2 class="script-h reveal-up">Our Expertise</h2>
-    </div>
-    <div class="expertise__grid">
-      <div class="expertise__media reveal-img">
-        <img loading="lazy" decoding="async" src="assets/img/expertise-horse.jpg" alt="" data-parallax="0.14">
+  <section class="xp" id="expertise">
+    <div class="xp__head">
+      <div class="xp__head-left">
+        <span class="eyebrow reveal-up">What We Do</span>
+        <h2 class="xp__title script reveal-up">Our<br>Expertise</h2>
       </div>
-      <ul class="expertise__list">
-        <li data-cursor><span class="num">/01</span><span class="name">Residential</span><span class="desc">Deeply personal homes designed for how people actually live.</span></li>
-        <li data-cursor><span class="num">/02</span><span class="name">Commercial</span><span class="desc">Workplaces and environments with strategic rigor and warmth.</span></li>
-        <li data-cursor><span class="num">/03</span><span class="name">Hospitality</span><span class="desc">Luxury experiences shaped across three continents.</span></li>
-        <li data-cursor><span class="num">/04</span><span class="name">Branded Environments</span><span class="desc">Spaces that carry a story from threshold to detail.</span></li>
-      </ul>
+      <p class="xp__head-right reveal-up">We design environments for living, working and gathering — across three continents. Each project shaped by narrative precision and a deep respect for place.</p>
     </div>
-    <div class="expertise__cta reveal-up">
+    <div class="xp__list">
+      <div class="xp__item reveal-up" data-cursor>
+        <div class="xp__item-left">
+          <span class="xp__num">/01</span>
+          <h3 class="xp__name">Residential</h3>
+        </div>
+        <p class="xp__desc">Deeply personal homes designed for how people actually live — material, light and space held in exact balance.</p>
+        <a href="services.html" class="xp__link">Explore &nbsp;→</a>
+      </div>
+      <div class="xp__item reveal-up" data-cursor>
+        <div class="xp__item-left">
+          <span class="xp__num">/02</span>
+          <h3 class="xp__name">Commercial</h3>
+        </div>
+        <p class="xp__desc">Workplaces and retail environments designed with strategic rigour and the warmth that makes people stay.</p>
+        <a href="services.html" class="xp__link">Explore &nbsp;→</a>
+      </div>
+      <div class="xp__item reveal-up" data-cursor>
+        <div class="xp__item-left">
+          <span class="xp__num">/03</span>
+          <h3 class="xp__name">Hospitality</h3>
+        </div>
+        <p class="xp__desc">Luxury experiences shaped across three continents — from intimate boutique properties to landmark integrated resorts.</p>
+        <a href="services.html" class="xp__link">Explore &nbsp;→</a>
+      </div>
+      <div class="xp__item reveal-up" data-cursor>
+        <div class="xp__item-left">
+          <span class="xp__num">/04</span>
+          <h3 class="xp__name">Branded Environments</h3>
+        </div>
+        <p class="xp__desc">Spaces that carry a story from threshold to every detail — brand values made physical, experiential and enduring.</p>
+        <a href="services.html" class="xp__link">Explore &nbsp;→</a>
+      </div>
+    </div>
+    <div class="xp__footer reveal-up">
       <a href="services.html" class="section-cta">Explore our services &nbsp;→</a>
     </div>
   </section>

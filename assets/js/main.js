@@ -326,6 +326,29 @@
     });
   }
 
+  /* ---------- Project scene: scroll-driven image switch ---------- */
+  function initProjectScenes(){
+    const scenes = document.querySelectorAll('.pj-scene');
+    if (!scenes.length) return;
+    const mobile = window.matchMedia('(max-width:767px)').matches;
+    scenes.forEach(function(scene){
+      const imgs     = scene.querySelectorAll('.pj-scene__img');
+      const chapters = scene.querySelectorAll('.pj-chapter[data-img]');
+      if (!imgs.length || !chapters.length) return;
+      function setImg(idx){
+        imgs.forEach(function(img,i){ img.classList.toggle('is-active', i === idx); });
+      }
+      setImg(0);
+      if (mobile) return;
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) setImg(parseInt(entry.target.dataset.img || '0'));
+        });
+      }, { rootMargin: '-38% 0px -38% 0px' });
+      chapters.forEach(function(ch){ obs.observe(ch); });
+    });
+  }
+
   /* ---------- Marquee ---------- */
   function initMarquee(){
     const row = document.querySelector('.marquee__row');
@@ -399,6 +422,7 @@
       initScroll();
       initHorizontal();
       initDrawer();
+      initProjectScenes();
       initMarquee();
       if (hasGSAP) ScrollTrigger.refresh();
     });
