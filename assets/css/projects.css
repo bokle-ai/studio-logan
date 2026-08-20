@@ -189,14 +189,18 @@
 .hp-split__cta{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-display);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:.22rem;transition:color .3s,border-color .3s,letter-spacing .32s}
 .hp-split__cta:hover{color:var(--gold-2);border-color:var(--gold-2);letter-spacing:.3em}
 
-/* ── Scroll-image stack: glass card stays sticky, images fade behind it ── */
-.hp-split__card-wrap{position:sticky;top:0;height:100svh;z-index:10;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.hp-split__card{pointer-events:auto;width:76%;max-width:440px;padding:clamp(2rem,3.8vw,3rem) clamp(2rem,4.5vw,3.8rem);background:rgba(36,26,18,.46);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(182,137,63,.24);display:flex;flex-direction:column;align-items:center;gap:.9rem;text-align:center}
-.hp-split__figs{margin-top:-100svh}
-.hp-split__figs .hp-split__fig{height:100svh;margin:0;overflow:hidden;position:relative;z-index:1}
-.hp-split__figs .hp-split__fig img{width:100%;height:100%;object-fit:cover;display:block;transition:none}
-.hp-split__figs .hp-split__fig:hover img{transform:none}
-.hp-split__end{height:80svh;display:flex;align-items:center;justify-content:center;background:var(--espresso);position:relative;z-index:2}
+/* ── Right panel: sticky espresso frame with small centered image card ── */
+.hp-split__rpin{position:sticky;top:0;height:100svh;z-index:5;display:flex;align-items:center;justify-content:center;background:var(--espresso)}
+.hp-split__rcard{position:relative;width:78%;aspect-ratio:3/4;overflow:hidden;max-height:74svh}
+.hp-split__rimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:blur(7px);transform:scale(1.06);transition:opacity .92s ease,filter .92s ease,transform .92s ease}
+.hp-split__rimg.is-active{opacity:1;filter:blur(0);transform:scale(1)}
+.hp-split__rcard-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(1.5rem,3vw,2.4rem);background:linear-gradient(to top,rgba(36,26,18,.92) 0%,rgba(36,26,18,.52) 44%,transparent 68%);z-index:5}
+.hp-split__rcard-info .hp-split__eyebrow{margin-bottom:.3rem}
+.hp-split__rcard-info .hp-split__name{margin:.18rem 0 .22rem}
+.hp-split__rcard-info .hp-split__loc{margin-bottom:.9rem}
+/* Invisible chapters: create scroll height + trigger image crossfades */
+.hp-split__chapters{margin-top:-100svh;position:relative;z-index:1}
+.hp-split__ch{height:80svh;pointer-events:none}
 
 @media(max-width:767px){
   .hp-split{grid-template-columns:1fr}
@@ -206,11 +210,10 @@
   .hp-split__head{height:70svh}
   .hp-split__head-text{padding:2rem 1.8rem}
   .hp-split__body{padding:2rem 1.5rem 6rem}
-  .hp-split__card-wrap{height:70svh}
-  .hp-split__figs{margin-top:-70svh}
-  .hp-split__figs .hp-split__fig{height:70svh}
-  .hp-split__end{height:50svh}
-  .hp-split__card{width:90%;padding:1.8rem 1.6rem}
+  .hp-split__rpin{position:relative;height:auto;padding:4svh 0 6svh}
+  .hp-split__rcard{width:88%;max-height:58svh}
+  .hp-split__chapters{margin-top:0}
+  .hp-split__ch{height:50svh}
 }
 
 /* ===== OUR PROJECTS GRID (projects page overview) ===== */

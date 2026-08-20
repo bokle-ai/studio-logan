@@ -411,51 +411,27 @@
     });
   }
 
-  /* ---------- HP split: scroll-image stack + left-stage crossfade ---------- */
+  /* ---------- HP split: scroll chapters → crossfade left stage + right card ---------- */
   function initHPSplit(){
     var sections = document.querySelectorAll('.hp-split');
     if (!sections.length) return;
 
     sections.forEach(function(sect){
-      var stageImgs = sect.querySelectorAll('.hp-split__img');
-      var figs = Array.from(sect.querySelectorAll('.hp-split__figs .hp-split__fig[data-img]'));
-      if (!figs.length) return;
+      var stageImgs = sect.querySelectorAll('.hp-split__img');   // left sticky panel
+      var rImgs     = sect.querySelectorAll('.hp-split__rimg');  // right card images
+      var chapters  = sect.querySelectorAll('.hp-split__ch[data-img]'); // scroll triggers
+      if (!chapters.length) return;
 
-      // Crossfade the LEFT stage image to match whichever right-side fig is in view
-      if (stageImgs.length) {
-        var imgObs = new IntersectionObserver(function(entries){
-          entries.forEach(function(entry){
-            if (!entry.isIntersecting) return;
-            var idx = parseInt(entry.target.dataset.img, 10);
-            stageImgs.forEach(function(img, i){
-              img.classList.toggle('is-active', i === idx);
-            });
-          });
-        }, { threshold: 0.5, rootMargin: '-20% 0px -20% 0px' });
-        figs.forEach(function(fig){ imgObs.observe(fig); });
-      }
-
-      // Fade right-side images as they scroll up past the sticky glass card
-      function updateFade(){
-        var vh = window.innerHeight;
-        figs.forEach(function(fig){
-          var rect = fig.getBoundingClientRect();
-          var img = fig.querySelector('img');
-          if (!img) return;
-          var fadeStart = vh * 0.85;
-          var fadeEnd   = vh * 0.12;
-          var b = rect.bottom;
-          if (b >= fadeStart) {
-            img.style.opacity = '';
-          } else if (b <= fadeEnd) {
-            img.style.opacity = 0;
-          } else {
-            img.style.opacity = (b - fadeEnd) / (fadeStart - fadeEnd);
-          }
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (!entry.isIntersecting) return;
+          var idx = parseInt(entry.target.dataset.img, 10);
+          stageImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
+          rImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
         });
-      }
-      window.addEventListener('scroll', updateFade, { passive: true });
-      updateFade();
+      }, { threshold: 0.5, rootMargin: '-20% 0px -20% 0px' });
+
+      chapters.forEach(function(ch){ obs.observe(ch); });
     });
   }
 
