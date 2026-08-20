@@ -186,7 +186,7 @@
 .hp-split__fig img{width:100%;height:auto;display:block;object-fit:cover;transition:transform .7s ease}
 .hp-split__fig:hover img{transform:scale(1.03)}
 .hp-split__cta-wrap{padding-top:1rem}
-.hp-split__cta{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-display);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:.22rem;transition:color .3s,border-color .3s,letter-spacing .32s}
+.hp-split__cta{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-display);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:.22rem;transition:color .3s,border-color .3s,letter-spacing .32s;margin-top:.8rem}
 .hp-split__cta:hover{color:var(--gold-2);border-color:var(--gold-2);letter-spacing:.3em}
 
 @media(max-width:767px){
