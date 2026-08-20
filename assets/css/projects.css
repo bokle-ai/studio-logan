@@ -199,8 +199,8 @@
 .hp-split__rcard-info .hp-split__name{margin:.18rem 0 .22rem}
 .hp-split__rcard-info .hp-split__loc{margin-bottom:.9rem}
 /* Invisible chapters: create scroll height + trigger image crossfades */
-.hp-split__chapters{margin-top:-100svh;position:relative;z-index:1}
-.hp-split__ch{height:80svh;pointer-events:none}
+.hp-split__chapters{position:relative;z-index:1}
+.hp-split__ch{height:80svh;pointer-events:none;background:var(--espresso)}
 
 @media(max-width:767px){
   .hp-split{grid-template-columns:1fr}
