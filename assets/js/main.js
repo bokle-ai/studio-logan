@@ -411,33 +411,26 @@
     });
   }
 
-  /* ---------- HP split: scroll chapters → crossfade left stage + right card ---------- */
+  /* ---------- HP split: portrait card stack — active card drives left stage ---------- */
   function initHPSplit(){
     var sections = document.querySelectorAll('.hp-split');
     if (!sections.length) return;
 
     sections.forEach(function(sect){
       var stageImgs = sect.querySelectorAll('.hp-split__img');
-      var rImgs     = sect.querySelectorAll('.hp-split__rimg');
-      var rpin      = sect.querySelector('.hp-split__rpin');
-      var chapters  = sect.querySelectorAll('.hp-split__ch[data-img]');
-      if (!chapters.length) return;
+      var cards = sect.querySelectorAll('.hp-split__card[data-img]');
+      if (!cards.length) return;
 
       var obs = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
           if (!entry.isIntersecting) return;
           var idx = parseInt(entry.target.dataset.img, 10);
-          var ctaState = idx >= rImgs.length;
-          /* Left stage: clamp to last image so it never goes blank */
-          var stageIdx = Math.min(idx, stageImgs.length - 1);
-          stageImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === stageIdx); });
-          /* Right card: out-of-range idx deactivates all images → CTA reveal state */
-          rImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
-          if (rpin) rpin.classList.toggle('is-cta', ctaState);
+          stageImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
+          cards.forEach(function(card){ card.classList.toggle('is-active', card === entry.target); });
         });
-      }, { threshold: 0.5, rootMargin: '-20% 0px -20% 0px' });
+      }, { threshold: 0.1, rootMargin: '-35% 0px -35% 0px' });
 
-      chapters.forEach(function(ch){ obs.observe(ch); });
+      cards.forEach(function(card){ obs.observe(card); });
     });
   }
 

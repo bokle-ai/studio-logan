@@ -6,4 +6,3 @@ enabled = true
 
 [assets]
 directory = "."
-exclude = [".git/**", ".git"]
