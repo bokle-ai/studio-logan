@@ -419,7 +419,7 @@
     sections.forEach(function(sect){
       var stageImgs = sect.querySelectorAll('.hp-split__img');
       var rImgs     = sect.querySelectorAll('.hp-split__rimg');
-      var rcard     = sect.querySelector('.hp-split__rcard');
+      var rpin      = sect.querySelector('.hp-split__rpin');
       var chapters  = sect.querySelectorAll('.hp-split__ch[data-img]');
       if (!chapters.length) return;
 
@@ -433,7 +433,7 @@
           stageImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === stageIdx); });
           /* Right card: out-of-range idx deactivates all images → CTA reveal state */
           rImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
-          if (rcard) rcard.classList.toggle('is-cta', ctaState);
+          if (rpin) rpin.classList.toggle('is-cta', ctaState);
         });
       }, { threshold: 0.5, rootMargin: '-20% 0px -20% 0px' });
 

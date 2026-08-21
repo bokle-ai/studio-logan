@@ -189,18 +189,18 @@
 .hp-split__cta{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-display);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:.22rem;transition:color .3s,border-color .3s,letter-spacing .32s}
 .hp-split__cta:hover{color:var(--gold-2);border-color:var(--gold-2);letter-spacing:.3em}
 
-/* ── Right panel: sticky espresso frame with small centered image card ── */
-.hp-split__rpin{position:sticky;top:0;height:100svh;z-index:5;display:flex;align-items:center;justify-content:center;background:var(--espresso)}
-.hp-split__rcard{position:relative;width:78%;aspect-ratio:3/4;overflow:hidden;max-height:74svh}
-.hp-split__rimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:blur(7px);transform:scale(1.06);transition:opacity .92s ease,filter .92s ease,transform .92s ease}
-.hp-split__rimg.is-active{opacity:1;filter:blur(0);transform:scale(1)}
-.hp-split__rcard-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(1.5rem,3vw,2.4rem);background:linear-gradient(to top,rgba(36,26,18,.92) 0%,rgba(36,26,18,.52) 44%,transparent 68%);z-index:5}
-.hp-split__rcard-info .hp-split__eyebrow{margin-bottom:.3rem}
-.hp-split__rcard-info .hp-split__name{margin:.18rem 0 .22rem}
-.hp-split__rcard-info .hp-split__loc{margin-bottom:.9rem}
-/* CTA reveal state: all images faded, gradient covers full card */
-.hp-split__rcard.is-cta .hp-split__rcard-info{background:linear-gradient(to top,rgba(36,26,18,.97) 0%,rgba(36,26,18,.88) 55%,rgba(36,26,18,.65) 80%,rgba(36,26,18,.2) 100%);transition:background .92s ease}
-.hp-split__rcard.is-cta .hp-split__cta{color:var(--gold);border-color:var(--gold);letter-spacing:.3em}
+/* ── Right panel: sticky full-bleed images behind glass morphism card ── */
+.hp-split__rpin{position:sticky;top:0;height:100svh;z-index:5;overflow:hidden;background:var(--espresso)}
+.hp-split__rimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.1s ease}
+.hp-split__rimg.is-active{opacity:1}
+/* Glass morphism card — bottom-left of the right panel */
+.hp-split__glass-card{position:absolute;z-index:5;bottom:clamp(2rem,5svh,4rem);left:clamp(1.8rem,4vw,3.2rem);width:clamp(240px,42%,380px);padding:clamp(1.4rem,2.4vw,2.2rem);background:rgba(36,26,18,.38);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);border:1px solid rgba(236,224,203,.13);display:flex;flex-direction:column;gap:.28rem;transition:background .92s ease}
+.hp-split__glass-card .hp-split__eyebrow{margin-bottom:.1rem}
+.hp-split__glass-card .hp-split__name{margin:.1rem 0 .15rem}
+.hp-split__glass-card .hp-split__loc{margin-bottom:.8rem}
+/* CTA reveal state: images faded, glass card more opaque, CTA in gold */
+.hp-split__rpin.is-cta .hp-split__glass-card{background:rgba(36,26,18,.72);transition:background .92s ease}
+.hp-split__rpin.is-cta .hp-split__cta{color:var(--gold);border-color:var(--gold);letter-spacing:.3em}
 /* Invisible chapters: create scroll height + trigger image crossfades */
 .hp-split__chapters{position:relative;z-index:1}
 .hp-split__ch{height:80svh;pointer-events:none;background:var(--espresso)}
@@ -213,8 +213,8 @@
   .hp-split__head{height:70svh}
   .hp-split__head-text{padding:2rem 1.8rem}
   .hp-split__body{padding:2rem 1.5rem 6rem}
-  .hp-split__rpin{position:relative;height:auto;padding:4svh 0 6svh}
-  .hp-split__rcard{width:88%;max-height:58svh}
+  .hp-split__rpin{position:relative;height:65svh}
+  .hp-split__glass-card{width:calc(100% - 2.4rem);left:1.2rem;bottom:1.4rem;padding:1.2rem 1.4rem}
   .hp-split__chapters{margin-top:0}
   .hp-split__ch{height:50svh}
 }
