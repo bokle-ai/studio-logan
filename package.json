@@ -2,6 +2,6 @@
   "name": "studio-logan",
   "private": true,
   "scripts": {
-    "deploy": "wrangler deploy --no-interactive"
+    "deploy": "wrangler deploy --autoconfig=false"
   }
 }
