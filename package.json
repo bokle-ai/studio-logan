@@ -1,0 +1,7 @@
+{
+  "name": "studio-logan",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy --no-interactive"
+  }
+}
