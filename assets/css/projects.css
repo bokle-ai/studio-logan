@@ -198,6 +198,9 @@
 .hp-split__rcard-info .hp-split__eyebrow{margin-bottom:.3rem}
 .hp-split__rcard-info .hp-split__name{margin:.18rem 0 .22rem}
 .hp-split__rcard-info .hp-split__loc{margin-bottom:.9rem}
+/* CTA reveal state: all images faded, gradient covers full card */
+.hp-split__rcard.is-cta .hp-split__rcard-info{background:linear-gradient(to top,rgba(36,26,18,.97) 0%,rgba(36,26,18,.88) 55%,rgba(36,26,18,.65) 80%,rgba(36,26,18,.2) 100%);transition:background .92s ease}
+.hp-split__rcard.is-cta .hp-split__cta{color:var(--gold);border-color:var(--gold);letter-spacing:.3em}
 /* Invisible chapters: create scroll height + trigger image crossfades */
 .hp-split__chapters{position:relative;z-index:1}
 .hp-split__ch{height:80svh;pointer-events:none;background:var(--espresso)}

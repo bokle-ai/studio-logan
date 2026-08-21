@@ -417,17 +417,23 @@
     if (!sections.length) return;
 
     sections.forEach(function(sect){
-      var stageImgs = sect.querySelectorAll('.hp-split__img');   // left sticky panel
-      var rImgs     = sect.querySelectorAll('.hp-split__rimg');  // right card images
-      var chapters  = sect.querySelectorAll('.hp-split__ch[data-img]'); // scroll triggers
+      var stageImgs = sect.querySelectorAll('.hp-split__img');
+      var rImgs     = sect.querySelectorAll('.hp-split__rimg');
+      var rcard     = sect.querySelector('.hp-split__rcard');
+      var chapters  = sect.querySelectorAll('.hp-split__ch[data-img]');
       if (!chapters.length) return;
 
       var obs = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
           if (!entry.isIntersecting) return;
           var idx = parseInt(entry.target.dataset.img, 10);
-          stageImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
+          var ctaState = idx >= rImgs.length;
+          /* Left stage: clamp to last image so it never goes blank */
+          var stageIdx = Math.min(idx, stageImgs.length - 1);
+          stageImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === stageIdx); });
+          /* Right card: out-of-range idx deactivates all images → CTA reveal state */
           rImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
+          if (rcard) rcard.classList.toggle('is-cta', ctaState);
         });
       }, { threshold: 0.5, rootMargin: '-20% 0px -20% 0px' });
 
