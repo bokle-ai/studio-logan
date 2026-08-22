@@ -292,8 +292,8 @@ a{color:inherit;text-decoration:none}
 .xp{background:var(--cream-2);padding:clamp(5rem,10vw,10rem) var(--pad) clamp(4rem,8vw,7rem)}
 .xp__head{display:grid;grid-template-columns:1fr 1fr;gap:2rem 5rem;align-items:end;margin-bottom:clamp(3rem,6vw,5.5rem)}
 .xp__head-left .eyebrow{margin-bottom:.8rem;display:block}
-.xp__title{font-family:var(--f-script);font-size:clamp(4rem,8vw,7.5rem);color:var(--espresso);line-height:.88}
-.xp__head-right{font-family:var(--f-display);font-size:clamp(1rem,1.6vw,1.28rem);color:rgba(43,31,22,.62);line-height:1.78;max-width:46ch;align-self:end}
+.xp__title{font-family:var(--f-display);font-style:italic;font-weight:300;font-size:clamp(4rem,8vw,7.5rem);color:var(--espresso);line-height:.9}
+.xp__head-right{font-family:var(--f-display);font-size:clamp(1.05rem,1.5vw,1.22rem);color:rgba(43,31,22,.62);line-height:1.78;max-width:46ch;align-self:end}
 .xp__list{display:flex;flex-direction:column}
 .xp__item{display:grid;grid-template-columns:clamp(180px,26vw,300px) 1fr auto;align-items:center;gap:1.5rem clamp(2rem,4vw,4.5rem);border-top:1px solid var(--line);padding:clamp(1.6rem,2.8vw,2.4rem) 0;cursor:pointer;transition:opacity .3s}
 .xp__item:last-child{border-bottom:1px solid var(--line)}
@@ -302,7 +302,7 @@ a{color:inherit;text-decoration:none}
 .xp__num{font-family:var(--f-display);font-size:.7rem;letter-spacing:.22em;color:var(--gold);flex-shrink:0}
 .xp__name{font-family:var(--f-display);font-size:clamp(1.3rem,2.2vw,1.95rem);color:var(--espresso-3);font-weight:400;transition:color .35s;white-space:nowrap}
 .xp__item:hover .xp__name{color:var(--gold)}
-.xp__desc{font-family:var(--f-display);font-size:clamp(.88rem,1.25vw,1rem);color:rgba(43,31,22,.56);line-height:1.72}
+.xp__desc{font-family:var(--f-display);font-size:clamp(1rem,1.3vw,1.1rem);color:rgba(43,31,22,.58);line-height:1.72}
 .xp__link{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-2);text-decoration:none;white-space:nowrap;flex-shrink:0;transition:color .3s,letter-spacing .32s}
 .xp__link:hover{color:var(--espresso);letter-spacing:.3em}
 .xp__footer{display:flex;justify-content:flex-end;margin-top:clamp(2.5rem,5vw,3.5rem)}

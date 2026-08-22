@@ -175,7 +175,7 @@
 .hp-split__head:hover .hp-split__head-bg{transform:scale(1.04)}
 .hp-split__head-scrim{position:absolute;inset:0;background:linear-gradient(160deg,rgba(36,26,18,.52) 0%,rgba(36,26,18,.32) 100%);z-index:1}
 .hp-split__head-text{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1.1rem;text-align:center;padding:3rem clamp(2.4rem,4.5vw,5.5rem);background:rgba(255,255,255,.06);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(182,137,63,.22)}
-.hp-split__eyebrow{font-family:var(--f-display);font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(236,224,203,.62)}
+.hp-split__eyebrow{font-family:var(--f-display);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(236,224,203,.72)}
 .hp-split__name{font-family:var(--f-display);font-weight:500;font-size:clamp(2.2rem,4vw,4rem);line-height:1.05;color:var(--cream);margin:0;letter-spacing:.02em}
 .hp-split__loc{font-family:var(--f-display);font-size:clamp(.85rem,1.2vw,1rem);color:rgba(236,224,203,.52);letter-spacing:.07em}
 
