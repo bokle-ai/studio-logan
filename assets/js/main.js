@@ -10,7 +10,7 @@
   /* ---------- Lenis smooth scroll ---------- */
   let lenis = null;
   if (window.Lenis && !reduce) {
-    lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+    lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, smoothTouch: true });
     lenis.on('scroll', () => { if (hasGSAP) ScrollTrigger.update(); });
     function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
