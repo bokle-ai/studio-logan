@@ -128,10 +128,10 @@
 
   /* ---------- Scroll-build canvas scrubber ---------- */
   function initScrollBuild(){
-    const canvas  = document.getElementById('buildCanvas');
-    const hint    = document.getElementById('buildHint');
-    const tagline = document.getElementById('buildTagline');
-    const caps    = document.querySelectorAll('.sbuild__cap');
+    const canvas       = document.getElementById('buildCanvas');
+    const hint         = document.getElementById('buildHint');
+    const portraitText = document.getElementById('buildPortraitText');
+    const caps         = document.querySelectorAll('.sbuild__cap');
 
     if (!canvas) return;
 
@@ -146,15 +146,17 @@
     }
     sizeCanvas();
 
-    // Cover-fit draw: anchored to top-center
+    // Cover-fit draw: top-anchor; on portrait (mobile) focus on the bookshelf wall
     function drawImg(img) {
       if (!img || !img.complete || !img.naturalWidth) return;
       const cw = canvas.width, ch = canvas.height;
       const iw = img.naturalWidth, ih = img.naturalHeight;
       const scale = Math.max(cw / iw, ch / ih);
       const sw = iw * scale, sh = ih * scale;
-      const dx = (cw - sw) / 2;
-      const dy = 0; // top-anchor (empty room ceiling stays at top)
+      // Portrait screens: shift horizontally so the portrait painting (at ~51% of frame) stays centered
+      const focusX = ch > cw ? 0.51 : 0.5;
+      const dx = focusX * (cw - sw);
+      const dy = 0;
       ctx.drawImage(img, dx, dy, sw, sh);
     }
 
@@ -170,7 +172,6 @@
         imgs[i] = img;
         if (i === 1) {
           drawImg(img);
-          if (tagline) tagline.classList.add('is-visible'); // show from plain wall immediately
         }
         if (i === currentIdx) drawImg(img);
       };
@@ -181,11 +182,11 @@
     if (reduce || !hasGSAP) return;
 
     const STAGES = [
-      { from: 0,    to: 0.18 },
-      { from: 0.18, to: 0.36 },
-      { from: 0.36, to: 0.58 },
-      { from: 0.58, to: 0.78 },
-      { from: 0.78, to: 1.00 },
+      { from: 0,    to: 0.20 },
+      { from: 0.20, to: 0.40 },
+      { from: 0.40, to: 0.58 },
+      { from: 0.58, to: 0.75 },
+      { from: 0.75, to: 1.00 },
     ];
     let activeStage = 0;
     function updateCaptions(p) {
@@ -206,13 +207,24 @@
       end: 'bottom bottom',
       invalidateOnRefresh: true,
       onUpdate(self) {
-        const p   = self.progress;
-        const idx = Math.max(1, Math.min(TOTAL, Math.round(p * (TOTAL - 1)) + 1));
+        const p = self.progress;
+        // Non-linear mapping: first 75% of scroll → frames 1-75 (room build, no portrait)
+        // Last 25% of scroll → frames 76-150 (portrait dramatically appears)
+        let idx;
+        if (p <= 0.75) {
+          idx = Math.max(1, Math.round((p / 0.75) * 74) + 1);
+        } else {
+          idx = Math.max(76, Math.min(TOTAL, Math.round(((p - 0.75) / 0.25) * 74) + 76));
+        }
         if (idx !== currentIdx) {
           currentIdx = idx;
           drawImg(imgs[idx]);
         }
-        if (hint)    hint.classList.toggle('is-hidden', p > 0.05);
+        if (hint)         hint.classList.toggle('is-hidden', p > 0.05);
+        if (portraitText) {
+          portraitText.classList.toggle('is-visible', p > 0.65);
+          portraitText.classList.toggle('is-white',   p > 0.88);
+        }
         updateCaptions(p);
       },
       onLeave() {
@@ -472,6 +484,15 @@
       if (nav) nav.classList.remove('is-hidden');
       initScrollBuild();
       heroIntro();
+      // Subtle upward bounce after preloader — hints at scrollable content below
+      if (hasGSAP && !reduce) {
+        const sbuild = document.getElementById('scroll-build');
+        if (sbuild) {
+          gsap.timeline({ delay: 1.0 })
+            .to(sbuild, { y: -32, duration: 0.55, ease: 'power2.out' })
+            .to(sbuild, { y: 0, duration: 0.7, ease: 'power2.inOut' });
+        }
+      }
       initScroll();
       initHorizontal();
       initDrawer();
