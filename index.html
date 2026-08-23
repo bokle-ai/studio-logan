@@ -362,6 +362,7 @@
 <script src="assets/js/main.js"></script>
 <script>
 (function(){
+  var GAS = 'https://script.google.com/macros/s/AKfycbycrigUbksGCtIrLzL-iuGrKZI2-E3X0y7-R12-0ozd-UR-U95TdzSJMuog7ceWeRlI5g/exec';
   var form = document.getElementById('contactForm');
   if (!form) return;
   form.addEventListener('submit', function(e){
@@ -369,17 +370,19 @@
     var btn = form.querySelector('.cform__submit');
     btn.disabled = true;
     btn.textContent = 'Sending…';
-    var name = form.querySelector('[name="name"]').value.trim();
-    var email = form.querySelector('[name="email"]').value.trim();
-    var phone = form.querySelector('[name="phone"]').value.trim();
+    var name    = form.querySelector('[name="name"]').value.trim();
+    var email   = form.querySelector('[name="email"]').value.trim();
+    var phone   = form.querySelector('[name="phone"]').value.trim();
     var message = form.querySelector('[name="message"]').value.trim();
-    var body = 'Name: '+name+'\nEmail: '+email+'\nPhone: '+phone+'\n\n'+message;
-    var link = document.createElement('a');
-    link.href = 'mailto:loganathanyeswanth@gmail.com?subject=Project+Enquiry+from+'+encodeURIComponent(name)+'&body='+encodeURIComponent(body);
-    link.click();
+    fetch(GAS, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name:name, email:email, phone:phone, message:message })
+    }).catch(function(){});
     setTimeout(function(){
       form.innerHTML = '<p style="font-family:var(--f-display);font-size:1.3rem;color:var(--gold-2);text-align:center;padding:2rem 0">Thank you — we\'ll be in touch shortly.</p>';
-    }, 300);
+    }, 600);
   });
 })();
 </script>
