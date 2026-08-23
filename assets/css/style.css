@@ -81,9 +81,7 @@ a{color:inherit;text-decoration:none}
   z-index:2;
 }
 @media(max-width:767px){
-  #scroll-build-outer{height:100svh}
-  /* First caption visible on mobile since no scroll animation */
-  .sbuild__cap[data-stage="1"]{opacity:1;transform:translateY(0)}
+  #scroll-build-outer{height:300vh}
 }
 .sbuild__canvas{
   position:absolute;inset:0;width:100%;height:100%;
