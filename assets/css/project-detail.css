@@ -18,8 +18,8 @@
 .proj-hero__scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(36,26,18,.88) 0%,rgba(36,26,18,.28) 55%,transparent 80%)}
 .proj-hero__inner{position:absolute;bottom:0;left:0;right:0;padding:clamp(2.5rem,5vw,5rem) var(--pad)}
 .proj-hero__meta{font-family:var(--f-sans);font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem}
-.proj-hero__title{font-family:var(--f-script);font-size:clamp(4.5rem,13vw,13rem);color:var(--cream);line-height:.88;margin:0}
-.proj-hero__loc{font-family:var(--f-display);font-size:clamp(.95rem,1.4vw,1.1rem);color:rgba(236,224,203,.65);margin-top:1rem;display:block;letter-spacing:.06em;font-weight:300}
+.proj-hero__title{font-family:var(--f-display);font-size:clamp(4.5rem,13vw,13rem);color:var(--cream);line-height:.88;margin:0;font-weight:700}
+.proj-hero__loc{font-family:var(--f-sans);font-size:clamp(.95rem,1.4vw,1.1rem);color:rgba(236,224,203,.65);margin-top:1rem;display:block;letter-spacing:.06em;font-weight:400}
 
 /* Detail section */
 .proj-detail{
@@ -27,8 +27,8 @@
   padding:clamp(4rem,8vw,8rem) var(--pad);background:var(--cream);align-items:start
 }
 .proj-detail__body p{
-  font-family:var(--f-display);font-size:clamp(1.1rem,1.6vw,1.4rem);
-  line-height:1.72;color:var(--espresso);margin-bottom:1.6rem;font-weight:300
+  font-family:var(--f-display);font-size:clamp(1rem,1.4vw,1.15rem);
+  line-height:1.78;color:var(--espresso);margin-bottom:1.6rem;font-weight:300
 }
 .proj-detail__body p:last-child{margin-bottom:0}
 .proj-detail__meta dl{display:grid;gap:0}
@@ -67,8 +67,8 @@
   text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1.4rem
 }
 .proj-cta__title{
-  font-family:var(--f-script);font-size:clamp(4rem,10vw,9rem);
-  color:var(--cream);line-height:.88;margin:0 0 2.4rem
+  font-family:var(--f-display);font-style:italic;font-weight:300;font-size:clamp(2.5rem,5vw,5rem);
+  color:var(--cream);line-height:.9;margin:0 0 2.4rem
 }
 .proj-cta__btn{
   display:inline-flex;align-items:center;gap:.5rem;

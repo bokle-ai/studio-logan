@@ -411,26 +411,32 @@
     });
   }
 
-  /* ---------- HP split: portrait card stack — active card drives left stage ---------- */
+  /* ---------- HP Split: both sides sticky, images crossfade on scroll triggers ---------- */
   function initHPSplit(){
     var sections = document.querySelectorAll('.hp-split');
     if (!sections.length) return;
+    var mobile = window.matchMedia('(max-width:767px)').matches;
 
     sections.forEach(function(sect){
-      var stageImgs = sect.querySelectorAll('.hp-split__img');
-      var cards = sect.querySelectorAll('.hp-split__card[data-img]');
-      if (!cards.length) return;
+      var stageImgs = sect.querySelectorAll('.hp-split__stage .hp-split__img');
+      var cardImgs  = sect.querySelectorAll('.hp-split__card-img');
+      var triggers  = sect.querySelectorAll('.hp-split__trigger[data-img]');
+
+      function setActive(idx){
+        stageImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
+        cardImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
+      }
+
+      setActive(0);
+      if (mobile || !triggers.length) return;
 
       var obs = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          if (!entry.isIntersecting) return;
-          var idx = parseInt(entry.target.dataset.img, 10);
-          stageImgs.forEach(function(img, i){ img.classList.toggle('is-active', i === idx); });
-          cards.forEach(function(card){ card.classList.toggle('is-active', card === entry.target); });
+          if (entry.isIntersecting) setActive(parseInt(entry.target.dataset.img || '0'));
         });
-      }, { threshold: 0.1, rootMargin: '-35% 0px -35% 0px' });
+      }, { rootMargin: '-40% 0px -40% 0px' });
 
-      cards.forEach(function(card){ obs.observe(card); });
+      triggers.forEach(function(t){ obs.observe(t); });
     });
   }
 
