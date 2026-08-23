@@ -362,7 +362,7 @@
 <script src="assets/js/main.js"></script>
 <script>
 (function(){
-  var GAS = 'https://script.google.com/macros/s/AKfycbyDKMWm6GPCTQ6mYLVeHUwDhupHSSgoGPusZOhljSEVU6JMkFAfrHRHP18n4TaMcfDEKQ/exec';
+  var GAS = 'https://script.google.com/macros/s/AKfycbzGY35dgPLpuhPS5u5DGDRn3bmDTWHC6o3UD1Z-WG6UApzkVtzwu_kQrsyMGpmp0cnXLg/exec';
   var form = document.getElementById('contactForm');
   if (!form) return;
   form.addEventListener('submit', function(e){
@@ -377,8 +377,8 @@
     fetch(GAS, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name:name, email:email, phone:phone, message:message })
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&phone='+encodeURIComponent(phone)+'&message='+encodeURIComponent(message)
     }).catch(function(){});
     setTimeout(function(){
       form.innerHTML = '<p style="font-family:var(--f-display);font-size:1.3rem;color:var(--gold-2);text-align:center;padding:2rem 0">Thank you — we\'ll be in touch shortly.</p>';
