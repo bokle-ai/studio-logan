@@ -311,7 +311,7 @@
     <div class="contact__left">
       <span class="eyebrow reveal-up">Let's collaborate</span>
       <h2 class="contact__title script reveal-up">contact</h2>
-      <p class="contact__line reveal-up">Tell us about the space you're building.</p>
+      <p class="contact__line reveal-up">Tell us about the space you're building. We respond within 24 hours.</p>
       <div class="contact__links">
         <a href="mailto:loganathanyeswanth@gmail.com" class="contact__link reveal-up" data-cursor>
           <span class="contact__link-label">Email</span>
@@ -322,25 +322,30 @@
           +91 73050 82466
         </a>
       </div>
+      <p class="contact__meta reveal-up">New York &nbsp;·&nbsp; Mumbai &nbsp;·&nbsp; Dubai</p>
     </div>
     <div class="contact__rule"></div>
     <div class="contact__right">
-      <form class="contact__form reveal-up" id="contactForm" novalidate>
+      <form class="contact__form" id="contactForm" novalidate>
         <div class="cform__row">
           <div class="cform__field">
-            <input type="text" name="name" placeholder="Name" autocomplete="name" aria-label="Name">
+            <input type="text" name="name" id="cf-name" placeholder=" " autocomplete="name" aria-label="Name">
+            <label for="cf-name">Your name</label>
           </div>
           <div class="cform__field">
-            <input type="tel" name="phone" placeholder="Phone" autocomplete="tel" aria-label="Phone">
+            <input type="tel" name="phone" id="cf-phone" placeholder=" " autocomplete="tel" aria-label="Phone">
+            <label for="cf-phone">Phone number</label>
           </div>
         </div>
         <div class="cform__field">
-          <input type="email" name="email" placeholder="Email" autocomplete="email" aria-label="Email">
+          <input type="email" name="email" id="cf-email" placeholder=" " autocomplete="email" aria-label="Email">
+          <label for="cf-email">Email address</label>
         </div>
         <div class="cform__field">
-          <textarea name="message" rows="5" placeholder="Tell us about your project…" aria-label="Message"></textarea>
+          <textarea name="message" id="cf-message" rows="4" placeholder=" " aria-label="Message"></textarea>
+          <label for="cf-message">Tell us about your project</label>
         </div>
-        <button type="submit" class="cform__submit">Send enquiry &nbsp;→</button>
+        <button type="submit" class="cform__submit"><span>Send enquiry &nbsp;→</span></button>
       </form>
     </div>
     </div>
@@ -365,11 +370,25 @@
   var GAS = 'https://script.google.com/macros/s/AKfycbwdc0-cBKSW0SBOi3i6mtgPFVb8rzY0cSjQy9mfMAfz061gM0l1w7mpHRstNoAS5rv1GA/exec';
   var form = document.getElementById('contactForm');
   if (!form) return;
+
+  /* Staggered field entrance */
+  var items = [].slice.call(form.children);
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.set(items, { opacity:0, y:28 });
+    ScrollTrigger.create({
+      trigger: form,
+      start: 'top 84%',
+      onEnter: function(){
+        gsap.to(items, { opacity:1, y:0, duration:.75, ease:'power3.out', stagger:.12 });
+      }
+    });
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var btn = form.querySelector('.cform__submit');
     btn.disabled = true;
-    btn.textContent = 'Sending…';
+    btn.querySelector('span').textContent = 'Sending…';
     var name    = form.querySelector('[name="name"]').value.trim();
     var email   = form.querySelector('[name="email"]').value.trim();
     var phone   = form.querySelector('[name="phone"]').value.trim();
@@ -381,8 +400,13 @@
       body: 'name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&phone='+encodeURIComponent(phone)+'&message='+encodeURIComponent(message)
     }).catch(function(){});
     setTimeout(function(){
-      form.innerHTML = '<p style="font-family:var(--f-display);font-size:1.3rem;color:var(--gold-2);text-align:center;padding:2rem 0">Thank you — we\'ll be in touch shortly.</p>';
+      if (window.gsap) gsap.to(form, { opacity:0, y:-12, duration:.35, ease:'power2.in', onComplete: showSuccess });
+      else showSuccess();
     }, 600);
+    function showSuccess(){
+      form.innerHTML = '<div class="cform__success"><div class="cform__success-icon">✓</div><p>Thank you — we\'ll be in touch shortly.</p></div>';
+      if (window.gsap) gsap.from('.cform__success', { opacity:0, y:20, duration:.65, ease:'power3.out' });
+    }
   });
 })();
 </script>

@@ -436,29 +436,68 @@ a{color:inherit;text-decoration:none}
 /* ============ CONTACT FORM ============ */
 .contact__form{display:flex;flex-direction:column;gap:0}
 .cform__row{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(1.5rem,3vw,3rem)}
-.cform__field{position:relative;margin-bottom:2.4rem}
+.cform__field{position:relative;padding-top:1.5rem;margin-bottom:2.2rem}
 .cform__field input,.cform__field textarea{
-  background:transparent;border:none;border-bottom:1px solid rgba(236,224,203,.16);
-  padding:.9rem 0 .7rem;
+  background:transparent;border:none;border-bottom:1px solid rgba(236,224,203,.13);
+  padding:.5rem 0 .65rem;
   font-family:var(--f-display);font-style:italic;font-size:clamp(1rem,1.4vw,1.12rem);
   color:var(--cream-2);width:100%;outline:none;resize:none;
+  transition:border-color .35s var(--ease);
 }
-.cform__field input::placeholder,.cform__field textarea::placeholder{color:rgba(236,224,203,.26);font-style:italic}
-.cform__field::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .5s var(--ease);pointer-events:none}
+.cform__field input::placeholder,.cform__field textarea::placeholder{color:transparent}
+.cform__field label{
+  position:absolute;left:0;top:1.5rem;
+  font-family:var(--f-display);font-style:italic;
+  font-size:clamp(1rem,1.4vw,1.12rem);
+  color:rgba(236,224,203,.28);
+  transition:top .26s var(--ease),font-size .26s var(--ease),color .26s,letter-spacing .26s,font-style .26s,font-family .26s;
+  pointer-events:none;
+}
+.cform__field input:not(:placeholder-shown) ~ label,
+.cform__field textarea:not(:placeholder-shown) ~ label,
+.cform__field input:focus ~ label,
+.cform__field textarea:focus ~ label{
+  top:.05rem;font-size:.58rem;font-style:normal;
+  font-family:var(--f-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+}
+.cform__field::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .45s var(--ease);pointer-events:none}
 .cform__field:focus-within::after{width:100%}
+.cform__field:focus-within input,.cform__field:focus-within textarea{border-color:transparent}
 .cform__submit{
+  position:relative;overflow:hidden;
   align-self:flex-start;background:transparent;
-  border:1px solid var(--gold);color:var(--gold);
-  padding:.82rem 2.6rem;
-  font-family:var(--f-sans);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
-  cursor:pointer;transition:background .4s var(--ease),color .4s,letter-spacing .3s;
-  margin-top:.4rem;
+  border:1px solid rgba(182,137,63,.45);color:var(--cream-2);
+  padding:.9rem 3rem;
+  font-family:var(--f-sans);font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;
+  cursor:pointer;transition:color .45s var(--ease),border-color .4s;
+  margin-top:.8rem;
 }
-.cform__submit:hover{background:var(--gold);color:var(--espresso);letter-spacing:.32em}
+.cform__submit::before{
+  content:'';position:absolute;inset:0;
+  background:var(--gold);
+  transform:translateX(-101%);
+  transition:transform .5s var(--ease);
+  z-index:0;
+}
+.cform__submit:hover::before{transform:translateX(0)}
+.cform__submit:hover{color:var(--espresso);border-color:var(--gold)}
+.cform__submit>span{position:relative;z-index:1;display:inline-block}
+.cform__success{text-align:center;padding:3rem 1.5rem}
+.cform__success-icon{
+  width:52px;height:52px;border-radius:50%;
+  border:1px solid var(--gold);color:var(--gold);
+  font-size:1.3rem;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.4rem;
+  animation:successPop .55s var(--ease) forwards;
+}
+.cform__success p{font-family:var(--f-display);font-size:1.3rem;color:var(--gold-2);line-height:1.5}
+@keyframes successPop{0%{transform:scale(0);opacity:0}65%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 
 /* ============ CONTACT ============ */
 .contact{position:relative;background:var(--espresso);color:var(--cream);padding:clamp(6rem,14vw,13rem) var(--pad) 0;overflow:hidden}
-.contact__lion{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:min(72vw,620px);opacity:.06;pointer-events:none;filter:brightness(0) invert(1)}
+.contact::before{content:'';position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:80vw;height:80vw;max-width:960px;background:radial-gradient(ellipse at center,rgba(182,137,63,.07) 0%,transparent 65%);pointer-events:none;z-index:0}
+.contact__lion{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:min(72vw,620px);opacity:.05;pointer-events:none;filter:brightness(0) invert(1)}
+.contact__meta{font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(236,224,203,.22);margin-top:clamp(2.5rem,5vw,4.5rem);padding-top:1.4rem;border-top:1px solid rgba(236,224,203,.07)}
 .contact__inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1px 1fr;gap:0 clamp(4rem,7vw,8rem);align-items:start}
 .contact__rule{background:rgba(182,137,63,.2);align-self:stretch;margin:1rem 0}
 .contact .eyebrow{margin-bottom:1rem;display:block}
