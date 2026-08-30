@@ -4,187 +4,318 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Services — Studio Logan Architecture &amp; Interiors</title>
-<meta name="description" content="Studio Logan's full range of services — from interior design and architecture to hospitality, residential, and branded environments.">
+<meta name="description" content="From inception to opening and beyond — Studio Logan offers 360° creative services across architecture, interiors, hospitality, and beyond.">
 <link rel="icon" href="assets/img/lion-double.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Gloock&family=Pinyon+Script&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=22">
-<link rel="stylesheet" href="assets/css/services.css?v=13">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:   #f7f5f2;
+  --ink:  #1a1712;
+  --mid:  #8a7f72;
+  --gold: #b09a7a;
+  --f-display: "Tenor Sans", sans-serif;
+  --f-sans:    "Poppins", system-ui, sans-serif;
+}
+html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); -webkit-font-smoothing: antialiased; }
+
+/* ── TOP NAV ── */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0; height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(176,154,122,.2);
+  z-index: 100;
+}
+.top-nav__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
+.top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
+.top-nav__name { font-family: var(--f-display); font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; }
+.top-nav__links { display: flex; align-items: center; gap: 2.4rem; }
+.top-nav__links a { font-size: .68rem; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .25s; }
+.top-nav__links a:hover { color: var(--ink); }
+.top-nav__links a.nav-active { color: var(--ink); font-weight: 500; }
+.top-nav__links a.nav-contact { border: 1px solid var(--gold); color: var(--ink); padding: .45rem 1.3rem; }
+.top-nav__links a.nav-contact:hover { color: var(--gold); }
+
+/* ── PAGE WRAPPER ── */
+.sv-page { margin-top: 68px; }
+
+/* ── HEADER BAND (like projects page) ── */
+.sv-header {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem 2.5rem;
+  border-bottom: 1px solid rgba(176,154,122,.2);
+  flex-shrink: 0;
+}
+.sv-header__label {
+  font-family: var(--f-sans);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: .25rem;
+  white-space: nowrap;
+}
+.sv-header__rule {
+  height: 1px;
+  background: rgba(176,154,122,.25);
+  flex: 0 0 2rem;
+}
+.sv-header__quote {
+  font-family: var(--f-display);
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+.sv-header__quote strong {
+  font-family: var(--f-display);
+  font-weight: 400;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: .05em;
+}
+
+/* ── EXPERTISE SECTION ── */
+.sv-expertise {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  min-height: 65vh;
+  border-bottom: 1px solid rgba(176,154,122,.15);
+}
+.sv-expertise__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 3.5rem;
+  border-right: 1px solid rgba(176,154,122,.15);
+}
+.sv-expertise__title {
+  font-family: var(--f-display);
+  font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 2.5rem;
+}
+.sv-expertise__title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.sv-expertise__areas {
+  list-style: none;
+}
+.sv-expertise__areas li {
+  font-family: var(--f-display);
+  font-size: clamp(.95rem, 1.5vw, 1.3rem);
+  color: var(--mid);
+  padding: .9rem 0;
+  border-bottom: 1px solid rgba(176,154,122,.2);
+  transition: color .25s;
+  cursor: default;
+}
+.sv-expertise__areas li:first-child { border-top: 1px solid rgba(176,154,122,.2); }
+.sv-expertise__areas li:hover { color: var(--ink); }
+.sv-expertise__media {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+}
+.sv-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.sv-slide.is-active { opacity: 1; }
+
+/* ── SERVICES LIST ── */
+.sv-list {
+  padding: 4rem 2.5rem;
+  border-bottom: 1px solid rgba(176,154,122,.15);
+}
+.sv-list__heading {
+  font-family: var(--f-sans);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: .25rem;
+  display: inline-block;
+  margin-bottom: 2.5rem;
+}
+.sv-list__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 4rem;
+}
+.sv-list__grid ul { list-style: none; }
+.sv-list__grid li {
+  font-family: var(--f-display);
+  font-size: clamp(.9rem, 1.3vw, 1.15rem);
+  color: var(--mid);
+  padding: .85rem 0;
+  border-bottom: 1px solid rgba(176,154,122,.12);
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .5s ease, transform .5s ease, color .25s;
+}
+.sv-list__grid li.visible { opacity: 1; transform: translateY(0); }
+.sv-list__grid li:hover { color: var(--ink); }
+.sv-list__grid li::before {
+  content: '·';
+  color: var(--gold);
+  font-size: 1.2em;
+  flex-shrink: 0;
+}
+
+/* ── FOOTER ── */
+.sv-footer {
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(176,154,122,.2);
+}
+.sv-footer__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
+.sv-footer__mark { width: 24px; height: 24px; object-fit: contain; opacity: .6; }
+.sv-footer__name { font-family: var(--f-display); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); }
+.sv-footer__copy { font-size: .62rem; color: var(--mid); letter-spacing: .06em; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .sv-header { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.5rem; }
+  .sv-expertise { grid-template-columns: 1fr; }
+  .sv-expertise__content { padding: 2.5rem 1.5rem; border-right: none; border-bottom: 1px solid rgba(176,154,122,.15); }
+  .sv-expertise__media { height: 60vw; }
+  .sv-list { padding: 2.5rem 1.5rem; }
+  .sv-list__grid { grid-template-columns: 1fr; gap: 0; }
+  .top-nav__links { gap: 1.2rem; }
+  .top-nav__links a { font-size: .6rem; }
+}
+</style>
 </head>
 <body>
 
-<!-- ===== CUSTOM CURSOR ===== -->
-<div class="cursor" id="cursor"><span class="cursor__dot"></span><span class="cursor__label" id="cursorLabel"></span></div>
-
-<!-- ===== NAV ===== -->
-<header class="nav is-solid" id="nav">
-  <a href="index.html" class="nav__brand" data-cursor>
-    <img src="assets/img/lion-double.png" alt="Studio Logan" class="nav__mark">
-    <span class="nav__name">Studio&nbsp;Logan</span>
+<!-- Top Nav -->
+<nav class="top-nav">
+  <a href="index.html" class="top-nav__brand">
+    <img src="assets/img/lion-double.png" alt="Studio Logan" class="top-nav__mark">
+    <span class="top-nav__name">Studio Logan</span>
   </a>
-  <nav class="nav__menu">
-    <div class="nav__item has-dropdown">
-      <a href="studio.html" data-cursor>Studio</a>
-      <div class="nav__dropdown">
-        <a href="studio.html#brand-philosophy" data-cursor>Brand Philosophy</a>
-        <a href="studio.html#about-founder" data-cursor>About the Founder</a>
-        <a href="studio.html#awards" data-cursor>Awards &amp; Associations</a>
-      </div>
-    </div>
-    <a href="projects.html" data-cursor>Projects</a>
-    <a href="services.html" data-cursor>Our Services</a>
-    <a href="index.html#contact" class="nav__cta" data-cursor>Contact</a>
-  </nav>
-  <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span></button>
-</header>
+  <div class="top-nav__links">
+    <a href="studio.html">Studio</a>
+    <a href="projects.html">Projects</a>
+    <a href="awards.html">Awards</a>
+    <a href="services.html" class="nav-active">Our Services</a>
+    <a href="index.html#contact" class="nav-contact">Contact</a>
+  </div>
+</nav>
 
-<!-- ===== MOBILE MENU ===== -->
-<div class="menu" id="menu">
-  <a href="studio.html">Studio</a>
-  <a href="projects.html">Projects</a>
-  <a href="services.html">Our Services</a>
-  <a href="index.html#contact">Contact</a>
-</div>
+<div class="sv-page">
 
-<div class="scroll-progress" id="scrollProgress"></div>
+  <!-- Header quote -->
+  <div class="sv-header">
+    <span class="sv-header__label">Our Services</span>
+    <div class="sv-header__rule"></div>
+    <p class="sv-header__quote">From <strong>inception to opening &amp; beyond</strong> we offer a 360° creative services</p>
+  </div>
 
-<main id="top" data-scroll-container>
-
-  <!-- ===== SERVICES HERO ===== -->
-  <section class="sv-hero">
-    <div class="sv-hero__bg">
-      <img src="assets/img/piertop-lounge.jpg" alt="" class="sv-hero__img">
-    </div>
-    <div class="sv-hero__scrim"></div>
-    <div class="sv-hero__inner">
-      <img src="assets/img/lion-double.png" alt="" class="sv-hero__crest">
-      <h1 class="sv-hero__title">
-        <span class="line"><span>Our</span></span>
-        <span class="line"><span>Services</span></span>
-      </h1>
-      <p class="sv-hero__sub reveal-up">From inception to opening and beyond, our services fully surround every stage of a project. Consistency, quality, and a singular creative intelligence at every scale.</p>
-    </div>
-    <div class="sv-hero__scroll-hint">
-      <span>Scroll</span><i></i>
-    </div>
-  </section>
-
-  <!-- ===== EXPERTISE OVERVIEW ===== -->
+  <!-- Expertise — text left, images right -->
   <section class="sv-expertise">
-    <div class="sv-expertise__media">
-      <img src="assets/img/canter-1.jpg" class="sv-slide is-active" alt="Canter Hotel">
-      <img src="assets/img/hardrock-1.jpg" class="sv-slide" alt="Hard Rock Athens">
-      <img src="assets/img/manhattan-1.jpg" class="sv-slide" alt="432 Park Avenue">
-      <img src="assets/img/hardrock-2.jpg" class="sv-slide" alt="Hard Rock interior">
-      <img src="assets/img/klein-1.jpg" class="sv-slide" alt="Klein Tools">
-    </div>
     <div class="sv-expertise__content">
-      <h2 class="sv-expertise__title reveal-up">Our Area of<br><em class="script">Expertise</em></h2>
-      <ul class="sv-expertise__areas reveal-up">
+      <h2 class="sv-expertise__title">Our Area of<br><em>Expertise</em></h2>
+      <ul class="sv-expertise__areas">
         <li>Hospitality</li>
         <li>Residential</li>
         <li>Commercial &amp; Workplace</li>
         <li>Branded Environments</li>
       </ul>
     </div>
-  </section>
-
-  <!-- ===== SERVICES LIST ===== -->
-  <section class="sv-list">
-    <div class="sv-list__inner">
-      <div class="sv-list__col">
-        <h2 class="sv-list__heading reveal-up">Our Services</h2>
-        <ul>
-          <li>Architecture Design</li>
-          <li>Interior Design</li>
-          <li>Custom Furniture and Lighting Design</li>
-          <li>Consulting and Strategic Collaborations</li>
-          <li>Exclusive Commissions</li>
-          <li>Concept Development</li>
-          <li>Creative Direction</li>
-          <li>Brand Strategy</li>
-          <li>Portfolio and Brand-Building</li>
-          <li>Art Direction</li>
-          <li>Styling</li>
-          <li>Architecture Photography</li>
-          <li>Legal / Intellectual Property Advisory</li>
-        </ul>
-      </div>
-      <div class="sv-list__col">
-        <h2 class="sv-list__heading reveal-up">Our Hospitality<br>Specialty Services</h2>
-        <ul>
-          <li>Branding</li>
-          <li>Menu Curation</li>
-          <li>Kitchen Equipment Consultation</li>
-          <li>Image Architect &mdash; Fashion Design</li>
-        </ul>
-        <div class="sv-list__img reveal-img">
-          <img loading="lazy" src="assets/img/hardrock-lobby.jpg" alt="Hospitality design">
-        </div>
-      </div>
+    <div class="sv-expertise__media">
+      <img src="assets/img/canter-1.jpg"         class="sv-slide is-active" alt="Canter Hotel">
+      <img src="assets/img/hardrock-athens-wide.jpg" class="sv-slide"       alt="Hard Rock Athens">
+      <img src="assets/img/manhattan-1.jpg"       class="sv-slide"          alt="432 Park Avenue">
+      <img src="assets/img/piertop-hires.jpg"     class="sv-slide"          alt="Pier Top">
     </div>
   </section>
 
-  <!-- ===== ADDITIONAL SERVICES ===== -->
-  <section class="sv-additional">
-    <div class="sv-additional__inner">
-      <div class="sv-additional__text">
-
-        <h2 class="sv-additional__title reveal-up">Additional<br>Services</h2>
-        <p class="sv-additional__body reveal-up">Beyond our core disciplines, we offer a range of supporting services that complete the project cycle, from early feasibility through post-opening refinement.</p>
-      </div>
-      <ul class="sv-additional__list reveal-up">
-        <li><i>·</i><span>Feasibility &amp; site visioning</span></li>
-        <li><i>·</i><span>OS&amp;E direction &amp; procurement</span></li>
-        <li><i>·</i><span>Custom furniture &amp; lighting design</span></li>
-        <li><i>·</i><span>Art feature design &amp; curation</span></li>
-        <li><i>·</i><span>Budget alignment &amp; value engineering</span></li>
-        <li><i>·</i><span>Purchasing services</span></li>
-        <li><i>·</i><span>Final site styling &amp; photography prep</span></li>
-        <li><i>·</i><span>Post-occupancy review</span></li>
+  <!-- Services list — 12 items, 2 columns -->
+  <section class="sv-list">
+    <span class="sv-list__heading">What We Do</span>
+    <div class="sv-list__grid">
+      <ul>
+        <li>Architecture Design</li>
+        <li>Interior Design</li>
+        <li>Custom Furniture and Lighting Design</li>
+        <li>Consulting and Strategic Collaborations</li>
+        <li>Exclusive Commissions</li>
+        <li>Concept Development</li>
+      </ul>
+      <ul>
+        <li>Creative Direction</li>
+        <li>Brand Strategy</li>
+        <li>Portfolio and Brand-Building</li>
+        <li>Art Direction</li>
+        <li>Styling</li>
+        <li>Legal / Intellectual Property Advisory</li>
       </ul>
     </div>
   </section>
 
-  <!-- ===== CRAFT STATEMENT ===== -->
-  <section class="sv-craft">
-    <div class="sv-craft__bg">
-      <img loading="lazy" src="assets/img/piertop-bed.jpg" alt="">
-    </div>
-    <div class="sv-craft__scrim"></div>
-    <div class="sv-craft__inner">
-      <blockquote class="sv-craft__quote reveal-up">"We don't design for aesthetics. We design for impact. Every narrative we build must change how people experience a space and how they remember it."</blockquote>
-      <p class="sv-craft__attr reveal-up">— Loganathan Yeswanth, Founder</p>
-    </div>
-  </section>
-
-  <!-- ===== CTA ===== -->
-  <section class="sv-cta">
-
-    <h2 class="sv-cta__title script reveal-up">Start a project</h2>
-    <p class="sv-cta__sub reveal-up">Tell us about the space you're building. We'll bring the depth, rigour, and heritage it deserves.</p>
-    <a href="index.html#contact" class="sv-cta__btn reveal-up" data-cursor>Get in touch &nbsp;→</a>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer sv-footer">
-    <div class="footer__brand">
-      <img src="assets/img/lion-double.png" alt="" class="footer__mark">
-      <span class="script">Studio&nbsp;Logan</span>
-    </div>
-    <p class="footer__copy">© <span id="year"></span> Studio Logan · Crafted where global sophistication meets tradition.</p>
+  <!-- Footer -->
+  <footer class="sv-footer">
+    <a href="index.html" class="sv-footer__brand">
+      <img src="assets/img/lion-double.png" alt="" class="sv-footer__mark">
+      <span class="sv-footer__name">Studio Logan</span>
+    </a>
+    <span class="sv-footer__copy">© <span id="yr"></span> Studio Logan</span>
   </footer>
 
-</main>
+</div>
 
 <script>
-var slides=document.querySelectorAll('.sv-slide'),cur=0;
-if(slides.length){setInterval(function(){slides[cur].classList.remove('is-active');cur=(cur+1)%slides.length;slides[cur].classList.add('is-active');},2000);}
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Image slideshow
+(function(){
+  var slides = document.querySelectorAll('.sv-slide'), cur = 0;
+  if (slides.length) {
+    setInterval(function(){
+      slides[cur].classList.remove('is-active');
+      cur = (cur + 1) % slides.length;
+      slides[cur].classList.add('is-active');
+    }, 3000);
+  }
+})();
+
+// Staggered services list animation
+(function(){
+  var items = document.querySelectorAll('.sv-list__grid li');
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var delay = Array.prototype.indexOf.call(items, e.target) * 60;
+        setTimeout(function(){ e.target.classList.add('visible'); }, delay);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  items.forEach(function(item){ observer.observe(item); });
+})();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="assets/js/main.js"></script>
 </body>
 </html>
