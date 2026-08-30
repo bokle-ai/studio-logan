@@ -4,142 +4,261 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Projects — Studio Logan Architecture &amp; Interiors</title>
-<meta name="description" content="Studio Logan's portfolio — hospitality, residential, and commercial environments across three continents.">
+<meta name="description" content="Studio Logan portfolio — hospitality and residential environments across three continents.">
 <link rel="icon" href="assets/img/lion-double.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Gloock&family=Pinyon+Script&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=22">
-<link rel="stylesheet" href="assets/css/projects.css?v=35">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:   #f7f5f2;
+  --ink:  #1a1712;
+  --mid:  #8a7f72;
+  --gold: #b09a7a;
+  --f-display: "Tenor Sans", sans-serif;
+  --f-sans:    "Poppins", system-ui, sans-serif;
+}
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOP NAV ── */
+.top-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(176,154,122,.2);
+  z-index: 100;
+}
+.top-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
+.top-nav__name {
+  font-family: var(--f-display);
+  font-size: .82rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.top-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+}
+.top-nav__links a {
+  font-size: .68rem;
+  font-weight: 400;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--mid);
+  transition: color .25s;
+}
+.top-nav__links a:hover { color: var(--ink); }
+.top-nav__links a.nav-active { color: var(--ink); font-weight: 500; }
+.top-nav__links a.nav-contact {
+  border: 1px solid var(--gold);
+  color: var(--ink);
+  padding: .45rem 1.3rem;
+}
+.top-nav__links a.nav-contact:hover { color: var(--gold); }
+
+/* ── PAGE LAYOUT ── */
+.projects-page {
+  height: calc(100vh - 68px);
+  margin-top: 68px;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2.5rem 1.5rem;
+  gap: 1.5rem;
+}
+
+/* ── HEADER ── */
+.projects-header {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  flex-shrink: 0;
+}
+.projects-label {
+  font-family: var(--f-sans);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: .25rem;
+  white-space: nowrap;
+}
+.projects-rule {
+  height: 1px;
+  background: rgba(176,154,122,.25);
+  flex: 0 0 2rem;
+}
+.projects-quote {
+  font-family: var(--f-display);
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+.projects-quote em { font-style: normal; color: var(--gold); }
+
+/* ── 2×2 GRID ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+  flex: 1;
+  align-content: start;
+  overflow-y: auto;
+}
+
+.project-item {
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+}
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  background: #111;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+.project-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .9;
+  transition: opacity .6s ease, transform .7s ease;
+}
+.project-card:hover .project-card__img {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.project-card__meta {
+  flex-shrink: 0;
+  padding: 0 .1rem;
+}
+.project-card__name {
+  font-family: var(--f-display);
+  font-size: clamp(.9rem, 1.4vw, 1.2rem);
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: .2rem;
+}
+.project-card__place {
+  font-family: var(--f-sans);
+  font-size: .62rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  html, body { overflow: auto; }
+  .projects-page { height: auto; padding: 1.5rem; gap: 1.2rem; }
+  .projects-grid { grid-template-columns: 1fr; grid-template-rows: none; gap: 1.5rem; }
+  .project-card { height: 56vw; }
+  .projects-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .top-nav__links { gap: 1.2rem; }
+  .top-nav__links a { font-size: .6rem; }
+}
+</style>
 </head>
 <body>
 
-<!-- ===== CUSTOM CURSOR ===== -->
-<div class="cursor" id="cursor"><span class="cursor__dot"></span><span class="cursor__label" id="cursorLabel"></span></div>
-
-<!-- ===== NAV ===== -->
-<header class="nav is-solid" id="nav">
-  <a href="index.html" class="nav__brand" data-cursor>
-    <img src="assets/img/lion-double.png" alt="Studio Logan" class="nav__mark">
-    <span class="nav__name">Studio&nbsp;Logan</span>
+<!-- Top Nav -->
+<nav class="top-nav">
+  <a href="index.html" class="top-nav__brand">
+    <img src="assets/img/lion-double.png" alt="Studio Logan" class="top-nav__mark">
+    <span class="top-nav__name">Studio Logan</span>
   </a>
-  <nav class="nav__menu">
-    <div class="nav__item has-dropdown">
-      <a href="studio.html" data-cursor>Studio</a>
-      <div class="nav__dropdown">
-        <a href="studio.html#brand-philosophy" data-cursor>Brand Philosophy</a>
-        <a href="studio.html#about-founder" data-cursor>About the Founder</a>
-        <a href="studio.html#awards" data-cursor>Awards &amp; Associations</a>
+  <div class="top-nav__links">
+    <a href="studio.html">Studio</a>
+    <a href="projects.html" class="nav-active">Projects</a>
+    <a href="awards.html">Awards</a>
+    <a href="services.html">Our Services</a>
+    <a href="index.html#contact" class="nav-contact">Contact</a>
+  </div>
+</nav>
+
+<!-- Page -->
+<div class="projects-page">
+
+  <div class="projects-header">
+    <span class="projects-label">Projects</span>
+    <div class="projects-rule"></div>
+    <p class="projects-quote">We create <em>memorable spaces</em> &amp; experiences across various typologies that bring people together</p>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="project-item">
+      <a class="project-card" href="canter.html">
+        <img class="project-card__img" src="assets/img/canter-card.jpg" alt="Canter Hotel">
+      </a>
+      <div class="project-card__meta">
+        <p class="project-card__name">Canter Hotel</p>
+        <p class="project-card__place">Oklahoma City · USA</p>
       </div>
     </div>
-    <a href="projects.html" data-cursor>Projects</a>
-    <a href="services.html" data-cursor>Our Services</a>
-    <a href="index.html#contact" class="nav__cta" data-cursor>Contact</a>
-  </nav>
-  <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span></button>
-</header>
 
-<!-- ===== MOBILE MENU ===== -->
-<div class="menu" id="menu">
-  <a href="studio.html">Studio</a>
-  <a href="projects.html">Projects</a>
-  <a href="services.html">Our Services</a>
-  <a href="index.html#contact">Contact</a>
+    <div class="project-item">
+      <a class="project-card" href="hardrock.html">
+        <img class="project-card__img" src="assets/img/hardrock-card.jpg" alt="Hard Rock Athens">
+      </a>
+      <div class="project-card__meta">
+        <p class="project-card__name">Hard Rock Athens</p>
+        <p class="project-card__place">Athens · Greece</p>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <a class="project-card" href="park432.html">
+        <img class="project-card__img" src="assets/img/manhattan-card.jpg" alt="432 Park Residence">
+      </a>
+      <div class="project-card__meta">
+        <p class="project-card__name">Private Residence</p>
+        <p class="project-card__place">432 Park Avenue · Manhattan</p>
+      </div>
+    </div>
+
+    <div class="project-item">
+      <a class="project-card" href="piertop.html">
+        <img class="project-card__img" src="assets/img/piertop-card.jpg" alt="Pier Top">
+      </a>
+      <div class="project-card__meta">
+        <p class="project-card__name">Pier Top</p>
+        <p class="project-card__place">Fort Lauderdale · Florida</p>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
-<div class="scroll-progress" id="scrollProgress"></div>
-
-<main id="top" data-scroll-container>
-
-  <!-- ===== HERO ===== -->
-  <section class="pj-hero">
-    <div class="pj-hero__bg">
-      <img src="assets/img/proj/PIERTOP/aerial.jpg" alt="" class="pj-hero__img" data-parallax="0.15">
-    </div>
-    <div class="pj-hero__scrim"></div>
-    <div class="pj-hero__inner">
-      <img src="assets/img/lion-double.png" alt="" class="pj-hero__crest">
-      <h1 class="pj-hero__title">
-        <span class="line"><span>Our</span></span>
-        <span class="line"><span>Projects</span></span>
-      </h1>
-      <p class="pj-hero__sub reveal-up">Four environments across hospitality and residential. Each a study in how narrative and precision hold together.</p>
-    </div>
-    <div class="pj-hero__scroll-hint"><span>Scroll</span><i></i></div>
-  </section>
-
-  <!-- ===== OUR PROJECTS GRID ===== -->
-  <section class="pj-grid-section">
-    <div class="pj-grid">
-
-      <a href="piertop.html" class="pj-grid__card reveal-up">
-        <div class="pj-grid__img-wrap">
-          <img class="pj-grid__img" src="assets/img/proj/PIERTOP/aerial.jpg" alt="Pier 66 aerial view">
-        </div>
-        <div class="pj-grid__info">
-          <span class="pj-grid__eyebrow">01 · Hospitality · Completed 2024</span>
-          <span class="pj-grid__name">Pier Top</span>
-          <span class="pj-grid__loc">Fort Lauderdale · Florida</span>
-        </div>
-      </a>
-
-      <a href="canter.html" class="pj-grid__card reveal-up">
-        <div class="pj-grid__img-wrap">
-          <img class="pj-grid__img" src="assets/img/proj/CANTER-HOTEL/lobby.webp" alt="Canter Hotel lobby">
-        </div>
-        <div class="pj-grid__info">
-          <span class="pj-grid__eyebrow">02 · Hospitality · Completed 2023</span>
-          <span class="pj-grid__name">Canter Hotel</span>
-          <span class="pj-grid__loc">Oklahoma City · United States</span>
-        </div>
-      </a>
-
-      <a href="park432.html" class="pj-grid__card reveal-up">
-        <div class="pj-grid__img-wrap">
-          <img class="pj-grid__img" src="assets/img/proj/MANHATTAN-APARTMENT/living.jpg" alt="432 Park Avenue living room">
-        </div>
-        <div class="pj-grid__info">
-          <span class="pj-grid__eyebrow">03 · Residential · Completed 2023</span>
-          <span class="pj-grid__name">432 Park Avenue</span>
-          <span class="pj-grid__loc">Manhattan · New York</span>
-        </div>
-      </a>
-
-      <a href="hardrock.html" class="pj-grid__card reveal-up">
-        <div class="pj-grid__img-wrap">
-          <img class="pj-grid__img" src="assets/img/proj/HARD-ROCK-RESORT/lobby.jpg" alt="Hard Rock Athens lobby">
-        </div>
-        <div class="pj-grid__info">
-          <span class="pj-grid__eyebrow">04 · Hospitality · Opening 2026</span>
-          <span class="pj-grid__name">Hard Rock Athens</span>
-          <span class="pj-grid__loc">Hellinikon · Athens, Greece</span>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- ===== CTA ===== -->
-  <section class="pj-cta">
-    <h2 class="pj-cta__title script reveal-up">Start a project</h2>
-    <p class="pj-cta__sub reveal-up">Tell us about the space you're building. We'll bring the depth, rigour, and heritage it deserves.</p>
-    <a href="index.html#contact" class="pj-cta__btn reveal-up" data-cursor>Get in touch &nbsp;→</a>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer pj-footer">
-    <div class="footer__brand">
-      <img src="assets/img/lion-double.png" alt="" class="footer__mark">
-      <span class="script">Studio&nbsp;Logan</span>
-    </div>
-    <p class="footer__copy">© <span id="year"></span> Studio Logan · Crafted where global sophistication meets tradition.</p>
-  </footer>
-
-</main>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="assets/js/main.js"></script>
 </body>
 </html>

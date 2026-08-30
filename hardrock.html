@@ -4,134 +4,138 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hard Rock Athens — Studio Logan</title>
-<meta name="description" content="Hard Rock Athens, Hellinikon. Integrated resort, 1,100 keys. Interior design by Studio Logan.">
+<meta name="description" content="Hard Rock Hotel Athens. Where music meets Mediterranean luxury.">
 <link rel="icon" href="assets/img/lion-double.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Gloock&family=Pinyon+Script&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/project-detail.css?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --bg:#f7f5f2; --ink:#1a1712; --mid:#8a7f72; --gold:#b09a7a; --f-display:"Tenor Sans",sans-serif; --f-sans:"Poppins",system-ui,sans-serif; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); -webkit-font-smoothing: antialiased; }
+.top-nav { position: fixed; top: 0; left: 0; right: 0; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; background: var(--bg); border-bottom: 1px solid rgba(176,154,122,.2); z-index: 100; }
+.top-nav__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
+.top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
+.top-nav__name { font-family: var(--f-display); font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; }
+.top-nav__links { display: flex; align-items: center; gap: 2.4rem; }
+.top-nav__links a { font-size: .68rem; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .25s; }
+.top-nav__links a:hover { color: var(--ink); }
+.top-nav__links a.nav-contact { border: 1px solid var(--gold); color: var(--ink); padding: .45rem 1.3rem; }
+.top-nav__links a.nav-contact:hover { color: var(--gold); }
+.proj-hero { display: grid; grid-template-columns: 1fr 1.4fr; height: calc(100vh - 68px); margin-top: 68px; }
+.proj-hero__left { display: flex; flex-direction: column; justify-content: center; padding: 3rem 3rem; border-right: 1px solid rgba(176,154,122,.15); overflow-y: auto; }
+.proj-hero__back { display: inline-flex; align-items: center; gap: .5rem; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--mid); text-decoration: none; margin-bottom: 2rem; transition: color .25s; }
+.proj-hero__back:hover { color: var(--gold); }
+.proj-hero__label { font-size: .6rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: .25rem; display: inline-block; margin-bottom: .9rem; }
+.proj-hero__name { font-family: var(--f-display); font-size: clamp(2.4rem, 4.5vw, 4.2rem); line-height: 1; color: var(--ink); margin-bottom: .5rem; }
+.proj-hero__location { font-size: .65rem; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; color: var(--mid); margin-bottom: 1.4rem; }
+.proj-hero__desc { font-size: .85rem; font-weight: 300; line-height: 1.85; color: var(--mid); max-width: 40ch; margin-bottom: 2rem; }
+.proj-meta__divider { height: 1px; background: rgba(176,154,122,.3); margin-bottom: 1.5rem; }
+.proj-meta__row { display: grid; grid-template-columns: 6rem 1fr; align-items: baseline; padding: .65rem 0; border-bottom: 1px solid rgba(176,154,122,.12); }
+.proj-meta__key { font-size: .56rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+.proj-meta__val { font-family: var(--f-display); font-size: .88rem; color: var(--ink); }
+.proj-hero__carousel { position: relative; overflow: hidden; background: #111; }
+.proj-hero__carousel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; }
+.proj-hero__carousel-img.is-active { opacity: 1; }
+.proj-master { width: 100%; height: 100vh; overflow: hidden; }
+.proj-master img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.proj-gallery-intro { display: grid; grid-template-columns: 1fr 1fr; min-height: 55vh; border-top: 1px solid rgba(176,154,122,.15); }
+.proj-gallery-intro__left { display: flex; align-items: center; padding: 4rem 3.5rem; border-right: 1px solid rgba(176,154,122,.15); }
+.proj-gallery-intro__text { font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--mid); max-width: 44ch; }
+.proj-gallery-intro__right { overflow: hidden; }
+.proj-gallery-intro__right img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.proj-gallery-more { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid rgba(176,154,122,.15); }
+.proj-gallery-more img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; border-right: 1px solid rgba(176,154,122,.15); }
+.proj-gallery-more img:last-child { border-right: none; }
+.proj-footer { padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(176,154,122,.2); }
+.proj-footer__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
+.proj-footer__mark { width: 24px; height: 24px; object-fit: contain; opacity: .6; }
+.proj-footer__name { font-family: var(--f-display); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); }
+.proj-footer__copy { font-size: .62rem; color: var(--mid); letter-spacing: .06em; }
+@media (max-width: 768px) {
+  .proj-hero { grid-template-columns: 1fr; height: auto; }
+  .proj-hero__left { padding: 5.5rem 1.5rem 2rem; }
+  .proj-hero__carousel { height: 65vw; }
+  .proj-gallery-intro { grid-template-columns: 1fr; min-height: auto; }
+  .proj-gallery-intro__right { height: 65vw; }
+  .proj-gallery-more { grid-template-columns: 1fr 1fr; }
+  .top-nav__links { gap: 1rem; }
+  .top-nav__links a { font-size: .6rem; }
+}
+</style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"><span class="cursor__dot"></span><span class="cursor__label" id="cursorLabel"></span></div>
-
-<header class="nav is-solid" id="nav">
-  <a href="index.html" class="nav__brand" data-cursor>
-    <img src="assets/img/lion-double.png" alt="Studio Logan" class="nav__mark">
-    <span class="nav__name">Studio&nbsp;Logan</span>
+<nav class="top-nav">
+  <a href="index.html" class="top-nav__brand">
+    <img src="assets/img/lion-double.png" alt="Studio Logan" class="top-nav__mark">
+    <span class="top-nav__name">Studio Logan</span>
   </a>
-  <nav class="nav__menu">
-    <div class="nav__item has-dropdown">
-      <a href="studio.html" data-cursor>Studio</a>
-      <div class="nav__dropdown">
-        <a href="studio.html#brand-philosophy" data-cursor>Brand Philosophy</a>
-        <a href="studio.html#about-founder" data-cursor>About the Founder</a>
-        <a href="studio.html#awards" data-cursor>Awards &amp; Associations</a>
-      </div>
-    </div>
-    <a href="projects.html" data-cursor>Projects</a>
-    <a href="services.html" data-cursor>Our Services</a>
-    <a href="index.html#contact" class="nav__cta" data-cursor>Contact</a>
-  </nav>
-  <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span></button>
-</header>
+  <div class="top-nav__links">
+    <a href="studio.html">Studio</a>
+    <a href="projects.html">Projects</a>
+    <a href="awards.html">Awards</a>
+    <a href="services.html">Our Services</a>
+    <a href="index.html#contact" class="nav-contact">Contact</a>
+  </div>
+</nav>
 
-<div class="menu" id="menu">
-  <a href="studio.html">Studio</a>
-  <a href="projects.html">Projects</a>
-  <a href="services.html">Our Services</a>
-  <a href="index.html#contact">Contact</a>
+<section class="proj-hero">
+  <div class="proj-hero__left">
+    <a href="projects.html" class="proj-hero__back">← All Projects</a>
+    <span class="proj-hero__label">Hospitality</span>
+    <h1 class="proj-hero__name">Hard Rock Athens</h1>
+    <p class="proj-hero__location">Athens &nbsp;·&nbsp; Greece</p>
+    <p class="proj-hero__desc">Where music meets Mediterranean luxury. Studio Logan brought rhythm into the architecture — from the lobby's kinetic energy to the quiet opulence of Kuro's private dining rooms.</p>
+    <div class="proj-meta__divider"></div>
+    <div class="proj-meta__row"><span class="proj-meta__key">Type</span><span class="proj-meta__val">Hospitality</span></div>
+    <div class="proj-meta__row"><span class="proj-meta__key">Scale</span><span class="proj-meta__val">500+ Keys</span></div>
+    <div class="proj-meta__row"><span class="proj-meta__key">Scope</span><span class="proj-meta__val">Interiors · FF&amp;E</span></div>
+    <div class="proj-meta__row"><span class="proj-meta__key">Location</span><span class="proj-meta__val">Athens, Greece</span></div>
+    <div class="proj-meta__row"><span class="proj-meta__key">Status</span><span class="proj-meta__val">Completed</span></div>
+  </div>
+  <div class="proj-hero__carousel">
+    <img class="proj-hero__carousel-img is-active" src="assets/img/hardrock-card.jpg"   alt="Hard Rock Lobby Bar">
+    <img class="proj-hero__carousel-img"           src="assets/img/hardrock-lobby.jpg"  alt="Hard Rock Lobby">
+    <img class="proj-hero__carousel-img"           src="assets/img/hardrock-kuro.jpg"   alt="Kuro Restaurant">
+    <img class="proj-hero__carousel-img"           src="assets/img/hardrock-pool.jpg"   alt="Hard Rock Pool">
+  </div>
+</section>
+
+<div class="proj-master">
+  <img src="assets/img/hardrock-athens-wide.jpg" alt="Hard Rock Athens — Master View">
 </div>
 
-<div class="scroll-progress" id="scrollProgress"></div>
-
-<main id="top" data-scroll-container>
-
-  <a href="projects.html" class="proj-back" data-cursor>
-    <svg viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M13 5H1M5 1L1 5l4 4"/></svg>
-    All Projects
-  </a>
-
-  <section class="proj-hero">
-    <img src="assets/img/hardrock-ext.jpg" alt="Hard Rock Athens exterior" class="proj-hero__img">
-    <div class="proj-hero__scrim"></div>
-    <div class="proj-hero__inner">
-      <span class="proj-hero__meta">Integrated Resort · Opening 2026</span>
-      <h1 class="proj-hero__title">Hard Rock Athens</h1>
-      <span class="proj-hero__loc">Hellinikon · Athens, Greece</span>
-    </div>
-  </section>
-
-  <section class="proj-detail">
-    <div class="proj-detail__body">
-      <p>One of Europe's most significant hospitality developments, sited on the Hellinikon waterfront at the edge of Athens. This project sits at a genuine crossroads: a globally recognised brand in one of the world's oldest cities, on land that carries both archaeological and political weight. The design response draws from the geological bedrock of Attica, travertine, raw concrete, textured lime plasters, layered against the Rock aesthetic's confidence and energy.</p>
-      <p>The 1,100-key property encompasses a full-scale lobby arrival sequence, all-day dining, a fine dining concept with sea views, a beach club integrated into the landscaped coastal edge, and a suite collection positioned at the upper floors to command the Saronic Gulf panorama. The suite interiors take their cue from the classical proportion systems of the Attic plain, reinterpreted through contemporary craft.</p>
-      <p>Opening in 2026. Studio Logan led interior architecture and FF&amp;E direction across all public areas and the full suite collection.</p>
-    </div>
-    <div class="proj-detail__meta">
-      <dl>
-        <div><dt>Type</dt><dd>Integrated Resort</dd></div>
-        <div><dt>Scale</dt><dd>1,100 Keys</dd></div>
-        <div><dt>Scope</dt><dd>Lobby · All Dining · Suite Collection</dd></div>
-        <div><dt>Status</dt><dd>Opening 2026</dd></div>
-        <div><dt>Location</dt><dd>Hellinikon, Athens</dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <div class="proj-gallery">
-    <div class="proj-gallery__item proj-gallery__item--wide">
-      <img src="assets/img/hardrock-athens-wide.jpg" alt="Hard Rock Athens" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item">
-      <img src="assets/img/hardrock-lobby2.jpg" alt="Hard Rock lobby" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item">
-      <img src="assets/img/hardrock-lobby-bar.jpg" alt="Hard Rock lobby bar" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item">
-      <img src="assets/img/hardrock-3meal.jpg" alt="Hard Rock all-day dining" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item proj-gallery__item--wide">
-      <img src="assets/img/hardrock-steakhouse.jpg" alt="Council Oak Steakhouse bar" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item">
-      <img src="assets/img/hardrock-kuro.jpg" alt="Kuro restaurant" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item">
-      <img src="assets/img/hardrock-pool.jpg" alt="Hard Rock pool bar" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item">
-      <img src="assets/img/hardrock-kuro-pdr.jpg" alt="Kuro private dining" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item proj-gallery__item--wide">
-      <img src="assets/img/hardrock-king-room.jpg" alt="Hard Rock king room" class="proj-gallery__img" loading="lazy">
-    </div>
-    <div class="proj-gallery__item">
-      <img src="assets/img/hardrock-gaming.jpg" alt="Hard Rock gaming" class="proj-gallery__img" loading="lazy">
-    </div>
+<div class="proj-gallery-intro">
+  <div class="proj-gallery-intro__left">
+    <p class="proj-gallery-intro__text">The Hard Rock brand's energy was translated into a language of scale and warmth — dramatic pendant lights, curated music memorabilia, and a bar that anchors the entire hotel experience.</p>
   </div>
+  <div class="proj-gallery-intro__right">
+    <img src="assets/img/hardrock-dining.jpg" alt="Hard Rock Dining">
+  </div>
+</div>
 
-  <section class="proj-cta">
-    <span class="proj-cta__pre">Work with us</span>
-    <h2 class="proj-cta__title">Start a project</h2>
-    <a href="index.html#contact" class="proj-cta__btn" data-cursor>Get in touch &nbsp;→</a>
-  </section>
+<div class="proj-gallery-more">
+  <img src="assets/img/hardrock-lobby-bar.jpg"  alt="Lobby Bar">
+  <img src="assets/img/hardrock-kuro-pdr.jpg"   alt="Kuro Private Dining">
+  <img src="assets/img/hardrock-steakhouse.jpg" alt="Council Oak Steakhouse">
+</div>
 
-  <footer class="footer">
-    <div class="footer__brand">
-      <img src="assets/img/lion-double.png" alt="" class="footer__mark">
-      <span class="script">Studio&nbsp;Logan</span>
-    </div>
-    <p class="footer__copy">© <span id="year"></span> Studio Logan · Crafted where global sophistication meets tradition.</p>
-  </footer>
+<footer class="proj-footer">
+  <a href="index.html" class="proj-footer__brand">
+    <img src="assets/img/lion-double.png" alt="" class="proj-footer__mark">
+    <span class="proj-footer__name">Studio Logan</span>
+  </a>
+  <span class="proj-footer__copy">© <span id="yr"></span> Studio Logan</span>
+</footer>
 
-</main>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="assets/js/main.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+  var imgs = document.querySelectorAll('.proj-hero__carousel-img');
+  var cur = 0;
+  setInterval(function(){ imgs[cur].classList.remove('is-active'); cur=(cur+1)%imgs.length; imgs[cur].classList.add('is-active'); }, 4500);
+})();
+</script>
 </body>
 </html>

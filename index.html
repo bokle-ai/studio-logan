@@ -4,410 +4,276 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Studio Logan — Architecture &amp; Interiors</title>
-<meta name="description" content="Studio Logan — Architecture &amp; Interiors. Crafting spaces where heritage converges with vision, where global sophistication meets tradition.">
+<meta name="description" content="Studio Logan — Architecture &amp; Interiors. Crafting spaces where heritage converges with vision.">
 <link rel="icon" href="assets/img/lion-double.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Gloock&family=Pinyon+Script&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=25">
-<link rel="stylesheet" href="assets/css/projects.css?v=26">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:    #f7f5f2;
+  --ink:   #1a1712;
+  --mid:   #8a7f72;
+  --gold:  #b09a7a;
+  --f-display: "Tenor Sans", sans-serif;
+  --f-sans:    "Poppins", system-ui, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOP LOGO ── */
+.site-logo {
+  position: fixed;
+  top: 2rem;
+  left: 2.5rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.site-logo__mark {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+.site-logo__name {
+  font-family: var(--f-display);
+  font-size: .85rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+/* ── HERO SPLIT ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(100vh - 72px); /* leave room for bottom nav */
+}
+
+/* LEFT PANEL */
+.hero__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem 3rem;
+  background: var(--bg);
+  position: relative;
+}
+
+.hero__eyebrow {
+  font-family: var(--f-sans);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+
+.hero__title {
+  font-family: var(--f-display);
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  line-height: 1;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin-bottom: 1.4rem;
+}
+
+.hero__desc {
+  font-size: .9rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--mid);
+  max-width: 30ch;
+  margin-bottom: 2.5rem;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: .2rem;
+  transition: color .3s, border-color .3s;
+}
+.hero__cta:hover { color: var(--gold); border-color: var(--gold); }
+
+/* RIGHT PANEL */
+.hero__right {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+}
+
+.hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .9s ease;
+}
+.hero__img.is-active { opacity: 1; }
+
+.hero__img-label {
+  position: absolute;
+  bottom: 1.8rem;
+  left: 2rem;
+  font-family: var(--f-sans);
+  font-size: .7rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.75);
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  padding: 0 2.5rem;
+  background: #3a312a;
+  z-index: 50;
+}
+
+.bottom-nav a {
+  font-family: var(--f-sans);
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255,255,255,.75);
+  transition: color .25s;
+  white-space: nowrap;
+}
+.bottom-nav a:hover { color: #fff; }
+
+.bottom-nav a.nav-contact {
+  border: 1px solid var(--gold);
+  color: rgba(255,255,255,.85);
+  padding: .55rem 1.6rem;
+  transition: color .25s, border-color .25s;
+}
+.bottom-nav a.nav-contact:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  html, body { overflow: auto; }
+
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50vh auto;
+    height: auto;
+  }
+
+  .hero__right { order: -1; height: 50vh; }
+
+  .hero__left {
+    padding: 2rem 1.5rem;
+    justify-content: flex-start;
+  }
+
+  .hero__title { font-size: 2.8rem; }
+
+  .bottom-nav {
+    position: relative;
+    height: auto;
+    flex-wrap: wrap;
+    gap: .8rem 1.4rem;
+    padding: 1.2rem 1.5rem;
+    justify-content: flex-start;
+  }
+  .bottom-nav a, .bottom-nav a.nav-contact {
+    font-size: .65rem;
+  }
+}
+</style>
 </head>
 <body>
 
-<!-- ===== CURTAIN PANELS (preloader exit) ===== -->
-<div class="curtain curtain--l" id="curtainL"></div>
-<div class="curtain curtain--r" id="curtainR"></div>
+<!-- Logo -->
+<a href="index.html" class="site-logo">
+  <img src="assets/img/lion-double.png" alt="Studio Logan" class="site-logo__mark">
+  <span class="site-logo__name">Studio Logan</span>
+</a>
 
-<!-- ===== PRELOADER ===== -->
-<div class="preloader" id="preloader">
-  <div class="preloader__inner">
-    <img src="assets/img/lion-double.png" alt="" class="preloader__lion" id="preLion">
-    <div class="preloader__word"><span>S</span><span>T</span><span>U</span><span>D</span><span>I</span><span>O</span><span class="sp">&nbsp;</span><span>L</span><span>O</span><span>G</span><span>A</span><span>N</span></div>
-    <div class="preloader__bar"><i id="preFill"></i></div>
-    <p class="preloader__tagline">We create <span id="preMorphWord">experiences</span></p>
-  </div>
-</div>
+<!-- Hero -->
+<main class="hero">
 
-<!-- ===== CUSTOM CURSOR ===== -->
-<div class="cursor" id="cursor"><span class="cursor__dot"></span><span class="cursor__label" id="cursorLabel"></span></div>
-
-<!-- ===== NAV ===== -->
-<header class="nav is-solid" id="nav">
-  <a href="#top" class="nav__brand" data-cursor>
-    <img src="assets/img/lion-double.png" alt="Studio Logan" class="nav__mark">
-    <span class="nav__name">Studio&nbsp;Logan</span>
-  </a>
-  <nav class="nav__menu">
-    <div class="nav__item has-dropdown">
-      <a href="studio.html" data-cursor>Studio</a>
-      <div class="nav__dropdown">
-        <a href="studio.html#brand-philosophy" data-cursor>Brand Philosophy</a>
-        <a href="studio.html#about-founder" data-cursor>About the Founder</a>
-        <a href="studio.html#awards" data-cursor>Awards &amp; Associations</a>
-      </div>
-    </div>
-    <a href="projects.html" data-cursor>Projects</a>
-    <a href="services.html" data-cursor>Our Services</a>
-    <a href="#contact" class="nav__cta" data-cursor>Contact</a>
-  </nav>
-  <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span></button>
-</header>
-
-<!-- ===== MOBILE MENU ===== -->
-<div class="menu" id="menu">
-  <a href="studio.html">Studio</a>
-  <a href="projects.html">Projects</a>
-  <a href="services.html">Our Services</a>
-  <a href="#contact">Contact</a>
-</div>
-
-<div class="scroll-progress" id="scrollProgress"></div>
-
-<main id="top" data-scroll-container>
-
-  <!-- ===== SCROLL-BUILD ===== -->
-  <div id="scroll-build-outer">
-    <section class="sbuild" id="scroll-build">
-      <canvas class="sbuild__canvas" id="buildCanvas"></canvas>
-      <div class="sbuild__captions" id="buildCaptions">
-        <p class="sbuild__cap is-active" data-stage="0">Scroll to reveal the space.</p>
-        <p class="sbuild__cap" data-stage="1">Structure, floor to ceiling.</p>
-        <p class="sbuild__cap" data-stage="2">Every surface, considered.</p>
-        <p class="sbuild__cap" data-stage="3">Warmth finds its form.</p>
-        <p class="sbuild__cap" data-stage="4">Studio Logan — Architecture &amp; Interiors.</p>
-      </div>
-      <div class="sbuild__portrait-text" id="buildPortraitText">Spaces that<br>Tell Stories</div>
-      <div class="sbuild__hint" id="buildHint"><span>Scroll</span><i></i></div>
-    </section>
+  <!-- Left: text -->
+  <div class="hero__left">
+<h1 class="hero__title">We create spaces that tell stories</h1>
+    <p class="hero__desc">A cosmopolitan design studio crafting hospitality and residential environments where heritage converges with vision.</p>
+    <a href="#" class="hero__cta" onclick="document.querySelector('#contact-section').scrollIntoView()">Start a project &nbsp;→</a>
   </div>
 
-  <!-- ===== SELECTED PROJECT SCENES ===== -->
-  <div class="hp-split-group" id="rail">
-
-    <!-- 01 — CANTER HOTEL -->
-    <section class="hp-split" id="hs-canter" data-cat="hospitality">
-      <div class="hp-split__stage">
-        <img class="hp-split__img is-active" src="assets/img/canter-hero.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/canter-checkin.webp" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/canter-ballroom.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/canter-suite.jpg" alt="" aria-hidden="true">
-      </div>
-      <div class="hp-split__scroll">
-        <div class="hp-split__card-sticky">
-          <a href="canter.html" class="hp-split__card-inner" data-page-transition>
-            <img class="hp-split__card-img is-active" src="assets/img/canter-hero.jpg" alt="Canter Hotel">
-            <img class="hp-split__card-img" src="assets/img/canter-checkin.webp" alt="">
-            <img class="hp-split__card-img" src="assets/img/canter-ballroom.jpg" alt="">
-            <img class="hp-split__card-img" src="assets/img/canter-suite.jpg" alt="">
-            <div class="hp-split__card-info">
-              <span class="hp-split__eyebrow">Marriott Signature · 180 Keys</span>
-              <h2 class="hp-split__name">Canter Hotel</h2>
-              <span class="hp-split__loc">Oklahoma City · United States</span>
-              <span class="hp-split__cta">View project &nbsp;→</span>
-            </div>
-          </a>
-        </div>
-        <div class="hp-split__scroll-space">
-          <div class="hp-split__trigger" data-img="0"></div>
-          <div class="hp-split__trigger" data-img="1"></div>
-          <div class="hp-split__trigger" data-img="2"></div>
-          <div class="hp-split__trigger" data-img="3"></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="hp-split-div"></div>
-
-    <!-- 02 — HARD ROCK ATHENS -->
-    <section class="hp-split hp-split--flip" id="hs-hardrock" data-cat="hospitality">
-      <div class="hp-split__stage">
-        <img class="hp-split__img is-active" src="assets/img/hardrock-ext.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/hardrock-lobby.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/hardrock-restaurant.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/hardrock-interior.jpg" alt="" aria-hidden="true">
-      </div>
-      <div class="hp-split__scroll">
-        <div class="hp-split__card-sticky">
-          <a href="hardrock.html" class="hp-split__card-inner" data-page-transition>
-            <img class="hp-split__card-img is-active" src="assets/img/hardrock-ext.jpg" alt="Hard Rock Athens">
-            <img class="hp-split__card-img" src="assets/img/hardrock-lobby.jpg" alt="">
-            <img class="hp-split__card-img" src="assets/img/hardrock-restaurant.jpg" alt="">
-            <img class="hp-split__card-img" src="assets/img/hardrock-interior.jpg" alt="">
-            <div class="hp-split__card-info">
-              <span class="hp-split__eyebrow">Hard Rock International · Opening 2026</span>
-              <h2 class="hp-split__name">Hard Rock Athens</h2>
-              <span class="hp-split__loc">Athens · Greece</span>
-              <span class="hp-split__cta">View project &nbsp;→</span>
-            </div>
-          </a>
-        </div>
-        <div class="hp-split__scroll-space">
-          <div class="hp-split__trigger" data-img="0"></div>
-          <div class="hp-split__trigger" data-img="1"></div>
-          <div class="hp-split__trigger" data-img="2"></div>
-          <div class="hp-split__trigger" data-img="3"></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="hp-split-div"></div>
-
-    <!-- 03 — 432 PARK AVENUE -->
-    <section class="hp-split" id="hs-manhattan" data-cat="residential">
-      <div class="hp-split__stage">
-        <img class="hp-split__img is-active" src="assets/img/manhattan-ext.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/manhattan-living.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/manhattan-1.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/manhattan-detail.jpg" alt="" aria-hidden="true">
-      </div>
-      <div class="hp-split__scroll">
-        <div class="hp-split__card-sticky">
-          <a href="park432.html" class="hp-split__card-inner" data-page-transition>
-            <img class="hp-split__card-img is-active" src="assets/img/manhattan-ext.jpg" alt="432 Park Avenue">
-            <img class="hp-split__card-img" src="assets/img/manhattan-living.jpg" alt="">
-            <img class="hp-split__card-img" src="assets/img/manhattan-1.jpg" alt="">
-            <img class="hp-split__card-img" src="assets/img/manhattan-detail.jpg" alt="">
-            <div class="hp-split__card-info">
-              <span class="hp-split__eyebrow">Private Residence · Penthouse</span>
-              <h2 class="hp-split__name">432 Park Avenue</h2>
-              <span class="hp-split__loc">Manhattan · New York</span>
-              <span class="hp-split__cta">View project &nbsp;→</span>
-            </div>
-          </a>
-        </div>
-        <div class="hp-split__scroll-space">
-          <div class="hp-split__trigger" data-img="0"></div>
-          <div class="hp-split__trigger" data-img="1"></div>
-          <div class="hp-split__trigger" data-img="2"></div>
-          <div class="hp-split__trigger" data-img="3"></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="hp-split-div"></div>
-
-    <!-- 04 — PIER TOP -->
-    <section class="hp-split hp-split--flip" id="hs-piertop" data-cat="hospitality">
-      <div class="hp-split__stage">
-        <img class="hp-split__img is-active" src="assets/img/piertop-1.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/piertop-lounge.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/piertop-bar.jpg" alt="" aria-hidden="true">
-        <img class="hp-split__img" src="assets/img/piertop-exterior.jpg" alt="" aria-hidden="true">
-      </div>
-      <div class="hp-split__scroll">
-        <div class="hp-split__card-sticky">
-          <a href="piertop.html" class="hp-split__card-inner" data-page-transition>
-            <img class="hp-split__card-img is-active" src="assets/img/piertop-1.jpg" alt="Pier Top">
-            <img class="hp-split__card-img" src="assets/img/piertop-lounge.jpg" alt="">
-            <img class="hp-split__card-img" src="assets/img/piertop-bar.jpg" alt="">
-            <img class="hp-split__card-img" src="assets/img/piertop-exterior.jpg" alt="">
-            <div class="hp-split__card-info">
-              <span class="hp-split__eyebrow">Pier 66 · Auberge Resorts Collection</span>
-              <h2 class="hp-split__name">Pier Top</h2>
-              <span class="hp-split__loc">Fort Lauderdale · Florida</span>
-              <span class="hp-split__cta">View project &nbsp;→</span>
-            </div>
-          </a>
-        </div>
-        <div class="hp-split__scroll-space">
-          <div class="hp-split__trigger" data-img="0"></div>
-          <div class="hp-split__trigger" data-img="1"></div>
-          <div class="hp-split__trigger" data-img="2"></div>
-          <div class="hp-split__trigger" data-img="3"></div>
-        </div>
-      </div>
-    </section>
-
+  <!-- Right: images -->
+  <div class="hero__right">
+    <img class="hero__img is-active" src="assets/img/canter-hero.jpg"         alt="Canter Hotel">
+    <img class="hero__img"           src="assets/img/hardrock-ext.jpg"         alt="Hard Rock Athens">
+    <img class="hero__img"           src="assets/img/manhattan-living.jpg"     alt="432 Park Avenue">
+    <img class="hero__img"           src="assets/img/piertop-exterior.jpg"     alt="Pier Top">
+    <span class="hero__img-label" id="imgLabel">Canter Hotel &nbsp;·&nbsp; Oklahoma City</span>
   </div>
-
-  <!-- ===== OUR EXPERTISE ===== -->
-  <section class="xp" id="expertise">
-    <div class="xp__left">
-      <h2 class="xp__title reveal-up">Our<br>Expertise</h2>
-      <img src="assets/img/pdf-horse.jpg" alt="" class="xp__horse reveal-up" loading="lazy">
-    </div>
-    <div class="xp__right">
-      <p class="xp__head-right reveal-up">Four disciplines, one practice. We build from a specific understanding of each project's location, its programme, and the people who will actually use it.</p>
-      <div class="xp__list">
-        <div class="xp__item reveal-up" data-cursor>
-          <div class="xp__item-left">
-            <span class="xp__num">/01</span>
-            <h3 class="xp__name">Residential</h3>
-          </div>
-          <p class="xp__desc">Private residences built around how people actually inhabit a home. Material choices that age well, spatial sequences that feel right from day one.</p>
-          <a href="services.html" class="xp__link">Explore &nbsp;→</a>
-        </div>
-        <div class="xp__item reveal-up" data-cursor>
-          <div class="xp__item-left">
-            <span class="xp__num">/02</span>
-            <h3 class="xp__name">Commercial</h3>
-          </div>
-          <p class="xp__desc">Offices, showrooms, and retail environments designed for the people using them, not only the brand presenting itself.</p>
-          <a href="services.html" class="xp__link">Explore &nbsp;→</a>
-        </div>
-        <div class="xp__item reveal-up" data-cursor>
-          <div class="xp__item-left">
-            <span class="xp__num">/03</span>
-            <h3 class="xp__name">Hospitality</h3>
-          </div>
-          <p class="xp__desc">Hotels and restaurants built for a specific guest, operator, and location. No two projects look the same because no two briefs are the same.</p>
-          <a href="services.html" class="xp__link">Explore &nbsp;→</a>
-        </div>
-        <div class="xp__item reveal-up" data-cursor>
-          <div class="xp__item-left">
-            <span class="xp__num">/04</span>
-            <h3 class="xp__name">Branded Environments</h3>
-          </div>
-          <p class="xp__desc">Spaces where brand identity becomes physical. From the threshold to back of house, every decision is consistent with what the organisation stands for.</p>
-          <a href="services.html" class="xp__link">Explore &nbsp;→</a>
-        </div>
-      </div>
-      <div class="xp__footer reveal-up">
-        <a href="services.html" class="section-cta">Explore our services &nbsp;→</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== OUR CULTURE ===== -->
-  <section class="vision" id="culture">
-    <div class="vision__head">
-      <h2 class="vision__title script reveal-up">Our Culture</h2>
-      <div class="vision__cta reveal-up">
-        <a href="studio.html" class="section-cta section-cta--light">Explore Studio Logan &nbsp;→</a>
-      </div>
-    </div>
-    <div class="vision__gallery">
-      <figure class="reveal-img"><img loading="lazy" decoding="async" src="assets/img/vision-1.jpg" alt="" data-parallax="0.12"></figure>
-      <figure class="reveal-img"><img loading="lazy" decoding="async" src="assets/img/vision-2.jpg" alt="" data-parallax="0.12"></figure>
-      <figure class="reveal-img"><img loading="lazy" decoding="async" src="assets/img/vision-3.jpg" alt="" data-parallax="0.12"></figure>
-      <figure class="reveal-img"><img loading="lazy" decoding="async" src="assets/img/vision-4.jpg" alt="" data-parallax="0.12"></figure>
-    </div>
-  </section>
-
-  <!-- ===== BRAND & ASSOCIATIONS ===== -->
-  <section class="brand-assoc" id="brand-assoc">
-    <div class="brand-assoc__marquee">
-      <div class="brand-assoc__track">
-        <img src="assets/img/logo-ritz.png"    alt="The Ritz-Carlton"          class="brand-assoc__logo">
-        <img src="assets/img/logo-marriott.png" alt="Marriott"                  class="brand-assoc__logo">
-        <img src="assets/img/logo-disney.png"   alt="Disney"                    class="brand-assoc__logo">
-        <img src="assets/img/logo-hyatt.png"    alt="Hyatt"                     class="brand-assoc__logo">
-        <img src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection" class="brand-assoc__logo">
-        <!-- duplicate for seamless loop -->
-        <img src="assets/img/logo-ritz.png"    alt="" aria-hidden="true" class="brand-assoc__logo">
-        <img src="assets/img/logo-marriott.png" alt="" aria-hidden="true" class="brand-assoc__logo">
-        <img src="assets/img/logo-disney.png"   alt="" aria-hidden="true" class="brand-assoc__logo">
-        <img src="assets/img/logo-hyatt.png"    alt="" aria-hidden="true" class="brand-assoc__logo">
-        <img src="assets/img/logo-auberge.png"  alt="" aria-hidden="true" class="brand-assoc__logo">
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CONTACT ===== -->
-  <section class="contact" id="contact">
-    <img src="assets/img/lion-double.png" alt="" class="contact__lion" data-parallax="0.06">
-    <div class="contact__inner">
-
-    <div class="contact__left">
-      <span class="eyebrow reveal-up">Let's collaborate</span>
-      <h2 class="contact__title script reveal-up">contact</h2>
-      <p class="contact__line reveal-up">Tell us about the space you're building. We respond within 24 hours.</p>
-      <div class="contact__links">
-        <a href="mailto:loganathanyeswanth@gmail.com" class="contact__link reveal-up" data-cursor>
-          <span class="contact__link-label">Email</span>
-          loganathanyeswanth@gmail.com
-        </a>
-        <a href="tel:+917305082466" class="contact__link reveal-up" data-cursor>
-          <span class="contact__link-label">Phone</span>
-          +91 73050 82466
-        </a>
-      </div>
-      <p class="contact__meta reveal-up">New York &nbsp;·&nbsp; Mumbai &nbsp;·&nbsp; Dubai</p>
-    </div>
-    <div class="contact__rule"></div>
-    <div class="contact__right">
-      <form class="contact__form" id="contactForm" novalidate>
-        <div class="cform__row">
-          <div class="cform__field">
-            <input type="text" name="name" id="cf-name" placeholder=" " autocomplete="name" aria-label="Name">
-            <label for="cf-name">Your name</label>
-          </div>
-          <div class="cform__field">
-            <input type="tel" name="phone" id="cf-phone" placeholder=" " autocomplete="tel" aria-label="Phone">
-            <label for="cf-phone">Phone number</label>
-          </div>
-        </div>
-        <div class="cform__field">
-          <input type="email" name="email" id="cf-email" placeholder=" " autocomplete="email" aria-label="Email">
-          <label for="cf-email">Email address</label>
-        </div>
-        <div class="cform__field">
-          <textarea name="message" id="cf-message" rows="4" placeholder=" " aria-label="Message"></textarea>
-          <label for="cf-message">Tell us about your project</label>
-        </div>
-        <button type="submit" class="cform__submit"><span>Send enquiry &nbsp;→</span></button>
-      </form>
-    </div>
-    </div>
-    <footer class="footer">
-      <div class="footer__brand">
-        <img src="assets/img/lion-double.png" alt="" class="footer__mark">
-        <span class="script">Studio&nbsp;Logan</span>
-      </div>
-      <p class="footer__copy">© <span id="year"></span> Studio Logan · Crafted where global sophistication meets tradition.</p>
-    </footer>
-  </section>
 
 </main>
 
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="studio.html">Studio</a>
+  <a href="projects.html">Projects</a>
+  <a href="awards.html">Awards</a>
+  <a href="services.html">Our Services</a>
+  <a href="index.html#contact" class="nav-contact">Contact</a>
+</nav>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="assets/js/main.js"></script>
+
 <script>
 (function(){
-  var GAS = 'https://script.google.com/macros/s/AKfycbwdc0-cBKSW0SBOi3i6mtgPFVb8rzY0cSjQy9mfMAfz061gM0l1w7mpHRstNoAS5rv1GA/exec';
-  var form = document.getElementById('contactForm');
-  if (!form) return;
-
-  /* Staggered field entrance */
-  var items = [].slice.call(form.children);
-  if (window.gsap && window.ScrollTrigger) {
-    gsap.set(items, { opacity:0, y:28 });
-    ScrollTrigger.create({
-      trigger: form,
-      start: 'top 84%',
-      onEnter: function(){
-        gsap.to(items, { opacity:1, y:0, duration:.75, ease:'power3.out', stagger:.12 });
-      }
-    });
-  }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var btn = form.querySelector('.cform__submit');
-    btn.disabled = true;
-    btn.querySelector('span').textContent = 'Sending…';
-    var name    = form.querySelector('[name="name"]').value.trim();
-    var email   = form.querySelector('[name="email"]').value.trim();
-    var phone   = form.querySelector('[name="phone"]').value.trim();
-    var message = form.querySelector('[name="message"]').value.trim();
-    fetch(GAS, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'name='+encodeURIComponent(name)+'&email='+encodeURIComponent(email)+'&phone='+encodeURIComponent(phone)+'&message='+encodeURIComponent(message)
-    }).catch(function(){});
-    setTimeout(function(){
-      if (window.gsap) gsap.to(form, { opacity:0, y:-12, duration:.35, ease:'power2.in', onComplete: showSuccess });
-      else showSuccess();
-    }, 600);
-    function showSuccess(){
-      form.innerHTML = '<div class="cform__success"><div class="cform__success-icon">✓</div><p>Thank you — we\'ll be in touch shortly.</p></div>';
-      if (window.gsap) gsap.from('.cform__success', { opacity:0, y:20, duration:.65, ease:'power3.out' });
-    }
-  });
+  var imgs = document.querySelectorAll('.hero__img');
+  var label = document.getElementById('imgLabel');
+  var labels = [
+    'Canter Hotel · Oklahoma City',
+    'Hard Rock Athens · Greece',
+    '432 Park Avenue · Manhattan',
+    'Pier Top · Fort Lauderdale'
+  ];
+  var cur = 0;
+  setInterval(function(){
+    imgs[cur].classList.remove('is-active');
+    cur = (cur + 1) % imgs.length;
+    imgs[cur].classList.add('is-active');
+    if(label) label.textContent = labels[cur];
+  }, 4500);
 })();
 </script>
 </body>
