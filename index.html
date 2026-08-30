@@ -65,8 +65,8 @@ html, body {
 .hero__left {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 2.5rem 3rem 3rem;
+  justify-content: center;
+  padding: 2.5rem 3rem;
   background: var(--bg);
   position: relative;
 }
@@ -208,9 +208,12 @@ html, body {
     position: relative;
     height: auto;
     flex-wrap: wrap;
-    gap: 1.2rem;
-    padding: 1.5rem 2rem;
+    gap: .8rem 1.4rem;
+    padding: 1.2rem 1.5rem;
     justify-content: flex-start;
+  }
+  .bottom-nav a, .bottom-nav a.nav-contact {
+    font-size: .65rem;
   }
 }
 </style>
@@ -228,8 +231,7 @@ html, body {
 
   <!-- Left: text -->
   <div class="hero__left">
-    <span class="hero__eyebrow">Architecture + Interiors</span>
-    <h1 class="hero__title">Where Vision<br>Meets Space</h1>
+<h1 class="hero__title">We create spaces that tell stories</h1>
     <p class="hero__desc">A cosmopolitan design studio crafting hospitality and residential environments where heritage converges with vision.</p>
     <a href="#" class="hero__cta" onclick="document.querySelector('#contact-section').scrollIntoView()">Start a project &nbsp;→</a>
   </div>
@@ -249,10 +251,30 @@ html, body {
 <nav class="bottom-nav">
   <a href="studio.html">Studio</a>
   <a href="projects.html">Projects</a>
+  <a href="awards.html">Awards</a>
   <a href="services.html">Our Services</a>
   <a href="index.html#contact" class="nav-contact">Contact</a>
 </nav>
 
 
+<script>
+(function(){
+  var imgs = document.querySelectorAll('.hero__img');
+  var label = document.getElementById('imgLabel');
+  var labels = [
+    'Canter Hotel · Oklahoma City',
+    'Hard Rock Athens · Greece',
+    '432 Park Avenue · Manhattan',
+    'Pier Top · Fort Lauderdale'
+  ];
+  var cur = 0;
+  setInterval(function(){
+    imgs[cur].classList.remove('is-active');
+    cur = (cur + 1) % imgs.length;
+    imgs[cur].classList.add('is-active');
+    if(label) label.textContent = labels[cur];
+  }, 4500);
+})();
+</script>
 </body>
 </html>
