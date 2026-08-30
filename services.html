@@ -182,18 +182,59 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   flex-shrink: 0;
 }
 
+/* ── QUOTE ── */
+.sv-quote {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(176,154,122,.15);
+}
+.sv-quote__bg { position: absolute; inset: 0; }
+.sv-quote__bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sv-quote__scrim { position: absolute; inset: 0; background: rgba(20,16,12,.72); }
+.sv-quote__inner { position: relative; z-index: 2; padding: 4rem 3rem; text-align: center; max-width: 900px; }
+.sv-quote__text {
+  font-family: var(--f-display);
+  font-size: clamp(1.15rem, 2.2vw, 2rem);
+  font-style: italic;
+  line-height: 1.6;
+  color: #f7f5f2;
+  margin-bottom: 1.5rem;
+}
+.sv-quote__attr {
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── CTA ── */
+.cta-strip { display: flex; align-items: center; justify-content: space-between; padding: 2.5rem 2.5rem; border-top: 1px solid rgba(176,154,122,.2); }
+.cta-strip__text { font-family: var(--f-display); font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink); }
+.cta-strip__btn { font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
+.cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
+
 /* ── FOOTER ── */
 .sv-footer {
-  padding: 2.5rem;
+  padding: 2rem 2.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(176,154,122,.2);
+  border-top: 1px solid rgba(176,154,122,.15);
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 .sv-footer__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
-.sv-footer__mark { width: 24px; height: 24px; object-fit: contain; opacity: .6; }
-.sv-footer__name { font-family: var(--f-display); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); }
-.sv-footer__copy { font-size: .62rem; color: var(--mid); letter-spacing: .06em; }
+.sv-footer__mark { width: 22px; height: 22px; object-fit: contain; opacity: .5; }
+.sv-footer__name { font-family: var(--f-display); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); }
+.sv-footer__links { display: flex; gap: 2rem; flex-wrap: wrap; }
+.sv-footer__links a { font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .2s; }
+.sv-footer__links a:hover { color: var(--ink); }
+.sv-footer__copy { font-size: .58rem; color: var(--mid); }
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
@@ -203,6 +244,10 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .sv-expertise__media { height: 60vw; }
   .sv-list { padding: 2.5rem 1.5rem; }
   .sv-list__grid { grid-template-columns: 1fr; gap: 0; }
+  .sv-quote__inner { padding: 3rem 1.5rem; }
+  .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
+  .sv-footer { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 2rem 1.5rem; }
+  .sv-footer__links { gap: 1.2rem; }
   .top-nav__links { gap: 1.2rem; }
   .top-nav__links a { font-size: .6rem; }
 }
@@ -221,7 +266,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
     <a href="projects.html">Projects</a>
     <a href="awards.html">Awards</a>
     <a href="services.html" class="nav-active">Our Services</a>
-    <a href="index.html#contact" class="nav-contact">Contact</a>
+    <a href="contact.html" class="nav-contact">Contact</a>
   </div>
 </nav>
 
@@ -276,12 +321,35 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
     </div>
   </section>
 
+  <!-- Quote section -->
+  <div class="sv-quote">
+    <div class="sv-quote__bg"><img src="assets/img/piertop-hires.jpg" alt=""></div>
+    <div class="sv-quote__scrim"></div>
+    <div class="sv-quote__inner">
+      <p class="sv-quote__text">"We don't design for aesthetics. We design for impact. Every narrative we build must change how people experience a space and how they remember it."</p>
+      <p class="sv-quote__attr">— Loganathan Yeswanth, Founder</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <p class="cta-strip__text">Ready to build something memorable?</p>
+    <a href="contact.html" class="cta-strip__btn">Start a project →</a>
+  </div>
+
   <!-- Footer -->
   <footer class="sv-footer">
     <a href="index.html" class="sv-footer__brand">
       <img src="assets/img/lion-double.png" alt="" class="sv-footer__mark">
       <span class="sv-footer__name">Studio Logan</span>
     </a>
+    <nav class="sv-footer__links">
+      <a href="studio.html">Studio</a>
+      <a href="projects.html">Projects</a>
+      <a href="awards.html">Awards</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </nav>
     <span class="sv-footer__copy">© <span id="yr"></span> Studio Logan</span>
   </footer>
 

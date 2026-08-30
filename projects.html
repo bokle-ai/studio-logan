@@ -176,6 +176,21 @@ html, body {
   color: var(--mid);
 }
 
+/* ── CTA ── */
+.cta-strip { display: flex; align-items: center; justify-content: space-between; padding: 2.5rem 2.5rem; border-top: 1px solid rgba(176,154,122,.2); }
+.cta-strip__text { font-family: var(--f-display); font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink); }
+.cta-strip__btn { font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
+.cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
+/* ── FOOTER ── */
+.site-footer { padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-top: 1px solid rgba(176,154,122,.15); flex-wrap: wrap; }
+.site-footer__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
+.site-footer__mark { width: 22px; height: 22px; object-fit: contain; opacity: .5; }
+.site-footer__name { font-family: var(--f-display); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); }
+.site-footer__links { display: flex; gap: 2rem; flex-wrap: wrap; }
+.site-footer__links a { font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .2s; }
+.site-footer__links a:hover { color: var(--ink); }
+.site-footer__copy { font-size: .58rem; color: var(--mid); }
+
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   html, body { overflow: auto; }
@@ -183,6 +198,9 @@ html, body {
   .projects-grid { grid-template-columns: 1fr; grid-template-rows: none; gap: 1.5rem; }
   .project-card { height: 56vw; }
   .projects-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
+  .site-footer { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 2rem 1.5rem; }
+  .site-footer__links { gap: 1.2rem; }
   .top-nav__links { gap: 1.2rem; }
   .top-nav__links a { font-size: .6rem; }
 }
@@ -201,7 +219,7 @@ html, body {
     <a href="projects.html" class="nav-active">Projects</a>
     <a href="awards.html">Awards</a>
     <a href="services.html">Our Services</a>
-    <a href="index.html#contact" class="nav-contact">Contact</a>
+    <a href="contact.html" class="nav-contact">Contact</a>
   </div>
 </nav>
 
@@ -260,5 +278,26 @@ html, body {
 
 </div>
 
+<div class="cta-strip">
+  <p class="cta-strip__text">Ready to start a project?</p>
+  <a href="contact.html" class="cta-strip__btn">Get in touch →</a>
+</div>
+
+<footer class="site-footer">
+  <a href="index.html" class="site-footer__brand">
+    <img src="assets/img/lion-double.png" alt="" class="site-footer__mark">
+    <span class="site-footer__name">Studio Logan</span>
+  </a>
+  <nav class="site-footer__links">
+    <a href="studio.html">Studio</a>
+    <a href="projects.html">Projects</a>
+    <a href="awards.html">Awards</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <span class="site-footer__copy">© <span id="yr"></span> Studio Logan</span>
+</footer>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

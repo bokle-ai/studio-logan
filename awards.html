@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --bg:   #f7f5f2;
   --ink:  #1a1712;
@@ -20,219 +19,125 @@
   --f-display: "Tenor Sans", sans-serif;
   --f-sans:    "Poppins", system-ui, sans-serif;
 }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); -webkit-font-smoothing: antialiased; }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--f-sans);
-  -webkit-font-smoothing: antialiased;
-}
+/* TOP NAV */
+.top-nav { position: fixed; top: 0; left: 0; right: 0; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; background: var(--bg); border-bottom: 1px solid rgba(176,154,122,.2); z-index: 100; }
+.top-nav__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
+.top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
+.top-nav__name { font-family: var(--f-display); font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; }
+.top-nav__links { display: flex; align-items: center; gap: 2.4rem; }
+.top-nav__links a { font-size: .68rem; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .25s; }
+.top-nav__links a:hover { color: var(--ink); }
+.top-nav__links a.nav-active { color: var(--ink); font-weight: 500; }
+.top-nav__links a.nav-contact { border: 1px solid var(--gold); color: var(--ink); padding: .45rem 1.3rem; }
+.top-nav__links a.nav-contact:hover { color: var(--gold); }
 
-/* ── LOGO ── */
-.site-logo {
-  position: fixed;
-  top: 2rem;
-  left: 2.5rem;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  text-decoration: none;
-  color: var(--ink);
-}
-.site-logo__mark { width: 32px; height: 32px; object-fit: contain; }
-.site-logo__name {
-  font-family: var(--f-display);
-  font-size: .85rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-
-/* ── PAGE LAYOUT ── */
+/* PAGE */
 .awards-page {
-  height: calc(100vh - 68px);
   margin-top: 68px;
+  padding: 2.5rem 3.5rem 0;
   display: flex;
   flex-direction: column;
-  padding: 2.5rem 3.5rem 2rem;
   gap: 2rem;
+  min-height: calc(100vh - 68px);
 }
 
-/* ── HEADER ── */
-.awards-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
+/* HEADER */
+.awards-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+.awards-label { font-family: var(--f-sans); font-size: .68rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: .3rem; display: inline-block; margin-bottom: 1rem; }
+.awards-title { font-family: var(--f-display); font-size: clamp(2.4rem, 4.5vw, 4.2rem); line-height: 1.05; color: var(--ink); }
+.awards-header__right { font-family: var(--f-sans); font-size: .82rem; font-weight: 300; line-height: 1.8; color: var(--mid); max-width: 32ch; text-align: right; }
+.awards-rule { height: 1px; background: rgba(176,154,122,.25); flex-shrink: 0; }
+
+/* CARDS */
+.awards-cards { display: flex; gap: 1.2rem; align-items: stretch; padding-bottom: 2.5rem; }
+.award-card { flex: 1; border: 1px solid rgba(176,154,122,.3); padding: 1.8rem 1.2rem 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; background: rgba(255,255,255,.5); transition: border-color .3s, background .3s; cursor: default; position: relative; overflow: hidden; }
+.award-card:hover { border-color: var(--gold); background: rgba(176,154,122,.05); }
+.award-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(176,154,122,.04) 0%, transparent 60%); pointer-events: none; }
+.award-card__trophy { width: 52px; height: 60px; flex-shrink: 0; color: var(--gold); }
+.award-card__body { display: flex; flex-direction: column; align-items: center; gap: .4rem; text-align: center; flex: 1; }
+.award-card__year { font-size: .62rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+.award-card__name { font-family: var(--f-display); font-size: .88rem; line-height: 1.35; color: var(--ink); }
+.award-card__org { font-size: .68rem; font-weight: 300; color: var(--mid); letter-spacing: .04em; line-height: 1.5; }
+
+/* LOGO TICKER */
+.logos-band {
+  border-top: 1px solid rgba(176,154,122,.2);
+  border-bottom: 1px solid rgba(176,154,122,.2);
+  background: var(--ink);
+  padding: 1.8rem 0;
+  overflow: hidden;
+  margin: 0 -3.5rem;
 }
-.awards-header__left { }
-.awards-label {
-  font-family: var(--f-sans);
-  font-size: .68rem;
+.logos-band__label {
+  text-align: center;
+  font-size: .58rem;
   font-weight: 500;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--gold);
-  border-bottom: 1px solid var(--gold);
-  padding-bottom: .3rem;
-  display: inline-block;
-  margin-bottom: 1rem;
+  color: rgba(176,154,122,.5);
+  margin-bottom: 1.2rem;
 }
-.awards-title {
-  font-family: var(--f-display);
-  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
-  line-height: 1.05;
-  color: var(--ink);
+.logos-track-wrap { overflow: hidden; }
+.logos-track {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  width: max-content;
+  animation: ticker 22s linear infinite;
 }
-.awards-header__right {
-  font-family: var(--f-sans);
-  font-size: .82rem;
-  font-weight: 300;
-  line-height: 1.8;
-  color: var(--mid);
-  max-width: 32ch;
-  text-align: right;
+.logos-track:hover { animation-play-state: paused; }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
-
-/* ── DIVIDER ── */
-.awards-rule {
-  height: 1px;
-  background: rgba(176,154,122,.25);
+.logos-track img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  opacity: .6;
+  filter: brightness(0) invert(1);
+  transition: opacity .3s;
   flex-shrink: 0;
 }
+.logos-track img:hover { opacity: 1; }
 
-/* ── CARDS ROW ── */
-.awards-cards {
-  display: flex;
-  gap: 1.2rem;
-  flex: 1;
-  align-items: stretch;
-}
-
-.award-card {
-  flex: 1;
-  border: 1px solid rgba(176,154,122,.3);
-  padding: 1.8rem 1.2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-  background: rgba(255,255,255,.5);
-  transition: border-color .3s, background .3s;
-  cursor: default;
-  position: relative;
-  overflow: hidden;
-}
-.award-card:hover {
-  border-color: var(--gold);
-  background: rgba(176,154,122,.05);
-}
-.award-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, rgba(176,154,122,.04) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-/* trophy SVG */
-.award-card__trophy {
-  width: 52px;
-  height: 60px;
-  flex-shrink: 0;
-  color: var(--gold);
-}
-
-.award-card__body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .4rem;
-  text-align: center;
-  flex: 1;
-}
-.award-card__year {
-  font-size: .62rem;
-  font-weight: 600;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.award-card__name {
-  font-family: var(--f-display);
-  font-size: .88rem;
-  line-height: 1.35;
-  color: var(--ink);
-}
-.award-card__org {
-  font-size: .68rem;
-  font-weight: 300;
-  color: var(--mid);
-  letter-spacing: .04em;
-  line-height: 1.5;
-}
-
-/* ── TOP NAV ── */
-.top-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 68px;
+/* CTA STRIP */
+.cta-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2.5rem;
-  background: var(--bg);
-  border-bottom: 1px solid rgba(176,154,122,.2);
-  z-index: 100;
+  padding: 2.5rem 0;
+  margin: 0;
+  border-top: 1px solid rgba(176,154,122,.2);
 }
-.top-nav__brand {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  text-decoration: none;
-  color: var(--ink);
-}
-.top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
-.top-nav__name {
-  font-family: var(--f-display);
-  font-size: .82rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-.top-nav__links {
-  display: flex;
-  align-items: center;
-  gap: 2.4rem;
-}
-.top-nav__links a {
-  font-size: .68rem;
-  font-weight: 400;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--mid);
-  transition: color .25s;
-}
-.top-nav__links a:hover { color: var(--ink); }
-.top-nav__links a.nav-active { color: var(--ink); font-weight: 500; }
-.top-nav__links a.nav-contact {
-  border: 1px solid var(--gold);
-  color: var(--ink);
-  padding: .45rem 1.3rem;
-}
-.top-nav__links a.nav-contact:hover { color: var(--gold); }
+.cta-strip__text { font-family: var(--f-display); font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink); }
+.cta-strip__btn { font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
+.cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
 
-/* ── MOBILE ── */
+/* FOOTER */
+.site-footer { padding: 2rem 0; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-top: 1px solid rgba(176,154,122,.15); flex-wrap: wrap; margin-bottom: 2rem; }
+.site-footer__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
+.site-footer__mark { width: 22px; height: 22px; object-fit: contain; opacity: .5; }
+.site-footer__name { font-family: var(--f-display); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); }
+.site-footer__links { display: flex; gap: 2rem; flex-wrap: wrap; }
+.site-footer__links a { font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .2s; }
+.site-footer__links a:hover { color: var(--ink); }
+.site-footer__copy { font-size: .58rem; color: var(--mid); }
+
+/* MOBILE */
 @media (max-width: 768px) {
-  html, body { overflow: auto; }
-  .awards-page { height: auto; padding: 5.5rem 1.5rem 1.5rem; gap: 1.5rem; }
+  .awards-page { padding: 5.5rem 1.5rem 0; gap: 1.5rem; }
   .awards-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .awards-header__right { text-align: left; }
   .awards-cards { flex-direction: column; }
   .award-card { flex-direction: row; align-items: center; text-align: left; }
   .award-card__body { align-items: flex-start; text-align: left; }
+  .logos-band { margin: 0 -1.5rem; }
+  .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  .site-footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .site-footer__links { gap: 1.2rem; }
   .top-nav__links { gap: 1rem; }
   .top-nav__links a { font-size: .6rem; }
 }
@@ -240,7 +145,6 @@ html, body {
 </head>
 <body>
 
-<!-- Top Nav -->
 <nav class="top-nav">
   <a href="index.html" class="top-nav__brand">
     <img src="assets/img/lion-double.png" alt="Studio Logan" class="top-nav__mark">
@@ -251,11 +155,10 @@ html, body {
     <a href="projects.html">Projects</a>
     <a href="awards.html" class="nav-active">Awards</a>
     <a href="services.html">Our Services</a>
-    <a href="index.html#contact" class="nav-contact">Contact</a>
+    <a href="contact.html" class="nav-contact">Contact</a>
   </div>
 </nav>
 
-<!-- Page -->
 <div class="awards-page">
 
   <div class="awards-header">
@@ -270,7 +173,6 @@ html, body {
 
   <div class="awards-cards">
 
-    <!-- Card 1 -->
     <div class="award-card">
       <svg class="award-card__trophy" viewBox="0 0 52 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M16 6h20l-5 26H21L16 6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -287,7 +189,6 @@ html, body {
       </div>
     </div>
 
-    <!-- Card 2 -->
     <div class="award-card">
       <svg class="award-card__trophy" viewBox="0 0 52 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M16 6h20l-5 26H21L16 6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -304,7 +205,6 @@ html, body {
       </div>
     </div>
 
-    <!-- Card 3 -->
     <div class="award-card">
       <svg class="award-card__trophy" viewBox="0 0 52 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M16 6h20l-5 26H21L16 6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -321,7 +221,6 @@ html, body {
       </div>
     </div>
 
-    <!-- Card 4 -->
     <div class="award-card">
       <svg class="award-card__trophy" viewBox="0 0 52 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M16 6h20l-5 26H21L16 6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -338,7 +237,6 @@ html, body {
       </div>
     </div>
 
-    <!-- Card 5 -->
     <div class="award-card">
       <svg class="award-card__trophy" viewBox="0 0 52 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M16 6h20l-5 26H21L16 6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -356,8 +254,51 @@ html, body {
     </div>
 
   </div>
+
+  <!-- Brand logo ticker -->
+  <div class="logos-band">
+    <p class="logos-band__label">Trusted by the world's finest hospitality brands</p>
+    <div class="logos-track-wrap">
+      <div class="logos-track">
+        <img src="assets/img/logo-disney.png"   alt="Disney">
+        <img src="assets/img/logo-hyatt.png"    alt="Hyatt">
+        <img src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection">
+        <img src="assets/img/logo-ritz.png"     alt="The Ritz-Carlton">
+        <img src="assets/img/logo-marriott.png" alt="Marriott">
+        <!-- duplicate for seamless loop -->
+        <img src="assets/img/logo-disney.png"   alt="Disney">
+        <img src="assets/img/logo-hyatt.png"    alt="Hyatt">
+        <img src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection">
+        <img src="assets/img/logo-ritz.png"     alt="The Ritz-Carlton">
+        <img src="assets/img/logo-marriott.png" alt="Marriott">
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <p class="cta-strip__text">Ready to build something memorable?</p>
+    <a href="contact.html" class="cta-strip__btn">Start a project →</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <a href="index.html" class="site-footer__brand">
+      <img src="assets/img/lion-double.png" alt="" class="site-footer__mark">
+      <span class="site-footer__name">Studio Logan</span>
+    </a>
+    <nav class="site-footer__links">
+      <a href="studio.html">Studio</a>
+      <a href="projects.html">Projects</a>
+      <a href="awards.html">Awards</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <span class="site-footer__copy">© <span id="yr"></span> Studio Logan</span>
+  </footer>
+
 </div>
 
-
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
