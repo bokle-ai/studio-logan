@@ -35,8 +35,9 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .proj-meta__key { font-size: .56rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
 .proj-meta__val { font-family: var(--f-display); font-size: .88rem; color: var(--ink); }
 .proj-hero__carousel { position: relative; overflow: hidden; background: #111; }
-.proj-hero__carousel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; }
-.proj-hero__carousel-img.is-active { opacity: 1; }
+@keyframes kb { 0% { transform: scale(1.06) translate(0%,0%); } 100% { transform: scale(1.14) translate(-1.5%,-1%); } }
+.proj-hero__carousel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; transform: scale(1.06); }
+.proj-hero__carousel-img.is-active { opacity: 1; animation: kb 9s ease-in-out forwards; }
 .proj-master { width: 100%; height: 100vh; overflow: hidden; }
 .proj-master img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .proj-gallery-intro { display: grid; grid-template-columns: 1fr 1fr; min-height: 55vh; border-top: 1px solid rgba(176,154,122,.15); }
