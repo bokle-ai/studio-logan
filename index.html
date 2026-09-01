@@ -45,13 +45,13 @@ html, body {
   white-space: nowrap;
 }
 .site-logo__mark {
-  width: 44px;
-  height: 44px;
+  width: 58px;
+  height: 58px;
   object-fit: contain;
 }
 .site-logo__name {
   font-family: var(--f-display);
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   letter-spacing: .14em;
   text-transform: uppercase;
 }
@@ -60,16 +60,16 @@ html, body {
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: calc(100vh - 72px); /* leave room for bottom nav */
-  padding-top: 5rem; /* keep image below the centered logo */
+  height: calc(100vh - 72px);
+  padding-top: 6rem; /* space for the larger centered logo */
 }
 
 /* LEFT PANEL */
 .hero__left {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 2.5rem 3rem;
+  justify-content: flex-start;
+  padding: 2.5rem 3rem 2rem;
   background: var(--bg);
   position: relative;
 }
@@ -121,7 +121,7 @@ html, body {
 /* RIGHT PANEL */
 .hero__right {
   background: var(--bg);
-  padding: 0 2rem 2rem;
+  padding: 0 1.5rem .8rem;
   display: flex;
   align-items: stretch;
 }
