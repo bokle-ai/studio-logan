@@ -36,7 +36,9 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: calc(100vh - 68px);
+  height: auto;
+  min-height: 0;
+  max-height: calc(100vh - 68px);
   margin-top: 68px;
 }
 
@@ -151,6 +153,12 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   color: var(--ink);
 }
 
+/* SOCIAL */
+.contact-social { margin-top: 1.5rem; }
+.contact-social__links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.contact-social__link { font-size: .6rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--mid); border-bottom: 1px solid rgba(176,154,122,.4); padding-bottom: .15rem; transition: color .2s, border-color .2s; }
+.contact-social__link:hover { color: var(--gold); border-color: var(--gold); }
+
 /* RIGHT — horse image */
 .contact-right {
   position: relative;
@@ -213,7 +221,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   <div class="contact-left">
     <span class="contact-label">Contact</span>
     <h1 class="contact-heading">Let's<br>Collaborate</h1>
-    <p class="contact-sub">Tell us about the space you're building. We respond within 24 hours.</p>
+    <p class="contact-sub">Tell us about the space you're building.</p>
 
     <form class="contact-form" action="#" method="POST">
       <div class="form-row">
@@ -245,6 +253,15 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
       <div class="contact-info__item">
         <p class="contact-info__label">Phone</p>
         <p class="contact-info__val">+91 73050 82466</p>
+      </div>
+    </div>
+
+    <div class="contact-social">
+      <p class="contact-info__label" style="margin-bottom:.6rem;">Follow</p>
+      <div class="contact-social__links">
+        <a href="#" class="contact-social__link">Instagram</a>
+        <a href="#" class="contact-social__link">LinkedIn</a>
+        <a href="#" class="contact-social__link">Pinterest</a>
       </div>
     </div>
   </div>

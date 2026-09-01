@@ -44,10 +44,10 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 }
 
 /* HEADER */
-.awards-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
-.awards-label { font-family: var(--f-sans); font-size: .68rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: .3rem; display: inline-block; margin-bottom: 1rem; }
-.awards-title { font-family: var(--f-display); font-size: clamp(2.4rem, 4.5vw, 4.2rem); line-height: 1.05; color: var(--ink); }
-.awards-header__right { font-family: var(--f-sans); font-size: .82rem; font-weight: 300; line-height: 1.8; color: var(--mid); max-width: 32ch; text-align: right; }
+.awards-header { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1rem; }
+.awards-label { font-family: var(--f-sans); font-size: .68rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: .3rem; display: inline-block; margin-bottom: 0; }
+.awards-title { font-family: var(--f-display); font-size: clamp(2.4rem, 4.5vw, 4.2rem); line-height: 1.05; color: var(--ink); text-align: center; }
+.awards-header__right { font-family: var(--f-sans); font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--mid); max-width: 52ch; text-align: center; }
 .awards-rule { height: 1px; background: rgba(176,154,122,.25); flex-shrink: 0; }
 
 /* CARDS */
@@ -61,13 +61,12 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .award-card__name { font-family: var(--f-display); font-size: .88rem; line-height: 1.35; color: var(--ink); }
 .award-card__org { font-size: .68rem; font-weight: 300; color: var(--mid); letter-spacing: .04em; line-height: 1.5; }
 
-/* LOGO TICKER */
+/* LOGO SINGLE DISPLAY */
 .logos-band {
   border-top: 1px solid rgba(176,154,122,.2);
   border-bottom: 1px solid rgba(176,154,122,.2);
   background: var(--ink);
-  padding: 1.8rem 0;
-  overflow: hidden;
+  padding: 2.2rem 0;
   margin: 0 -3.5rem;
 }
 .logos-band__label {
@@ -77,31 +76,26 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   letter-spacing: .22em;
   text-transform: uppercase;
   color: rgba(176,154,122,.5);
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
 }
-.logos-track-wrap { overflow: hidden; }
-.logos-track {
+.logos-single-wrap {
+  position: relative;
+  height: 52px;
   display: flex;
   align-items: center;
-  gap: 5rem;
-  width: max-content;
-  animation: ticker 22s linear infinite;
+  justify-content: center;
 }
-.logos-track:hover { animation-play-state: paused; }
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.logos-track img {
-  height: 32px;
+.logo-fade {
+  position: absolute;
+  height: 40px;
   width: auto;
-  object-fit: contain;
-  opacity: .6;
+  max-width: 160px;
+  opacity: 0;
   filter: brightness(0) invert(1);
-  transition: opacity .3s;
-  flex-shrink: 0;
+  transition: opacity .8s ease;
+  object-fit: contain;
 }
-.logos-track img:hover { opacity: 1; }
+.logo-fade.is-active { opacity: .75; }
 
 /* CTA STRIP */
 .cta-strip {
@@ -255,23 +249,15 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 
   </div>
 
-  <!-- Brand logo ticker -->
+  <!-- Brand logo display (one at a time) -->
   <div class="logos-band">
     <p class="logos-band__label">Trusted by the world's finest hospitality brands</p>
-    <div class="logos-track-wrap">
-      <div class="logos-track">
-        <img src="assets/img/logo-disney.png"   alt="Disney">
-        <img src="assets/img/logo-hyatt.png"    alt="Hyatt">
-        <img src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection">
-        <img src="assets/img/logo-ritz.png"     alt="The Ritz-Carlton">
-        <img src="assets/img/logo-marriott.png" alt="Marriott">
-        <!-- duplicate for seamless loop -->
-        <img src="assets/img/logo-disney.png"   alt="Disney">
-        <img src="assets/img/logo-hyatt.png"    alt="Hyatt">
-        <img src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection">
-        <img src="assets/img/logo-ritz.png"     alt="The Ritz-Carlton">
-        <img src="assets/img/logo-marriott.png" alt="Marriott">
-      </div>
+    <div class="logos-single-wrap">
+      <img class="logo-fade is-active" src="assets/img/logo-disney.png"   alt="Disney">
+      <img class="logo-fade"           src="assets/img/logo-hyatt.png"    alt="Hyatt">
+      <img class="logo-fade"           src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection">
+      <img class="logo-fade"           src="assets/img/logo-ritz.png"     alt="The Ritz-Carlton">
+      <img class="logo-fade"           src="assets/img/logo-marriott.png" alt="Marriott">
     </div>
   </div>
 
@@ -299,6 +285,17 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 
 </div>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+  var logos = document.querySelectorAll('.logo-fade');
+  var cur = 0;
+  setInterval(function(){
+    logos[cur].classList.remove('is-active');
+    cur = (cur + 1) % logos.length;
+    logos[cur].classList.add('is-active');
+  }, 2500);
+})();
+</script>
 </body>
 </html>

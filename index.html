@@ -33,24 +33,26 @@ html, body {
 /* ── TOP LOGO ── */
 .site-logo {
   position: fixed;
-  top: 2rem;
-  left: 2.5rem;
+  top: 1.8rem;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 50;
   display: flex;
   align-items: center;
-  gap: .6rem;
+  gap: .7rem;
   text-decoration: none;
   color: var(--ink);
+  white-space: nowrap;
 }
 .site-logo__mark {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
 }
 .site-logo__name {
   font-family: var(--f-display);
-  font-size: .85rem;
-  letter-spacing: .12em;
+  font-size: 1.1rem;
+  letter-spacing: .14em;
   text-transform: uppercase;
 }
 
@@ -59,6 +61,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: calc(100vh - 72px); /* leave room for bottom nav */
+  padding-top: 5rem; /* keep image below the centered logo */
 }
 
 /* LEFT PANEL */
@@ -117,7 +120,14 @@ html, body {
 
 /* RIGHT PANEL */
 .hero__right {
+  background: var(--bg);
+  padding: 0 2rem 2rem;
+  display: flex;
+  align-items: stretch;
+}
+.hero__img-box {
   position: relative;
+  flex: 1;
   overflow: hidden;
   background: #111;
 }
@@ -232,17 +242,18 @@ html, body {
   <!-- Left: text -->
   <div class="hero__left">
 <h1 class="hero__title">We create spaces that tell stories</h1>
-    <p class="hero__desc">A cosmopolitan design studio crafting hospitality and residential environments where heritage converges with vision.</p>
     <a href="contact.html" class="hero__cta">Start a project &nbsp;→</a>
   </div>
 
   <!-- Right: images -->
   <div class="hero__right">
-    <img class="hero__img is-active" src="assets/img/canter-hero.jpg"         alt="Canter Hotel">
-    <img class="hero__img"           src="assets/img/hardrock-ext.jpg"         alt="Hard Rock Athens">
-    <img class="hero__img"           src="assets/img/manhattan-living.jpg"     alt="432 Park Avenue">
-    <img class="hero__img"           src="assets/img/piertop-exterior.jpg"     alt="Pier Top">
-    <span class="hero__img-label" id="imgLabel">Canter Hotel &nbsp;·&nbsp; Oklahoma City</span>
+    <div class="hero__img-box">
+      <img class="hero__img is-active" src="assets/img/canter-hero.jpg"         alt="Canter Hotel">
+      <img class="hero__img"           src="assets/img/hardrock-ext.jpg"         alt="Hard Rock Athens">
+      <img class="hero__img"           src="assets/img/manhattan-living.jpg"     alt="432 Park Avenue">
+      <img class="hero__img"           src="assets/img/piertop-exterior.jpg"     alt="Pier Top">
+      <span class="hero__img-label" id="imgLabel">Canter Hotel &nbsp;·&nbsp; Oklahoma City</span>
+    </div>
   </div>
 
 </main>

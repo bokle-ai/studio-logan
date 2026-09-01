@@ -44,9 +44,20 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .proj-gallery-intro__text { font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--mid); max-width: 44ch; }
 .proj-gallery-intro__right { overflow: hidden; }
 .proj-gallery-intro__right img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.proj-gallery-more { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid rgba(176,154,122,.15); }
-.proj-gallery-more img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; border-right: 1px solid rgba(176,154,122,.15); }
-.proj-gallery-more img:last-child { border-right: none; }
+.proj-gallery-more { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid rgba(176,154,122,.15); gap: .5rem; padding: .5rem; }
+.proj-gallery-more img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; cursor: pointer; transition: opacity .3s; }
+.proj-gallery-more img:hover { opacity: .88; }
+.proj-gallery-intro__right img { cursor: pointer; transition: opacity .3s; }
+.proj-gallery-intro__right img:hover { opacity: .88; }
+.lb-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s; }
+.lb-overlay.is-open { opacity: 1; pointer-events: all; }
+.lb-img { max-width: 90vw; max-height: 85vh; object-fit: contain; display: block; }
+.lb-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; color: rgba(255,255,255,.7); background: none; border: none; cursor: pointer; line-height: 1; transition: color .2s; }
+.lb-close:hover { color: #fff; }
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7); font-size: 1.4rem; padding: .7rem 1rem; cursor: pointer; transition: background .2s, color .2s; font-family: inherit; }
+.lb-nav:hover { background: rgba(255,255,255,.15); color: #fff; }
+.lb-prev { left: 1.5rem; }
+.lb-next { right: 1.5rem; }
 .cta-strip { display: flex; align-items: center; justify-content: space-between; padding: 2.5rem 2.5rem; border-top: 1px solid rgba(176,154,122,.2); }
 .cta-strip__text { font-family: var(--f-display); font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink); }
 .cta-strip__btn { font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
@@ -150,12 +161,40 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   <span class="proj-footer__copy">© <span id="yr"></span> Studio Logan</span>
 </footer>
 
+<div class="lb-overlay" id="lightbox">
+  <button class="lb-close" id="lbClose">&#215;</button>
+  <button class="lb-nav lb-prev" id="lbPrev">&#8249;</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <button class="lb-nav lb-next" id="lbNext">&#8250;</button>
+</div>
+
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
 (function(){
   var imgs = document.querySelectorAll('.proj-hero__carousel-img');
   var cur = 0;
   setInterval(function(){ imgs[cur].classList.remove('is-active'); cur=(cur+1)%imgs.length; imgs[cur].classList.add('is-active'); }, 4500);
+})();
+(function(){
+  var gImgs = Array.from(document.querySelectorAll('.proj-gallery-more img, .proj-gallery-intro__right img'));
+  var overlay = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var cur = 0;
+  function open(i){ cur=i; lbImg.src=gImgs[cur].src; lbImg.alt=gImgs[cur].alt; overlay.classList.add('is-open'); document.body.style.overflow='hidden'; }
+  function close(){ overlay.classList.remove('is-open'); document.body.style.overflow=''; }
+  function prev(){ cur=(cur-1+gImgs.length)%gImgs.length; lbImg.src=gImgs[cur].src; lbImg.alt=gImgs[cur].alt; }
+  function next(){ cur=(cur+1)%gImgs.length; lbImg.src=gImgs[cur].src; lbImg.alt=gImgs[cur].alt; }
+  gImgs.forEach(function(img,i){ img.addEventListener('click',function(){ open(i); }); });
+  document.getElementById('lbClose').addEventListener('click',close);
+  document.getElementById('lbPrev').addEventListener('click',prev);
+  document.getElementById('lbNext').addEventListener('click',next);
+  overlay.addEventListener('click',function(e){ if(e.target===overlay) close(); });
+  document.addEventListener('keydown',function(e){
+    if(!overlay.classList.contains('is-open')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowLeft') prev();
+    if(e.key==='ArrowRight') next();
+  });
 })();
 </script>
 </body>
