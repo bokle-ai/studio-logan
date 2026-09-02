@@ -197,8 +197,9 @@ html, body {
 @media (max-width: 768px) {
   html, body { overflow: auto; }
 
-  /* Logo becomes a full-width sticky top bar with solid background */
+  /* Logo: full-width bar pinned to very top, solid background */
   .site-logo {
+    top: 0;
     left: 0;
     right: 0;
     transform: none;
@@ -216,17 +217,18 @@ html, body {
     grid-template-columns: 1fr;
     grid-template-rows: 50vh auto;
     height: auto;
-    padding-top: 0;
+    padding-top: 56px; /* clear the logo bar */
   }
 
-  .hero__right { order: -1; height: 50vh; }
+  /* Full-bleed image, no side padding */
+  .hero__right { order: -1; height: 50vh; padding: 0; }
 
   .hero__left {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem 1.5rem;
     justify-content: flex-start;
   }
 
-  .hero__title { font-size: 2.8rem; }
+  .hero__title { font-size: 2.4rem; }
 
   .bottom-nav {
     position: relative;

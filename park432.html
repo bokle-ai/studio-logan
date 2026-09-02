@@ -91,6 +91,26 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .top-nav__links { gap: 1rem; }
   .top-nav__links a { font-size: .6rem; }
 }
+
+/* ── MOBILE NAV HAMBURGER ── */
+.nav-hamburger { display: none; }
+@media (max-width: 768px) {
+  .nav-hamburger {
+    display: flex; flex-direction: column; justify-content: center; gap: 5px;
+    cursor: pointer; padding: 4px; background: none; border: none; flex-shrink: 0;
+  }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: transform .25s, opacity .25s; }
+  .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .top-nav__links {
+    display: none; position: fixed; top: 68px; left: 0; right: 0;
+    background: var(--bg); flex-direction: column; padding: 1.8rem 2.5rem;
+    gap: 1.4rem; border-bottom: 1px solid rgba(176,154,122,.2); z-index: 99;
+  }
+  .top-nav__links.is-open { display: flex; }
+  .top-nav__links a { font-size: .78rem; }
+}
 </style>
 </head>
 <body>
@@ -107,6 +127,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
     <a href="services.html">Our Services</a>
     <a href="contact.html" class="nav-contact">Contact</a>
   </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <section class="proj-hero">
@@ -204,6 +225,23 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     if(e.key==='Escape') close();
     if(e.key==='ArrowLeft') prev();
     if(e.key==='ArrowRight') next();
+  });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var links = document.querySelector('.top-nav__links');
+  if(!btn || !links) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('is-open');
+    links.classList.toggle('is-open');
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.top-nav')) {
+      btn.classList.remove('is-open');
+      links.classList.remove('is-open');
+    }
   });
 })();
 </script>
