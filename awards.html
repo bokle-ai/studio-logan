@@ -61,41 +61,47 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .award-card__name { font-family: var(--f-display); font-size: .88rem; line-height: 1.35; color: var(--ink); }
 .award-card__org { font-size: .68rem; font-weight: 300; color: var(--mid); letter-spacing: .04em; line-height: 1.5; }
 
-/* LOGO SINGLE DISPLAY */
+/* LOGO MARQUEE */
 .logos-band {
   border-top: 1px solid rgba(176,154,122,.2);
   border-bottom: 1px solid rgba(176,154,122,.2);
   background: var(--ink);
-  padding: 2.2rem 0;
+  padding: 2rem 0;
   margin: 0 -3.5rem;
+  overflow: hidden;
 }
 .logos-band__label {
   text-align: center;
-  font-size: .58rem;
+  font-size: .72rem;
   font-weight: 500;
-  letter-spacing: .22em;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(176,154,122,.5);
-  margin-bottom: 1.5rem;
+  color: rgba(176,154,122,.85);
+  margin-bottom: 1.8rem;
 }
-.logos-single-wrap {
-  position: relative;
-  height: 52px;
+.logos-marquee-wrap {
+  overflow: hidden;
+  width: 100%;
+}
+.logos-marquee {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 5rem;
+  width: max-content;
+  animation: marquee-scroll 20s linear infinite;
 }
-.logo-fade {
-  position: absolute;
-  height: 40px;
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.logos-marquee img {
+  height: 36px;
   width: auto;
-  max-width: 160px;
-  opacity: 0;
+  flex-shrink: 0;
   filter: brightness(0) invert(1);
-  transition: opacity .8s ease;
+  opacity: .7;
   object-fit: contain;
 }
-.logo-fade.is-active { opacity: .75; }
 
 /* CTA STRIP */
 .cta-strip {
@@ -248,15 +254,22 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 
   </div>
 
-  <!-- Brand logo display (one at a time) -->
+  <!-- Brand logo marquee -->
   <div class="logos-band">
     <p class="logos-band__label">Trusted by the world's finest hospitality brands</p>
-    <div class="logos-single-wrap">
-      <img class="logo-fade is-active" src="assets/img/logo-disney.png"   alt="Disney">
-      <img class="logo-fade"           src="assets/img/logo-hyatt.png"    alt="Hyatt">
-      <img class="logo-fade"           src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection">
-      <img class="logo-fade"           src="assets/img/logo-ritz.png"     alt="The Ritz-Carlton">
-      <img class="logo-fade"           src="assets/img/logo-marriott.png" alt="Marriott">
+    <div class="logos-marquee-wrap">
+      <div class="logos-marquee">
+        <img src="assets/img/logo-disney.png"   alt="Disney">
+        <img src="assets/img/logo-hyatt.png"    alt="Hyatt">
+        <img src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection">
+        <img src="assets/img/logo-ritz.png"     alt="The Ritz-Carlton">
+        <img src="assets/img/logo-marriott.png" alt="Marriott">
+        <img src="assets/img/logo-disney.png"   alt="Disney">
+        <img src="assets/img/logo-hyatt.png"    alt="Hyatt">
+        <img src="assets/img/logo-auberge.png"  alt="Auberge Resorts Collection">
+        <img src="assets/img/logo-ritz.png"     alt="The Ritz-Carlton">
+        <img src="assets/img/logo-marriott.png" alt="Marriott">
+      </div>
     </div>
   </div>
 
@@ -286,15 +299,6 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
-(function(){
-  var logos = document.querySelectorAll('.logo-fade');
-  var cur = 0;
-  setInterval(function(){
-    logos[cur].classList.remove('is-active');
-    cur = (cur + 1) % logos.length;
-    logos[cur].classList.add('is-active');
-  }, 2500);
-})();
 </script>
 </body>
 </html>
