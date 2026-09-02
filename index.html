@@ -195,33 +195,47 @@ html, body {
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  html, body { overflow: auto; }
+  html, body { overflow: hidden; height: 100%; }
 
+  /* Logo gets a frosted-glass pill so it reads over any image */
+  .site-logo {
+    background: rgba(247,245,242,.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: .35rem .9rem .35rem .4rem;
+  }
+  .site-logo__mark { width: 36px; height: 36px; }
+  .site-logo__name { font-size: 1rem; }
+
+  /* Hero fills remaining space above the fixed nav */
   .hero {
     grid-template-columns: 1fr;
-    grid-template-rows: 50vh auto;
-    height: auto;
+    grid-template-rows: 1fr auto;
+    height: calc(100vh - 62px);
+    padding-top: 0;
   }
 
-  .hero__right { order: -1; height: 50vh; }
+  .hero__right { order: -1; height: auto; }
 
   .hero__left {
-    padding: 2rem 1.5rem;
-    justify-content: flex-start;
+    padding: 1.2rem 1.5rem 1rem;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
-  .hero__title { font-size: 2.8rem; }
+  .hero__title { font-size: 2rem; }
 
+  /* Bottom nav stays fixed, single row */
   .bottom-nav {
-    position: relative;
-    height: auto;
-    flex-wrap: wrap;
-    gap: .8rem 1.4rem;
-    padding: 1.2rem 1.5rem;
-    justify-content: flex-start;
+    position: fixed;
+    height: 62px;
+    flex-wrap: nowrap;
+    gap: 0;
+    padding: 0 1rem;
+    justify-content: space-around;
   }
-  .bottom-nav a, .bottom-nav a.nav-contact { font-size: .65rem; }
-  .bottom-nav a.nav-contact { margin: 0 auto; }
+  .bottom-nav a { font-size: .58rem; letter-spacing: .13em; }
+  .bottom-nav a.nav-contact { font-size: .58rem; padding: .4rem 1rem; }
 }
 </style>
 </head>
