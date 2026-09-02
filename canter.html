@@ -22,7 +22,7 @@
 html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); -webkit-font-smoothing: antialiased; }
 
 /* TOP NAV */
-.top-nav { position: fixed; top: 0; left: 0; right: 0; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; background: var(--bg); border-bottom: 1px solid rgba(176,154,122,.2); z-index: 100; }
+.top-nav { position: fixed; top: 0; left: 0; right: 0; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; background: var(--bg); border-bottom: 1px solid rgba(176,154,122,.2); z-index: 1001; }
 .top-nav__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
 .top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
 .top-nav__name { font-family: var(--f-display); font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; }
@@ -111,7 +111,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .lb-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s; }
 .lb-overlay.is-open { opacity: 1; pointer-events: all; }
 .lb-img { max-width: 90vw; max-height: 85vh; object-fit: contain; display: block; }
-.lb-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; color: rgba(255,255,255,.7); background: none; border: none; cursor: pointer; line-height: 1; transition: color .2s; }
+.lb-close { position: absolute; top: 4.5rem; right: 2rem; font-size: 2rem; color: rgba(255,255,255,.7); background: none; border: none; cursor: pointer; line-height: 1; transition: color .2s; }
 .lb-close:hover { color: #fff; }
 .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7); font-size: 1.4rem; padding: .7rem 1rem; cursor: pointer; transition: background .2s, color .2s; font-family: inherit; }
 .lb-nav:hover { background: rgba(255,255,255,.15); color: #fff; }
