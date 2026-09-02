@@ -36,10 +36,8 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: auto;
-  min-height: 0;
-  max-height: calc(100vh - 68px);
   margin-top: 68px;
+  min-height: calc(100vh - 68px);
 }
 
 /* LEFT */
@@ -49,7 +47,6 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   justify-content: center;
   padding: 3.5rem 3.5rem;
   border-right: 1px solid rgba(176,154,122,.15);
-  overflow-y: auto;
 }
 .contact-label {
   font-size: .6rem;
@@ -181,7 +178,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   position: relative;
   overflow: hidden;
   background: #111;
-  min-height: 60vh;
+  min-height: 70vh;
 }
 .contact-right img {
   width: 100%;
