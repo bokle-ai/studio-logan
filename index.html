@@ -195,47 +195,49 @@ html, body {
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  html, body { overflow: hidden; height: 100%; }
+  html, body { overflow: auto; }
 
-  /* Logo gets a frosted-glass pill so it reads over any image */
+  /* Logo becomes a full-width sticky top bar with solid background */
   .site-logo {
-    background: rgba(247,245,242,.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: .35rem .9rem .35rem .4rem;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    justify-content: center;
+    height: 56px;
+    padding: 0 1.5rem;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(176,154,122,.2);
   }
-  .site-logo__mark { width: 36px; height: 36px; }
-  .site-logo__name { font-size: 1rem; }
+  .site-logo__mark { width: 32px; height: 32px; }
+  .site-logo__name { font-size: .9rem; }
 
-  /* Hero fills remaining space above the fixed nav */
   .hero {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
-    height: calc(100vh - 62px);
+    grid-template-rows: 50vh auto;
+    height: auto;
     padding-top: 0;
   }
 
-  .hero__right { order: -1; height: auto; }
+  .hero__right { order: -1; height: 50vh; }
 
   .hero__left {
-    padding: 1.2rem 1.5rem 1rem;
-    justify-content: center;
-    flex-shrink: 0;
+    padding: 2rem 1.5rem;
+    justify-content: flex-start;
   }
 
-  .hero__title { font-size: 2rem; }
+  .hero__title { font-size: 2.8rem; }
 
-  /* Bottom nav stays fixed, single row */
   .bottom-nav {
-    position: fixed;
-    height: 62px;
-    flex-wrap: nowrap;
-    gap: 0;
-    padding: 0 1rem;
-    justify-content: space-around;
+    position: relative;
+    height: auto;
+    flex-wrap: wrap;
+    gap: .8rem 1.4rem;
+    padding: 1.2rem 1.5rem;
+    justify-content: center;
   }
-  .bottom-nav a { font-size: .58rem; letter-spacing: .13em; }
-  .bottom-nav a.nav-contact { font-size: .58rem; padding: .4rem 1rem; }
+  .bottom-nav a, .bottom-nav a.nav-contact { font-size: .65rem; }
+  .bottom-nav a.nav-contact { margin: 0 auto; }
 }
 </style>
 </head>
