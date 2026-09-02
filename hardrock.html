@@ -38,6 +38,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 @keyframes kb { 0% { transform: scale(1.06) translate(0%,0%); } 100% { transform: scale(1.14) translate(-1.5%,-1%); } }
 .proj-hero__carousel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; transform: scale(1.06); }
 .proj-hero__carousel-img.is-active { opacity: 1; animation: kb 9s ease-in-out forwards; }
+.proj-hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
 .proj-master { width: 100%; height: 100vh; overflow: hidden; }
 .proj-master img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .proj-gallery-intro { display: grid; grid-template-columns: 1fr 1fr; min-height: 55vh; border-top: 1px solid rgba(176,154,122,.15); }
@@ -117,6 +118,9 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
     <div class="proj-meta__row"><span class="proj-meta__key">Status</span><span class="proj-meta__val">Completed</span></div>
   </div>
   <div class="proj-hero__carousel">
+    <video class="proj-hero__video" autoplay loop muted playsinline>
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_39CE7ep0rz5IdXWRmOpcKWhDAwa/hf_20260902_081816_bad705cd-ce7f-44c5-bfcc-dffb65abfdc4.mp4" type="video/mp4">
+    </video>
     <img class="proj-hero__carousel-img is-active" src="assets/img/hardrock-card.jpg"   alt="Hard Rock Lobby Bar">
     <img class="proj-hero__carousel-img"           src="assets/img/hardrock-lobby.jpg"  alt="Hard Rock Lobby">
     <img class="proj-hero__carousel-img"           src="assets/img/hardrock-kuro.jpg"   alt="Kuro Restaurant">
