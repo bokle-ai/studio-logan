@@ -64,14 +64,14 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .cta-strip__text { font-family: var(--f-display); font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink); }
 .cta-strip__btn { font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
 .cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
-.proj-footer { padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(176,154,122,.15); flex-wrap: wrap; gap: 1.5rem; }
-.proj-footer__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
-.proj-footer__mark { width: 22px; height: 22px; object-fit: contain; opacity: .5; }
-.proj-footer__name { font-family: var(--f-display); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); }
-.proj-footer__links { display: flex; gap: 2rem; flex-wrap: wrap; }
-.proj-footer__links a { font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .2s; }
-.proj-footer__links a:hover { color: var(--ink); }
-.proj-footer__copy { font-size: .58rem; color: var(--mid); letter-spacing: .06em; }
+.site-footer { padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(176,154,122,.15); flex-wrap: wrap; gap: 1.5rem; }
+.site-footer__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
+.site-footer__mark { width: 22px; height: 22px; object-fit: contain; opacity: .5; }
+.site-footer__name { font-family: var(--f-display); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); }
+.site-footer__links { display: flex; gap: 2rem; flex-wrap: wrap; }
+.site-footer__links a { font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .2s; }
+.site-footer__links a:hover { color: var(--ink); }
+.site-footer__copy { font-size: .58rem; color: var(--mid); letter-spacing: .06em; }
 @media (max-width: 768px) {
   .proj-hero { grid-template-columns: 1fr; height: auto; }
   .proj-hero__left { padding: 5.5rem 1.5rem 2rem; }
@@ -80,8 +80,8 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .proj-gallery-intro__right { height: 65vw; }
   .proj-gallery-more { grid-template-columns: 1fr 1fr; }
   .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
-  .proj-footer { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 2rem 1.5rem; }
-  .proj-footer__links { gap: 1.2rem; }
+  .site-footer { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 2rem 1.5rem; }
+  .site-footer__links { gap: 1.2rem; }
   .top-nav__links { gap: 1rem; }
   .top-nav__links a { font-size: .6rem; }
 }
@@ -147,23 +147,19 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   <img src="assets/img/piertop-exterior.jpg"   alt="Pier Top Exterior">
 </div>
 
-<div class="cta-strip">
-  <p class="cta-strip__text">Start your next project with us</p>
-  <a href="contact.html" class="cta-strip__btn">Get in touch →</a>
-</div>
-<footer class="proj-footer">
-  <a href="index.html" class="proj-footer__brand">
-    <img src="assets/img/lion-double.png" alt="" class="proj-footer__mark">
-    <span class="proj-footer__name">Studio Logan</span>
+<footer class="site-footer">
+  <a href="index.html" class="site-footer__brand">
+    <img src="assets/img/lion-double.png" alt="" class="site-footer__mark">
+    <span class="site-footer__name">Studio Logan</span>
   </a>
-  <nav class="proj-footer__links">
+  <nav class="site-footer__links">
     <a href="studio.html">Studio</a>
     <a href="projects.html">Projects</a>
     <a href="awards.html">Awards</a>
     <a href="services.html">Services</a>
     <a href="contact.html">Contact</a>
   </nav>
-  <span class="proj-footer__copy">© <span id="yr"></span> Studio Logan</span>
+  <span class="site-footer__copy">© <span id="yr"></span> Studio Logan</span>
 </footer>
 
 <div class="lb-overlay" id="lightbox">
