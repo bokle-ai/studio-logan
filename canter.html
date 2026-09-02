@@ -90,7 +90,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 /* MORE IMAGES */
 .proj-gallery-more {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   border-top: 1px solid rgba(176,154,122,.15);
   gap: .5rem;
   padding: .5rem;
@@ -146,7 +146,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .proj-hero__carousel { height: 65vw; }
   .proj-gallery-intro { grid-template-columns: 1fr; min-height: auto; }
   .proj-gallery-intro__right { height: 65vw; }
-  .proj-gallery-more { grid-template-columns: 1fr 1fr; }
+  .proj-gallery-more { grid-template-columns: 1fr; }
   .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
   .site-footer { padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .site-footer__right { align-items: flex-start; }
@@ -242,6 +242,11 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 <!-- CTA -->
 
 <!-- FOOTER -->
+<div class="cta-strip">
+  <span class="cta-strip__text">Ready to start your project?</span>
+  <a href="contact.html" class="cta-strip__btn">Get in Touch</a>
+</div>
+
 <footer class="site-footer">
   <div class="site-footer__left">
     <a href="index.html" class="site-footer__brand">

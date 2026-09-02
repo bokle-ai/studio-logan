@@ -46,7 +46,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .proj-gallery-intro__text { font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--mid); max-width: 44ch; }
 .proj-gallery-intro__right { overflow: hidden; }
 .proj-gallery-intro__right img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.proj-gallery-more { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid rgba(176,154,122,.15); gap: .5rem; padding: .5rem; }
+.proj-gallery-more { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(176,154,122,.15); gap: .5rem; padding: .5rem; }
 .proj-gallery-more img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; cursor: pointer; transition: opacity .3s; }
 .proj-gallery-more img:hover { opacity: .88; }
 .proj-gallery-intro__right img { cursor: pointer; transition: opacity .3s; }
@@ -84,7 +84,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .proj-hero__carousel { height: 65vw; }
   .proj-gallery-intro { grid-template-columns: 1fr; min-height: auto; }
   .proj-gallery-intro__right { height: 65vw; }
-  .proj-gallery-more { grid-template-columns: 1fr 1fr; }
+  .proj-gallery-more { grid-template-columns: 1fr; }
   .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
   .site-footer { padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .site-footer__right { align-items: flex-start; }
@@ -172,6 +172,11 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   <img src="assets/img/hardrock-lobby-bar.jpg"  alt="Lobby Bar">
   <img src="assets/img/hardrock-kuro-pdr.jpg"   alt="Kuro Private Dining">
   <img src="assets/img/hardrock-steakhouse.jpg" alt="Council Oak Steakhouse">
+</div>
+
+<div class="cta-strip">
+  <span class="cta-strip__text">Ready to start your project?</span>
+  <a href="contact.html" class="cta-strip__btn">Get in Touch</a>
 </div>
 
 <footer class="site-footer">
