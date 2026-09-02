@@ -20,8 +20,6 @@
   --f-sans:    "Poppins", system-ui, sans-serif;
 }
 html, body {
-  height: 100%;
-  overflow: hidden;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--f-sans);
@@ -80,7 +78,6 @@ html, body {
 
 /* ── PAGE LAYOUT ── */
 .projects-page {
-  height: calc(100vh - 68px);
   margin-top: 68px;
   display: flex;
   flex-direction: column;
@@ -132,9 +129,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1.4rem;
-  flex: 1;
   align-content: start;
-  overflow-y: auto;
 }
 
 .project-item {
@@ -190,7 +185,7 @@ html, body {
 .cta-strip__btn { font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
 .cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
 /* ── FOOTER ── */
-.site-footer { padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-top: 1px solid rgba(176,154,122,.15); flex-wrap: wrap; background: var(--bg); flex-shrink: 0; }
+.site-footer { margin: 0 -2.5rem; padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-top: 1px solid rgba(176,154,122,.28); flex-wrap: wrap; background: var(--bg); }
 .site-footer__left { display: flex; flex-direction: column; gap: .5rem; }
 .site-footer__brand { display: flex; align-items: center; gap: .55rem; text-decoration: none; color: var(--ink); }
 .site-footer__mark { width: 20px; height: 20px; object-fit: contain; opacity: .45; }
@@ -206,15 +201,14 @@ html, body {
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  html, body { overflow: auto; }
-  .projects-page { height: auto; padding: 1.5rem; gap: 1.2rem; }
+  .projects-page { padding: 1.5rem; gap: 1.2rem; }
   .projects-grid { grid-template-columns: 1fr 1fr; grid-template-rows: none; gap: 1rem; }
   .project-card { height: 44vw; }
   .project-card__name { font-size: .82rem; }
   .project-card__place { font-size: .6rem; }
   .projects-header { text-align: center; align-items: center; gap: .7rem; }
   .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
-  .site-footer { padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
+  .site-footer { margin: 0 -1.5rem; padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .site-footer__right { align-items: flex-start; }
   .top-nav__links { gap: 1.2rem; }
   .top-nav__links a { font-size: .6rem; }
