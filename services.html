@@ -43,12 +43,14 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 /* ── PAGE WRAPPER ── */
 .sv-page { margin-top: 68px; }
 
-/* ── HEADER BAND (like projects page) ── */
+/* ── HEADER BAND ── */
 .sv-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 3rem;
-  padding: 2rem 2.5rem;
+  text-align: center;
+  gap: 1rem;
+  padding: 2.5rem 2.5rem;
   border-bottom: 1px solid rgba(176,154,122,.2);
   flex-shrink: 0;
 }
@@ -59,18 +61,14 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--mid);
-  white-space: nowrap;
 }
-.sv-header__rule {
-  height: 1px;
-  background: rgba(176,154,122,.25);
-  flex: 0 0 2rem;
-}
+.sv-header__rule { display: none; }
 .sv-header__quote {
   font-family: var(--f-display);
-  font-size: clamp(1rem, 1.6vw, 1.3rem);
-  line-height: 1.5;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  line-height: 1.4;
   color: var(--ink);
+  max-width: 56ch;
 }
 .sv-header__quote strong {
   font-family: var(--f-display);
@@ -234,7 +232,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .sv-header { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.5rem; }
+  .sv-header { padding: 1.5rem; }
   .sv-expertise { grid-template-columns: 1fr; }
   .sv-expertise__content { padding: 2.5rem 1.5rem; border-right: none; border-bottom: 1px solid rgba(176,154,122,.15); }
   .sv-expertise__media { height: 60vw; }
