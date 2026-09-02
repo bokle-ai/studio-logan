@@ -210,7 +210,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   </div>
 
   <div class="proj-hero__carousel">
-    <video class="proj-hero__video" autoplay muted loop playsinline>
+    <video class="proj-hero__video" webkit-playsinline autoplay muted loop playsinline>
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3HiJm4PQMqCJ0ZuGEAan5mkwSTZ/hf_20260902_195216_883a20b0-2acb-4ca3-9d99-b49a62076277.mp4" type="video/mp4">
     </video>
   </div>
@@ -306,6 +306,18 @@ document.getElementById('yr').textContent = new Date().getFullYear();
       links.classList.remove('is-open');
     }
   });
+})();
+</script>
+<script>
+(function(){
+  function tryPlay(){
+    document.querySelectorAll('video').forEach(function(v){
+      v.muted = true;
+      v.play().catch(function(){});
+    });
+  }
+  document.addEventListener('DOMContentLoaded', tryPlay);
+  document.addEventListener('touchstart', tryPlay, {once: true});
 })();
 </script>
 </body>

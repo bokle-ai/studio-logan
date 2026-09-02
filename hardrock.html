@@ -145,7 +145,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
     <div class="proj-meta__row"><span class="proj-meta__key">Status</span><span class="proj-meta__val">Completed</span></div>
   </div>
   <div class="proj-hero__carousel">
-    <video class="proj-hero__video" autoplay loop muted playsinline>
+    <video class="proj-hero__video" webkit-playsinline autoplay loop muted playsinline>
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3HiJm4PQMqCJ0ZuGEAan5mkwSTZ/hf_20260902_090542_e30911df-25cb-43eb-909a-1df55db88adf.mp4" type="video/mp4">
     </video>
     <img class="proj-hero__carousel-img is-active" src="assets/img/hardrock-card.jpg"   alt="Hard Rock Lobby Bar">
@@ -243,6 +243,18 @@ document.getElementById('yr').textContent = new Date().getFullYear();
       links.classList.remove('is-open');
     }
   });
+})();
+</script>
+<script>
+(function(){
+  function tryPlay(){
+    document.querySelectorAll('video').forEach(function(v){
+      v.muted = true;
+      v.play().catch(function(){});
+    });
+  }
+  document.addEventListener('DOMContentLoaded', tryPlay);
+  document.addEventListener('touchstart', tryPlay, {once: true});
 })();
 </script>
 </body>
