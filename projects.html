@@ -261,48 +261,8 @@ html, body {
     <p class="projects-quote">We create <strong>memorable spaces</strong> &amp; experiences across <strong>various typologies</strong> that bring people together</p>
   </div>
 
-  <div class="projects-grid">
-
-    <div class="project-item">
-      <a class="project-card" href="canter.html">
-        <img class="project-card__img" src="assets/img/canter-card.jpg" alt="Canter Hotel">
-      </a>
-      <div class="project-card__meta">
-        <p class="project-card__name">Canter Hotel</p>
-        <p class="project-card__place">Oklahoma City · USA</p>
-      </div>
-    </div>
-
-    <div class="project-item">
-      <a class="project-card" href="hardrock.html">
-        <img class="project-card__img" src="assets/img/hardrock-card.jpg" alt="Hard Rock Athens">
-      </a>
-      <div class="project-card__meta">
-        <p class="project-card__name">Hard Rock Athens</p>
-        <p class="project-card__place">Athens · Greece</p>
-      </div>
-    </div>
-
-    <div class="project-item">
-      <a class="project-card" href="park432.html">
-        <img class="project-card__img" src="assets/img/manhattan-card.jpg" alt="432 Park Residence">
-      </a>
-      <div class="project-card__meta">
-        <p class="project-card__name">Private Residence</p>
-        <p class="project-card__place">432 Park Avenue · Manhattan</p>
-      </div>
-    </div>
-
-    <div class="project-item">
-      <a class="project-card" href="piertop.html">
-        <img class="project-card__img" src="assets/img/piertop-card.jpg" alt="Pier Top">
-      </a>
-      <div class="project-card__meta">
-        <p class="project-card__name">Pier Top</p>
-        <p class="project-card__place">Fort Lauderdale · Florida</p>
-      </div>
-    </div>
-
+  <div class="projects-grid" id="projects-grid">
+    <!-- populated from content.json -->
   </div>
 
   <footer class="site-footer">
@@ -325,7 +285,25 @@ html, body {
 
 </div>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+  fetch('content.json?v=' + Date.now())
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var grid = document.getElementById('projects-grid');
+      var projects = data.projects || [];
+      if (!projects.length) return;
+      grid.innerHTML = projects.map(function(p){
+        return '<div class="project-item"><a class="project-card" href="' + p.url + '"><img class="project-card__img" src="' + p.coverImage + '" alt="' + p.displayName + '"></a><div class="project-card__meta"><p class="project-card__name">' + p.displayName + '</p><p class="project-card__place">' + p.location + '</p></div></div>';
+      }).join('');
+    })
+    .catch(function(){
+      /* fallback: show placeholder if content.json unavailable */
+      document.getElementById('projects-grid').innerHTML = '<p style="color:var(--mid);padding:2rem">Unable to load projects.</p>';
+    });
+})();
+</script>
 <script>
 (function(){
   var btn = document.getElementById('navHamburger');

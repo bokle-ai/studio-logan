@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Studio Logan</title>
+<link rel="icon" href="assets/img/lion-double.png" type="image/png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f5f2;--ink:#1a1712;--mid:#8a7f72;--gold:#b09a7a;
+  --dark:#1a1712;--darker:#111009;--panel:#242018;
+  --f-display:"Tenor Sans",serif;--f-sans:"Poppins",system-ui,sans-serif;
+  --radius:4px;
+}
+html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* ── AUTH SCREENS ── */
+.auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--darker);padding:2rem}
+.auth-box{background:#242018;border:1px solid rgba(176,154,122,.2);padding:3rem 2.5rem;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:1.8rem}
+.auth-logo{width:52px;height:52px;object-fit:contain;opacity:.85}
+.auth-title{font-family:var(--f-display);font-size:1.4rem;letter-spacing:.08em;text-transform:uppercase;color:#f7f5f2;text-align:center}
+.auth-sub{font-size:.72rem;font-weight:300;line-height:1.7;color:var(--mid);text-align:center;max-width:32ch}
+.auth-form{display:flex;flex-direction:column;gap:.9rem;width:100%}
+.auth-field{display:flex;flex-direction:column;gap:.35rem}
+.auth-field label{font-size:.55rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.auth-field input{background:rgba(255,255,255,.04);border:1px solid rgba(176,154,122,.25);padding:.7rem .9rem;font-family:var(--f-sans);font-size:.82rem;color:#f7f5f2;outline:none;transition:border-color .2s}
+.auth-field input:focus{border-color:var(--gold)}
+.auth-field input::placeholder{color:rgba(255,255,255,.25)}
+.auth-btn{margin-top:.4rem;background:var(--gold);color:var(--darker);border:none;padding:.8rem;font-family:var(--f-sans);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.auth-btn:hover{background:#c4ae90}
+.auth-note{font-size:.58rem;color:var(--mid);text-align:center;line-height:1.6;max-width:36ch}
+.auth-err{font-size:.65rem;color:#e07070;background:rgba(220,80,80,.1);border:1px solid rgba(220,80,80,.25);padding:.55rem .8rem;text-align:center;display:none}
+.auth-err.show{display:block}
+
+/* ── DASHBOARD LAYOUT ── */
+#screen-dashboard{display:flex;flex-direction:column;height:100vh}
+.admin-header{display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;background:var(--darker);border-bottom:1px solid rgba(176,154,122,.15);flex-shrink:0}
+.admin-header__brand{display:flex;align-items:center;gap:.6rem}
+.admin-header__logo{width:24px;height:24px;object-fit:contain;opacity:.7}
+.admin-header__name{font-family:var(--f-display);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#f7f5f2}
+.admin-header__badge{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(176,154,122,.12);border:1px solid rgba(176,154,122,.3);padding:.2rem .5rem;margin-left:.4rem}
+.admin-header__right{display:flex;align-items:center;gap:.8rem}
+.admin-status{font-size:.6rem;color:var(--mid);font-style:italic}
+.admin-status.saving{color:var(--gold)}
+.admin-status.saved{color:#7ec87e}
+.admin-status.error{color:#e07070}
+.hbtn{padding:.5rem 1.1rem;font-family:var(--f-sans);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:none;transition:background .2s,color .2s}
+.hbtn--outline{background:transparent;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.2)}
+.hbtn--outline:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+.hbtn--gold{background:var(--gold);color:var(--darker)}
+.hbtn--gold:hover{background:#c4ae90}
+.hbtn--gold:disabled{opacity:.5;cursor:not-allowed}
+
+.admin-body{display:flex;flex:1;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.admin-sidebar{width:200px;background:var(--panel);border-right:1px solid rgba(176,154,122,.12);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sidebar-section{padding:.8rem 1rem .3rem;font-size:.48rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(176,154,122,.45)}
+.sidebar-link{display:flex;align-items:center;gap:.65rem;padding:.65rem 1.1rem;font-size:.68rem;font-weight:400;letter-spacing:.06em;color:rgba(255,255,255,.5);text-decoration:none;cursor:pointer;border-left:2px solid transparent;transition:color .2s,border-color .2s,background .2s;user-select:none}
+.sidebar-link:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
+.sidebar-link.active{color:#f7f5f2;border-left-color:var(--gold);background:rgba(176,154,122,.07)}
+.sidebar-link svg{width:14px;height:14px;flex-shrink:0;opacity:.7}
+.sidebar-link.active svg{opacity:1}
+.sidebar-sep{height:1px;background:rgba(176,154,122,.1);margin:.4rem 0}
+.sidebar-logout{margin-top:auto;padding:1rem 1.1rem;font-size:.6rem;color:rgba(255,255,255,.3);cursor:pointer;transition:color .2s;border-top:1px solid rgba(176,154,122,.08)}
+.sidebar-logout:hover{color:#e07070}
+
+/* ── MAIN CONTENT ── */
+.admin-main{flex:1;overflow-y:auto;background:var(--bg)}
+.section-panel{display:none;padding:2rem 2.5rem;max-width:900px}
+.section-panel.active{display:block}
+.sp-title{font-family:var(--f-display);font-size:1.5rem;color:var(--ink);margin-bottom:.3rem}
+.sp-desc{font-size:.72rem;font-weight:300;color:var(--mid);margin-bottom:2rem;line-height:1.6}
+.sp-rule{height:1px;background:rgba(176,154,122,.2);margin-bottom:2rem}
+
+/* Field groups */
+.field-group{display:flex;flex-direction:column;gap:1.2rem;margin-bottom:2rem}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field label{font-size:.55rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.field input,.field textarea,.field select{background:#fff;border:1px solid rgba(176,154,122,.3);padding:.65rem .75rem;font-family:var(--f-sans);font-size:.82rem;color:var(--ink);outline:none;transition:border-color .2s;border-radius:var(--radius);width:100%}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}
+.field textarea{resize:vertical;min-height:90px;line-height:1.6}
+.field-hint{font-size:.58rem;color:var(--mid);margin-top:.2rem}
+.field-full{grid-column:1/-1}
+
+.save-row{padding-top:1rem;border-top:1px solid rgba(176,154,122,.15);display:flex;align-items:center;gap:1rem}
+.sbtn{padding:.65rem 1.8rem;font-family:var(--f-sans);font-size:.65rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border:none;transition:background .2s}
+.sbtn--primary{background:var(--gold);color:#fff}
+.sbtn--primary:hover{background:#9a866a}
+.sbtn--ghost{background:transparent;color:var(--mid);border:1px solid rgba(176,154,122,.35)}
+.sbtn--ghost:hover{border-color:var(--gold);color:var(--ink)}
+.sbtn--danger{background:transparent;color:#c0504d;border:1px solid rgba(192,80,77,.35)}
+.sbtn--danger:hover{background:rgba(192,80,77,.08)}
+.save-msg{font-size:.62rem;color:#7ec87e;opacity:0;transition:opacity .4s}
+.save-msg.show{opacity:1}
+
+/* List items (projects, awards, team) */
+.item-list{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}
+.item-row{display:flex;align-items:center;gap.75rem;padding:.85rem 1rem;background:#fff;border:1px solid rgba(176,154,122,.2);border-radius:var(--radius);gap:.75rem}
+.item-row__thumb{width:52px;height:38px;object-fit:cover;border-radius:2px;flex-shrink:0;background:rgba(176,154,122,.1)}
+.item-row__thumb--ph{display:flex;align-items:center;justify-content:center;color:rgba(176,154,122,.4);font-size:.6rem}
+.item-row__info{flex:1;min-width:0}
+.item-row__name{font-family:var(--f-display);font-size:.88rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-row__sub{font-size:.6rem;color:var(--mid);letter-spacing:.06em}
+.item-row__actions{display:flex;gap:.4rem;flex-shrink:0}
+.iabtn{padding:.38rem .75rem;font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(176,154,122,.3);background:transparent;color:var(--mid);border-radius:var(--radius);transition:all .2s}
+.iabtn:hover{border-color:var(--gold);color:var(--ink)}
+.iabtn--danger:hover{border-color:#c0504d;color:#c0504d}
+.add-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;background:transparent;border:1px dashed rgba(176,154,122,.4);color:var(--mid);border-radius:var(--radius);transition:all .2s}
+.add-btn:hover{border-color:var(--gold);color:var(--ink)}
+
+/* Image picker */
+.img-picker{display:flex;flex-direction:column;gap:.6rem}
+.img-picker__preview{width:100%;height:160px;object-fit:cover;border-radius:var(--radius);background:rgba(176,154,122,.08);border:1px solid rgba(176,154,122,.2);display:flex;align-items:center;justify-content:center;color:var(--mid);font-size:.7rem;overflow:hidden}
+.img-picker__preview img{width:100%;height:100%;object-fit:cover}
+.img-picker__row{display:flex;gap:.5rem;align-items:center}
+.img-picker__url{flex:1}
+.img-picker__upload{padding:.55rem .85rem;font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;background:transparent;border:1px solid rgba(176,154,122,.35);color:var(--mid);border-radius:var(--radius);transition:all .2s;white-space:nowrap}
+.img-picker__upload:hover{border-color:var(--gold);color:var(--ink)}
+.img-picker__file{display:none}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border:1px solid rgba(176,154,122,.2);padding:2rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;border-radius:var(--radius);position:relative}
+.modal__title{font-family:var(--f-display);font-size:1.1rem;color:var(--ink);margin-bottom:1.5rem}
+.modal__close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--mid);line-height:1}
+.modal__close:hover{color:var(--ink)}
+.modal__footer{display:flex;gap:.7rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(176,154,122,.15)}
+
+/* Media library */
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.75rem;margin-top:1rem}
+.media-item{position:relative;aspect-ratio:1;overflow:hidden;border-radius:var(--radius);border:2px solid transparent;cursor:pointer;background:rgba(176,154,122,.08)}
+.media-item img{width:100%;height:100%;object-fit:cover;display:block}
+.media-item:hover{border-color:var(--gold)}
+.media-item__name{position:absolute;bottom:0;left:0;right:0;background:rgba(26,23,18,.75);font-size:.48rem;color:#fff;padding:.3rem .4rem;letter-spacing:.06em;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.media-upload-zone{border:2px dashed rgba(176,154,122,.35);border-radius:var(--radius);padding:2.5rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:1.5rem}
+.media-upload-zone:hover,.media-upload-zone.drag{border-color:var(--gold);background:rgba(176,154,122,.04)}
+.media-upload-zone__icon{font-size:2rem;margin-bottom:.5rem;opacity:.4}
+.media-upload-zone__text{font-size:.72rem;color:var(--mid)}
+.media-upload-zone__sub{font-size:.6rem;color:rgba(138,127,114,.6);margin-top:.3rem}
+.upload-input{display:none}
+
+/* Publish panel */
+.pub-box{background:var(--darker);border:1px solid rgba(176,154,122,.2);border-radius:var(--radius);padding:1.8rem;color:#f7f5f2;margin-bottom:1.5rem}
+.pub-box__title{font-family:var(--f-display);font-size:1rem;margin-bottom:.5rem;color:var(--gold)}
+.pub-box__text{font-size:.72rem;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:1.2rem}
+.pub-log{font-family:monospace;font-size:.65rem;color:rgba(255,255,255,.5);background:#111;border-radius:var(--radius);padding:.8rem 1rem;min-height:60px;max-height:200px;overflow-y:auto;white-space:pre-wrap;margin-top:.8rem}
+.pub-log .ok{color:#7ec87e}
+.pub-log .err{color:#e07070}
+.pub-log .info{color:var(--gold)}
+
+/* Tags */
+.tag{display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .6rem;font-size:.55rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:2px}
+.tag--gold{background:rgba(176,154,122,.15);color:var(--gold);border:1px solid rgba(176,154,122,.25)}
+.tag--green{background:rgba(126,200,126,.1);color:#5a9a5a;border:1px solid rgba(126,200,126,.25)}
+
+/* Toast */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--darker);color:#f7f5f2;padding:.75rem 1.2rem;border-radius:var(--radius);font-size:.7rem;border-left:3px solid var(--gold);opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s;z-index:9999;pointer-events:none;max-width:320px}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.error{border-left-color:#e07070}
+
+/* Stats editor */
+.stat-row{display:grid;grid-template-columns:140px 1fr;gap:.6rem;align-items:center;padding:.6rem .8rem;background:#fff;border:1px solid rgba(176,154,122,.2);border-radius:var(--radius);margin-bottom:.4rem}
+.stat-row input{border:none;border-bottom:1px solid rgba(176,154,122,.3);background:transparent;font-family:var(--f-sans);font-size:.8rem;color:var(--ink);padding:.2rem 0;outline:none;width:100%}
+.stat-row input:focus{border-bottom-color:var(--gold)}
+.stat-row__sep{text-align:center;color:rgba(176,154,122,.4);font-size:.8rem}
+
+/* Services list editor */
+.services-list-editor{display:flex;flex-direction:column;gap:.4rem}
+.svc-item{display:flex;align-items:center;gap:.5rem;background:#fff;border:1px solid rgba(176,154,122,.2);border-radius:var(--radius);padding:.5rem .7rem}
+.svc-item input{flex:1;border:none;background:transparent;font-family:var(--f-sans);font-size:.82rem;color:var(--ink);outline:none}
+.svc-item__del{background:none;border:none;color:rgba(176,154,122,.5);cursor:pointer;font-size:1rem;line-height:1;padding:.1rem .3rem;transition:color .2s;flex-shrink:0}
+.svc-item__del:hover{color:#c0504d}
+.svc-add{display:inline-flex;align-items:center;gap:.4rem;font-size:.62rem;color:var(--mid);cursor:pointer;padding:.4rem 0;background:none;border:none;font-family:var(--f-sans);transition:color .2s;margin-top:.2rem}
+.svc-add:hover{color:var(--gold)}
+
+/* Hero images editor */
+.hero-img-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .8rem;background:#fff;border:1px solid rgba(176,154,122,.2);border-radius:var(--radius);margin-bottom:.4rem}
+.hero-img-item__thumb{width:64px;height:40px;object-fit:cover;border-radius:2px;flex-shrink:0;background:rgba(176,154,122,.1)}
+.hero-img-item__fields{flex:1;display:flex;flex-direction:column;gap:.3rem}
+.hero-img-item__fields input{border:none;border-bottom:1px solid rgba(176,154,122,.2);background:transparent;font-family:var(--f-sans);font-size:.75rem;color:var(--ink);padding:.15rem 0;outline:none;width:100%}
+.hero-img-item__fields input:focus{border-bottom-color:var(--gold)}
+.hero-img-item__del{background:none;border:none;color:rgba(176,154,122,.4);cursor:pointer;font-size:1rem;line-height:1;flex-shrink:0}
+.hero-img-item__del:hover{color:#c0504d}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ SETUP SCREEN ══════════════════ -->
+<div id="screen-setup" class="auth-screen" style="display:none">
+  <div class="auth-box">
+    <img src="assets/img/lion-double.png" alt="Studio Logan" class="auth-logo">
+    <div>
+      <p class="auth-title">Admin Setup</p>
+      <p class="auth-sub" style="margin-top:.5rem">First time here. Set your admin password and connect to GitHub.</p>
+    </div>
+    <div class="auth-form" id="setup-form">
+      <div class="auth-field">
+        <label>Admin Password</label>
+        <input type="password" id="setup-pw" placeholder="Choose a password">
+      </div>
+      <div class="auth-field">
+        <label>Confirm Password</label>
+        <input type="password" id="setup-pw2" placeholder="Confirm password">
+      </div>
+      <div class="auth-field">
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="setup-pat" placeholder="ghp_…">
+      </div>
+      <p class="auth-note">Your PAT needs repo read/write scope. It will be stored in your browser only.</p>
+      <div class="auth-err" id="setup-err"></div>
+      <button class="auth-btn" onclick="doSetup()">Set Up Admin</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ LOGIN SCREEN ══════════════════ -->
+<div id="screen-login" class="auth-screen" style="display:none">
+  <div class="auth-box">
+    <img src="assets/img/lion-double.png" alt="Studio Logan" class="auth-logo">
+    <div>
+      <p class="auth-title">Studio Logan</p>
+      <p class="auth-sub" style="margin-top:.4rem">Content Management</p>
+    </div>
+    <div class="auth-form">
+      <div class="auth-field">
+        <label>Admin Password</label>
+        <input type="password" id="login-pw" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="auth-field">
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="login-pat" placeholder="ghp_… (stored per session)" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="auth-err" id="login-err"></div>
+      <button class="auth-btn" onclick="doLogin()">Sign In</button>
+    </div>
+    <p class="auth-note" style="cursor:pointer;text-decoration:underline" onclick="resetAdmin()">Reset admin (forgot password)</p>
+  </div>
+</div>
+
+<!-- ══════════════════ DASHBOARD ══════════════════ -->
+<div id="screen-dashboard" style="display:none;flex-direction:column;height:100vh">
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-header__brand">
+      <img src="assets/img/lion-double.png" alt="" class="admin-header__logo">
+      <span class="admin-header__name">Studio Logan</span>
+      <span class="admin-header__badge">Admin</span>
+    </div>
+    <div class="admin-header__right">
+      <span class="admin-status" id="admin-status">Loaded</span>
+      <button class="hbtn hbtn--outline" onclick="discardChanges()">Discard</button>
+      <button class="hbtn hbtn--gold" id="btn-publish" onclick="publishToSite()">Publish to Site</button>
+    </div>
+  </header>
+
+  <div class="admin-body">
+
+    <!-- Sidebar -->
+    <nav class="admin-sidebar">
+      <div class="sidebar-section">Content</div>
+      <div class="sidebar-link active" data-sec="home" onclick="switchSec('home',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </div>
+      <div class="sidebar-link" data-sec="projects" onclick="switchSec('projects',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </div>
+      <div class="sidebar-link" data-sec="awards" onclick="switchSec('awards',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        Awards
+      </div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-section">Pages</div>
+      <div class="sidebar-link" data-sec="studio" onclick="switchSec('studio',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="2"/></svg>
+        Studio
+      </div>
+      <div class="sidebar-link" data-sec="services" onclick="switchSec('services',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Services
+      </div>
+      <div class="sidebar-link" data-sec="contact" onclick="switchSec('contact',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.54 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.4a16 16 0 0 0 6.72 6.72l.87-1.77a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Contact
+      </div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-section">Assets</div>
+      <div class="sidebar-link" data-sec="media" onclick="switchSec('media',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Media Library
+      </div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-link" data-sec="publish" onclick="switchSec('publish',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Publish
+      </div>
+      <div class="sidebar-logout" onclick="logout()">← Sign out</div>
+    </nav>
+
+    <!-- Main -->
+    <main class="admin-main">
+
+      <!-- HOME -->
+      <div id="sec-home" class="section-panel active">
+        <p class="sp-title">Home Page</p>
+        <p class="sp-desc">Edit the hero headline and manage the rotating hero images.</p>
+        <div class="sp-rule"></div>
+
+        <div class="field-group">
+          <div class="field">
+            <label>Hero Headline</label>
+            <input type="text" id="home-heroTitle" oninput="markDirty()">
+          </div>
+          <div class="field">
+            <label>CTA Button Text</label>
+            <input type="text" id="home-heroCta" oninput="markDirty()">
+          </div>
+        </div>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem">Hero Images <span style="font-weight:300;letter-spacing:0;text-transform:none;color:var(--mid)">(drag to reorder — coming soon)</span></p>
+        <div id="home-images-list"></div>
+        <button class="add-btn" onclick="addHeroImage()">+ Add Hero Image</button>
+
+        <div class="save-row" style="margin-top:1.5rem">
+          <button class="sbtn sbtn--primary" onclick="saveSection('home')">Save Home</button>
+          <span class="save-msg" id="msg-home"></span>
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div id="sec-projects" class="section-panel">
+        <p class="sp-title">Projects</p>
+        <p class="sp-desc">Manage your project portfolio. Changes publish to projects.html automatically.</p>
+        <div class="sp-rule"></div>
+        <div class="item-list" id="projects-list"></div>
+        <button class="add-btn" onclick="openProjectModal(null)">+ Add Project</button>
+      </div>
+
+      <!-- AWARDS -->
+      <div id="sec-awards" class="section-panel">
+        <p class="sp-title">Awards</p>
+        <p class="sp-desc">Manage awards and recognition. Changes publish to awards.html automatically.</p>
+        <div class="sp-rule"></div>
+        <div class="item-list" id="awards-list"></div>
+        <button class="add-btn" onclick="openAwardModal(null)">+ Add Award</button>
+      </div>
+
+      <!-- STUDIO -->
+      <div id="sec-studio" class="section-panel">
+        <p class="sp-title">Studio Page</p>
+        <p class="sp-desc">Edit copy, founder bio, team members and statistics.</p>
+        <div class="sp-rule"></div>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem">Hero</p>
+        <div class="field-group">
+          <div class="field">
+            <label>Hero Title</label>
+            <input type="text" id="studio-heroTitle" oninput="markDirty()">
+          </div>
+        </div>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem">Philosophy</p>
+        <div class="field-group">
+          <div class="field">
+            <label>Lead Line</label>
+            <input type="text" id="studio-philosophyLead" oninput="markDirty()">
+          </div>
+          <div class="field">
+            <label>Body Paragraph 1</label>
+            <textarea id="studio-philosophyBody1" oninput="markDirty()"></textarea>
+          </div>
+          <div class="field">
+            <label>Body Paragraph 2</label>
+            <textarea id="studio-philosophyBody2" oninput="markDirty()"></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Philosophy Subtitle</label>
+              <input type="text" id="studio-philosophySubtitle" oninput="markDirty()">
+            </div>
+            <div class="field">
+              <label>Philosophy Principle</label>
+              <input type="text" id="studio-philosophyPrinciple" oninput="markDirty()">
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem">Stats</p>
+        <div id="studio-stats-list" style="margin-bottom:1.5rem"></div>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem">Founder</p>
+        <div class="field-group">
+          <div class="field-row">
+            <div class="field">
+              <label>Founder Name</label>
+              <input type="text" id="studio-founderName" oninput="markDirty()">
+            </div>
+            <div class="field">
+              <label>Founder Role</label>
+              <input type="text" id="studio-founderRole" oninput="markDirty()">
+            </div>
+          </div>
+          <div class="field">
+            <label>Founder Quote</label>
+            <textarea id="studio-founderQuote" oninput="markDirty()"></textarea>
+          </div>
+          <div class="field">
+            <label>Bio Paragraph 1</label>
+            <textarea id="studio-founderBio1" oninput="markDirty()"></textarea>
+          </div>
+          <div class="field">
+            <label>Bio Paragraph 2</label>
+            <textarea id="studio-founderBio2" oninput="markDirty()"></textarea>
+          </div>
+        </div>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem">Team Members</p>
+        <div class="item-list" id="team-list"></div>
+        <button class="add-btn" onclick="openTeamModal(null)">+ Add Team Member</button>
+
+        <div class="save-row" style="margin-top:1.5rem">
+          <button class="sbtn sbtn--primary" onclick="saveSection('studio')">Save Studio</button>
+          <span class="save-msg" id="msg-studio"></span>
+        </div>
+      </div>
+
+      <!-- SERVICES -->
+      <div id="sec-services" class="section-panel">
+        <p class="sp-title">Services Page</p>
+        <p class="sp-desc">Edit the services header, expertise areas, services list, and closing quote.</p>
+        <div class="sp-rule"></div>
+
+        <div class="field-group">
+          <div class="field">
+            <label>Header Quote</label>
+            <input type="text" id="svc-headerQuote" oninput="markDirty()">
+          </div>
+          <div class="field">
+            <label>Expertise Section Title</label>
+            <input type="text" id="svc-expertiseTitle" oninput="markDirty()">
+          </div>
+        </div>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem">Expertise Areas</p>
+        <div class="services-list-editor" id="svc-areas-list" style="margin-bottom:1.2rem"></div>
+        <button class="svc-add" onclick="addSvcArea()">+ Add Area</button>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;margin-top:1.5rem">Services — Column 1</p>
+        <div class="services-list-editor" id="svc-list1" style="margin-bottom:1.2rem"></div>
+        <button class="svc-add" onclick="addSvcItem(1)">+ Add Service</button>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;margin-top:1.5rem">Services — Column 2</p>
+        <div class="services-list-editor" id="svc-list2" style="margin-bottom:1.2rem"></div>
+        <button class="svc-add" onclick="addSvcItem(2)">+ Add Service</button>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;margin-top:1.5rem">Closing Quote</p>
+        <div class="field-group">
+          <div class="field">
+            <label>Quote Text</label>
+            <textarea id="svc-quoteText" oninput="markDirty()"></textarea>
+          </div>
+          <div class="field">
+            <label>Quote Attribution</label>
+            <input type="text" id="svc-quoteAuthor" oninput="markDirty()">
+          </div>
+        </div>
+
+        <div class="save-row">
+          <button class="sbtn sbtn--primary" onclick="saveSection('services')">Save Services</button>
+          <span class="save-msg" id="msg-services"></span>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div id="sec-contact" class="section-panel">
+        <p class="sp-title">Contact Page</p>
+        <p class="sp-desc">Edit the contact heading, sub-copy, and contact details.</p>
+        <div class="sp-rule"></div>
+
+        <div class="field-group">
+          <div class="field-row">
+            <div class="field">
+              <label>Page Heading</label>
+              <input type="text" id="ct-heading" oninput="markDirty()">
+            </div>
+            <div class="field">
+              <label>Sub-copy</label>
+              <input type="text" id="ct-subtext" oninput="markDirty()">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Email Address</label>
+              <input type="email" id="ct-email" oninput="markDirty()">
+            </div>
+            <div class="field">
+              <label>Phone Number</label>
+              <input type="text" id="ct-phone" oninput="markDirty()">
+            </div>
+          </div>
+          <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Social Links</p>
+          <div class="field-row">
+            <div class="field">
+              <label>Instagram URL</label>
+              <input type="url" id="ct-instagram" oninput="markDirty()" placeholder="https://instagram.com/…">
+            </div>
+            <div class="field">
+              <label>LinkedIn URL</label>
+              <input type="url" id="ct-linkedin" oninput="markDirty()" placeholder="https://linkedin.com/…">
+            </div>
+          </div>
+          <div class="field" style="max-width:50%">
+            <label>Pinterest URL</label>
+            <input type="url" id="ct-pinterest" oninput="markDirty()" placeholder="https://pinterest.com/…">
+          </div>
+        </div>
+
+        <div class="save-row">
+          <button class="sbtn sbtn--primary" onclick="saveSection('contact')">Save Contact</button>
+          <span class="save-msg" id="msg-contact"></span>
+        </div>
+      </div>
+
+      <!-- MEDIA -->
+      <div id="sec-media" class="section-panel">
+        <p class="sp-title">Media Library</p>
+        <p class="sp-desc">Upload images to the site's assets folder. Click any image to copy its URL for use elsewhere.</p>
+        <div class="sp-rule"></div>
+
+        <div class="media-upload-zone" id="media-drop-zone" onclick="document.getElementById('media-file-input').click()">
+          <div class="media-upload-zone__icon">⬆</div>
+          <div class="media-upload-zone__text">Click or drag &amp; drop images here</div>
+          <div class="media-upload-zone__sub">JPG, PNG, WebP, SVG — uploads directly to GitHub</div>
+        </div>
+        <input type="file" id="media-file-input" class="upload-input" accept="image/*" multiple onchange="uploadMediaFiles(this.files)">
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem">Uploaded Images</p>
+        <p style="font-size:.7rem;color:var(--mid);margin-bottom:1rem" id="media-list-note">Click an image to copy its path.</p>
+        <div class="media-grid" id="media-grid">
+          <p style="font-size:.7rem;color:var(--mid);grid-column:1/-1">Loading media list…</p>
+        </div>
+      </div>
+
+      <!-- PUBLISH -->
+      <div id="sec-publish" class="section-panel">
+        <p class="sp-title">Publish to Live Site</p>
+        <p class="sp-desc">Save all pending changes and push to GitHub. Cloudflare Pages auto-deploys within ~30 seconds.</p>
+        <div class="sp-rule"></div>
+
+        <div class="pub-box">
+          <p class="pub-box__title">How publishing works</p>
+          <p class="pub-box__text">When you click "Publish", the admin writes your changes to <code>content.json</code> in your GitHub repository (<code>bokle-ai/studio-logan</code>). Cloudflare Pages detects the commit and rebuilds your live site at <strong>studiologan.in</strong> automatically — no FTP, no manual upload.</p>
+        </div>
+
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.5rem">
+          <button class="sbtn sbtn--primary" onclick="publishToSite()">Publish Now</button>
+          <button class="sbtn sbtn--ghost" onclick="discardChanges()">Discard All Changes</button>
+        </div>
+
+        <p style="font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Publish Log</p>
+        <div class="pub-log" id="pub-log">Ready. Press "Publish Now" to deploy.</div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ══ PROJECT MODAL ══ -->
+<div class="modal-overlay" id="project-modal">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal('project-modal')">×</button>
+    <p class="modal__title" id="proj-modal-title">Add Project</p>
+    <div class="field-group">
+      <div class="field-row">
+        <div class="field">
+          <label>Project ID (slug)</label>
+          <input type="text" id="pm-id" placeholder="e.g. canter">
+          <p class="field-hint">Lowercase, no spaces. Used for the HTML filename.</p>
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <select id="pm-category" oninput="markDirty()">
+            <option>Hospitality</option>
+            <option>Residential</option>
+            <option>Commercial &amp; Workplace</option>
+            <option>Branded Environments</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Project Title</label>
+          <input type="text" id="pm-title" placeholder="e.g. Canter Hotel">
+        </div>
+        <div class="field">
+          <label>Display Name (card)</label>
+          <input type="text" id="pm-displayName" placeholder="e.g. Canter Hotel">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="pm-location" placeholder="e.g. Oklahoma City · USA">
+        </div>
+        <div class="field">
+          <label>Year</label>
+          <input type="text" id="pm-year" placeholder="e.g. 2024">
+        </div>
+      </div>
+      <div class="field">
+        <label>Detail Page URL</label>
+        <input type="text" id="pm-url" placeholder="e.g. canter.html">
+      </div>
+      <div class="field">
+        <label>Cover Image Path</label>
+        <div class="img-picker">
+          <div class="img-picker__preview" id="pm-img-preview">
+            <span>No image selected</span>
+          </div>
+          <div class="img-picker__row">
+            <input type="text" class="img-picker__url field" id="pm-coverImage" placeholder="assets/img/…" oninput="previewPmImg()" style="border:1px solid rgba(176,154,122,.3);border-radius:4px;padding:.5rem .7rem">
+            <label class="img-picker__upload" for="pm-img-file">Upload Image</label>
+            <input type="file" id="pm-img-file" class="img-picker__file" accept="image/*" onchange="handlePmImgUpload(this)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="sbtn sbtn--ghost" onclick="closeModal('project-modal')">Cancel</button>
+      <button class="sbtn sbtn--primary" onclick="saveProjectFromModal()">Save Project</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AWARD MODAL ══ -->
+<div class="modal-overlay" id="award-modal">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal('award-modal')">×</button>
+    <p class="modal__title" id="award-modal-title">Add Award</p>
+    <div class="field-group">
+      <div class="field-row">
+        <div class="field">
+          <label>Year</label>
+          <input type="text" id="am-year" placeholder="e.g. 2024">
+        </div>
+        <div class="field">
+          <label>Award Title</label>
+          <input type="text" id="am-title" placeholder="e.g. IIDA Design Excellence Award">
+        </div>
+      </div>
+      <div class="field">
+        <label>Organization / Sub-title</label>
+        <input type="text" id="am-org" placeholder="e.g. Interior Design Excellence — Hospitality Category">
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="sbtn sbtn--ghost" onclick="closeModal('award-modal')">Cancel</button>
+      <button class="sbtn sbtn--primary" onclick="saveAwardFromModal()">Save Award</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TEAM MODAL ══ -->
+<div class="modal-overlay" id="team-modal">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal('team-modal')">×</button>
+    <p class="modal__title" id="team-modal-title">Add Team Member</p>
+    <div class="field-group">
+      <div class="field-row">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" id="tm-name" placeholder="e.g. Jane Smith">
+        </div>
+        <div class="field">
+          <label>Role / Title</label>
+          <input type="text" id="tm-role" placeholder="e.g. Senior Architect">
+        </div>
+      </div>
+      <div class="field">
+        <label>Photo Path</label>
+        <div class="img-picker">
+          <div class="img-picker__preview" id="tm-img-preview">
+            <span>No photo selected</span>
+          </div>
+          <div class="img-picker__row">
+            <input type="text" class="img-picker__url field" id="tm-photo" placeholder="assets/img/…" oninput="previewTmImg()" style="border:1px solid rgba(176,154,122,.3);border-radius:4px;padding:.5rem .7rem">
+            <label class="img-picker__upload" for="tm-img-file">Upload</label>
+            <input type="file" id="tm-img-file" class="img-picker__file" accept="image/*" onchange="handleTmImgUpload(this)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="sbtn sbtn--ghost" onclick="closeModal('team-modal')">Cancel</button>
+      <button class="sbtn sbtn--primary" onclick="saveTeamFromModal()">Save Member</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════════════
+var GH_OWNER = 'bokle-ai';
+var GH_REPO  = 'studio-logan';
+var GH_BRANCH = 'main';
+var CONTENT_PATH = 'site/content.json';
+var ASSETS_PATH  = 'site/assets/img/';
+
+// ══════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════
+var ghPat = '';
+var content = {};
+var contentSha = '';
+var dirty = false;
+var editingProjectIdx = null;
+var editingAwardIdx   = null;
+var editingTeamIdx    = null;
+
+// ══════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════
+(function init(){
+  var hash = localStorage.getItem('sl_admin_hash');
+  if (!hash) {
+    show('screen-setup');
+  } else {
+    show('screen-login');
+  }
+})();
+
+function show(id){
+  ['screen-setup','screen-login','screen-dashboard'].forEach(function(s){
+    var el = document.getElementById(s);
+    el.style.display = 'none';
+  });
+  var el = document.getElementById(id);
+  if (id === 'screen-dashboard') {
+    el.style.display = 'flex';
+  } else {
+    el.style.display = 'flex';
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════════════════════
+async function sha256(str){
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+}
+
+async function doSetup(){
+  var pw  = document.getElementById('setup-pw').value.trim();
+  var pw2 = document.getElementById('setup-pw2').value.trim();
+  var pat = document.getElementById('setup-pat').value.trim();
+  var err = document.getElementById('setup-err');
+  err.classList.remove('show');
+  if (!pw) { showErr(err,'Enter a password'); return; }
+  if (pw !== pw2) { showErr(err,'Passwords do not match'); return; }
+  if (!pat) { showErr(err,'Enter your GitHub PAT'); return; }
+  var hash = await sha256(pw);
+  localStorage.setItem('sl_admin_hash', hash);
+  ghPat = pat;
+  sessionStorage.setItem('sl_pat', pat);
+  await loadDashboard();
+}
+
+async function doLogin(){
+  var pw  = document.getElementById('login-pw').value;
+  var pat = document.getElementById('login-pat').value.trim();
+  var err = document.getElementById('login-err');
+  err.classList.remove('show');
+  if (!pw || !pat) { showErr(err,'Enter password and GitHub PAT'); return; }
+  var hash = await sha256(pw);
+  var stored = localStorage.getItem('sl_admin_hash');
+  if (hash !== stored) { showErr(err,'Incorrect password'); return; }
+  ghPat = pat;
+  sessionStorage.setItem('sl_pat', pat);
+  await loadDashboard();
+}
+
+function logout(){
+  ghPat = '';
+  sessionStorage.removeItem('sl_pat');
+  show('screen-login');
+  document.getElementById('login-pw').value = '';
+  document.getElementById('login-pat').value = '';
+}
+
+function resetAdmin(){
+  if (confirm('This will clear your stored password hash. You will need to set a new password. Continue?')) {
+    localStorage.removeItem('sl_admin_hash');
+    sessionStorage.removeItem('sl_pat');
+    show('screen-setup');
+  }
+}
+
+function showErr(el, msg){ el.textContent = msg; el.classList.add('show'); }
+
+// ══════════════════════════════════════════════════════
+//  GITHUB API
+// ══════════════════════════════════════════════════════
+async function ghGet(path){
+  var r = await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path+'?ref='+GH_BRANCH, {
+    headers:{ Authorization:'token '+ghPat, Accept:'application/vnd.github.v3+json' }
+  });
+  if (!r.ok) throw new Error('GitHub '+r.status+': '+r.statusText);
+  return r.json();
+}
+
+async function ghPut(path, b64content, message, sha){
+  var body = { message:message, content:b64content, branch:GH_BRANCH };
+  if (sha) body.sha = sha;
+  var r = await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path, {
+    method:'PUT',
+    headers:{ Authorization:'token '+ghPat, 'Content-Type':'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok){
+    var t = await r.text();
+    throw new Error('GitHub PUT '+r.status+': '+t);
+  }
+  return r.json();
+}
+
+async function ghList(path){
+  var r = await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path+'?ref='+GH_BRANCH, {
+    headers:{ Authorization:'token '+ghPat, Accept:'application/vnd.github.v3+json' }
+  });
+  if (!r.ok) return [];
+  return r.json();
+}
+
+function b64encode(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64decode(str){
+  return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));
+}
+
+async function fileToB64(file){
+  return new Promise(function(resolve){
+    var reader = new FileReader();
+    reader.onload = function(e){ resolve(e.target.result.split(',')[1]); };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  DASHBOARD LOAD
+// ══════════════════════════════════════════════════════
+async function loadDashboard(){
+  setStatus('Loading…','saving');
+  show('screen-dashboard');
+  try {
+    var file = await ghGet(CONTENT_PATH);
+    contentSha = file.sha;
+    content = JSON.parse(b64decode(file.content));
+  } catch(e) {
+    // content.json may not exist yet — use defaults
+    content = getDefaultContent();
+    contentSha = '';
+    pubLog('info','content.json not found — will create on first publish.');
+  }
+  populateAllSections();
+  setStatus('Ready','');
+  loadMediaList();
+}
+
+function populateAllSections(){
+  populateHome();
+  populateProjects();
+  populateAwards();
+  populateStudio();
+  populateServices();
+  populateContact();
+}
+
+// ══════════════════════════════════════════════════════
+//  HOME
+// ══════════════════════════════════════════════════════
+function populateHome(){
+  var h = content.home || {};
+  v('home-heroTitle', h.heroTitle || '');
+  v('home-heroCta', h.heroCta || '');
+  renderHeroImages(h.heroImages || []);
+}
+
+function renderHeroImages(imgs){
+  var list = document.getElementById('home-images-list');
+  list.innerHTML = imgs.map(function(img, i){
+    return '<div class="hero-img-item" data-idx="'+i+'">'
+      + '<img class="hero-img-item__thumb" src="'+img.src+'" onerror="this.style.background=\'rgba(176,154,122,.1)\';this.style.display=\'block\'">'
+      + '<div class="hero-img-item__fields">'
+        + '<input type="text" value="'+esc(img.src)+'" placeholder="Image path (assets/img/…)" onchange="updateHeroImg('+i+',\'src\',this.value)">'
+        + '<input type="text" value="'+esc(img.label)+'" placeholder="Label (shown on slide)" onchange="updateHeroImg('+i+',\'label\',this.value)">'
+        + '<input type="text" value="'+esc(img.alt)+'" placeholder="Alt text" onchange="updateHeroImg('+i+',\'alt\',this.value)">'
+      + '</div>'
+      + '<button class="hero-img-item__del" onclick="removeHeroImg('+i+')" title="Remove">×</button>'
+    + '</div>';
+  }).join('');
+}
+
+function updateHeroImg(idx, key, val){
+  if (!content.home.heroImages) content.home.heroImages = [];
+  content.home.heroImages[idx][key] = val;
+  if (key === 'src'){
+    var thumb = document.querySelector('[data-idx="'+idx+'"] .hero-img-item__thumb');
+    if (thumb) thumb.src = val;
+  }
+  markDirty();
+}
+function removeHeroImg(idx){
+  content.home.heroImages.splice(idx, 1);
+  renderHeroImages(content.home.heroImages);
+  markDirty();
+}
+function addHeroImage(){
+  if (!content.home.heroImages) content.home.heroImages = [];
+  content.home.heroImages.push({src:'',alt:'',label:''});
+  renderHeroImages(content.home.heroImages);
+  markDirty();
+}
+
+function saveSection(sec){
+  collectSection(sec);
+  flashMsg('msg-'+sec,'Saved locally — press Publish to go live');
+  markDirty();
+}
+
+function collectSection(sec){
+  if (sec === 'home'){
+    if (!content.home) content.home = {};
+    content.home.heroTitle = g('home-heroTitle');
+    content.home.heroCta   = g('home-heroCta');
+  }
+  if (sec === 'studio'){
+    var s = content.studio || {};
+    s.heroTitle         = g('studio-heroTitle');
+    s.philosophyLead    = g('studio-philosophyLead');
+    s.philosophyBody1   = g('studio-philosophyBody1');
+    s.philosophyBody2   = g('studio-philosophyBody2');
+    s.philosophySubtitle= g('studio-philosophySubtitle');
+    s.philosophyPrinciple = g('studio-philosophyPrinciple');
+    s.founderName       = g('studio-founderName');
+    s.founderRole       = g('studio-founderRole');
+    s.founderQuote      = g('studio-founderQuote');
+    s.founderBio1       = g('studio-founderBio1');
+    s.founderBio2       = g('studio-founderBio2');
+    // stats collected inline
+    content.studio = s;
+  }
+  if (sec === 'services'){
+    var sv = content.services || {};
+    sv.headerQuote    = g('svc-headerQuote');
+    sv.expertiseTitle = g('svc-expertiseTitle');
+    sv.quoteText      = g('svc-quoteText');
+    sv.quoteAuthor    = g('svc-quoteAuthor');
+    sv.expertiseAreas = collectSvcList('svc-areas-list');
+    sv.servicesList1  = collectSvcList('svc-list1');
+    sv.servicesList2  = collectSvcList('svc-list2');
+    content.services = sv;
+  }
+  if (sec === 'contact'){
+    var c = content.contact || {};
+    c.heading  = g('ct-heading');
+    c.subtext  = g('ct-subtext');
+    c.email    = g('ct-email');
+    c.phone    = g('ct-phone');
+    c.socialLinks = { instagram: g('ct-instagram'), linkedin: g('ct-linkedin'), pinterest: g('ct-pinterest') };
+    content.contact = c;
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  PROJECTS
+// ══════════════════════════════════════════════════════
+function populateProjects(){
+  var list = document.getElementById('projects-list');
+  var projects = content.projects || [];
+  if (!projects.length){ list.innerHTML='<p style="font-size:.72rem;color:var(--mid)">No projects yet.</p>'; return; }
+  list.innerHTML = projects.map(function(p,i){
+    return '<div class="item-row">'
+      + '<img class="item-row__thumb" src="'+p.coverImage+'" alt="" onerror="this.style.opacity=0">'
+      + '<div class="item-row__info"><p class="item-row__name">'+esc(p.displayName)+'</p><p class="item-row__sub">'+esc(p.location)+' &nbsp;·&nbsp; '+esc(p.category)+'</p></div>'
+      + '<div class="item-row__actions">'
+        + '<button class="iabtn" onclick="openProjectModal('+i+')">Edit</button>'
+        + '<button class="iabtn iabtn--danger" onclick="deleteProject('+i+')">Delete</button>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+}
+
+function openProjectModal(idx){
+  editingProjectIdx = idx;
+  var p = idx !== null ? (content.projects[idx] || {}) : {};
+  document.getElementById('proj-modal-title').textContent = idx === null ? 'Add Project' : 'Edit Project';
+  v('pm-id', p.id || '');
+  v('pm-title', p.title || '');
+  v('pm-displayName', p.displayName || '');
+  v('pm-location', p.location || '');
+  v('pm-year', p.year || '');
+  v('pm-url', p.url || '');
+  v('pm-coverImage', p.coverImage || '');
+  document.getElementById('pm-category').value = p.category || 'Hospitality';
+  previewPmImg();
+  openModal('project-modal');
+}
+
+function saveProjectFromModal(){
+  if (!content.projects) content.projects = [];
+  var p = {
+    id: g('pm-id') || ('proj-'+Date.now()),
+    title: g('pm-title'),
+    displayName: g('pm-displayName') || g('pm-title'),
+    location: g('pm-location'),
+    category: document.getElementById('pm-category').value,
+    year: g('pm-year'),
+    coverImage: g('pm-coverImage'),
+    url: g('pm-url') || g('pm-id')+'.html',
+    featured: true
+  };
+  if (editingProjectIdx !== null){ content.projects[editingProjectIdx] = p; }
+  else { content.projects.push(p); }
+  closeModal('project-modal');
+  populateProjects();
+  markDirty();
+  toast('Project saved — publish to go live');
+}
+
+function deleteProject(idx){
+  if (!confirm('Delete "'+content.projects[idx].title+'"?')) return;
+  content.projects.splice(idx, 1);
+  populateProjects();
+  markDirty();
+  toast('Project removed');
+}
+
+function previewPmImg(){
+  var src = g('pm-coverImage');
+  var pv  = document.getElementById('pm-img-preview');
+  if (src){ pv.innerHTML = '<img src="'+esc(src)+'" style="width:100%;height:100%;object-fit:cover">'; }
+  else { pv.innerHTML = '<span>No image selected</span>'; }
+}
+
+async function handlePmImgUpload(input){
+  if (!input.files.length) return;
+  var file = input.files[0];
+  toast('Uploading '+file.name+'…');
+  var b64 = await fileToB64(file);
+  try {
+    var path = ASSETS_PATH + file.name;
+    var result = await ghPut(path, b64, 'Upload image: '+file.name, null);
+    var imgPath = 'assets/img/'+file.name;
+    v('pm-coverImage', imgPath);
+    previewPmImg();
+    toast('Uploaded: '+file.name);
+  } catch(e){ toast('Upload failed: '+e.message, true); }
+}
+
+// ══════════════════════════════════════════════════════
+//  AWARDS
+// ══════════════════════════════════════════════════════
+function populateAwards(){
+  var list = document.getElementById('awards-list');
+  var awards = content.awards || [];
+  if (!awards.length){ list.innerHTML='<p style="font-size:.72rem;color:var(--mid)">No awards yet.</p>'; return; }
+  list.innerHTML = awards.map(function(a,i){
+    return '<div class="item-row">'
+      + '<div class="item-row__thumb item-row__thumb--ph"><span style="font-size:1rem">🏆</span></div>'
+      + '<div class="item-row__info"><p class="item-row__name">'+esc(a.title)+'</p><p class="item-row__sub">'+esc(a.year)+' &nbsp;·&nbsp; '+esc(a.organization)+'</p></div>'
+      + '<div class="item-row__actions">'
+        + '<button class="iabtn" onclick="openAwardModal('+i+')">Edit</button>'
+        + '<button class="iabtn iabtn--danger" onclick="deleteAward('+i+')">Delete</button>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+}
+
+function openAwardModal(idx){
+  editingAwardIdx = idx;
+  var a = idx !== null ? (content.awards[idx] || {}) : {};
+  document.getElementById('award-modal-title').textContent = idx === null ? 'Add Award' : 'Edit Award';
+  v('am-year', a.year || '');
+  v('am-title', a.title || '');
+  v('am-org', a.organization || '');
+  openModal('award-modal');
+}
+
+function saveAwardFromModal(){
+  if (!content.awards) content.awards = [];
+  var a = {
+    id: 'award-'+Date.now(),
+    year: g('am-year'),
+    title: g('am-title'),
+    organization: g('am-org')
+  };
+  if (editingAwardIdx !== null){ a.id = content.awards[editingAwardIdx].id || a.id; content.awards[editingAwardIdx] = a; }
+  else { content.awards.push(a); }
+  closeModal('award-modal');
+  populateAwards();
+  markDirty();
+  toast('Award saved — publish to go live');
+}
+
+function deleteAward(idx){
+  if (!confirm('Delete "'+content.awards[idx].title+'"?')) return;
+  content.awards.splice(idx, 1);
+  populateAwards();
+  markDirty();
+  toast('Award removed');
+}
+
+// ══════════════════════════════════════════════════════
+//  STUDIO
+// ══════════════════════════════════════════════════════
+function populateStudio(){
+  var s = content.studio || {};
+  v('studio-heroTitle', s.heroTitle || '');
+  v('studio-philosophyLead', s.philosophyLead || '');
+  v('studio-philosophyBody1', s.philosophyBody1 || '');
+  v('studio-philosophyBody2', s.philosophyBody2 || '');
+  v('studio-philosophySubtitle', s.philosophySubtitle || '');
+  v('studio-philosophyPrinciple', s.philosophyPrinciple || '');
+  v('studio-founderName', s.founderName || '');
+  v('studio-founderRole', s.founderRole || '');
+  v('studio-founderQuote', s.founderQuote || '');
+  v('studio-founderBio1', s.founderBio1 || '');
+  v('studio-founderBio2', s.founderBio2 || '');
+  renderStudioStats(s.stats || []);
+  renderTeamList(s.team || []);
+}
+
+function renderStudioStats(stats){
+  var el = document.getElementById('studio-stats-list');
+  el.innerHTML = stats.map(function(st,i){
+    return '<div class="stat-row">'
+      + '<input type="text" value="'+esc(st.value)+'" placeholder="Value" onchange="updateStat('+i+',\'value\',this.value)">'
+      + '<span class="stat-row__sep">—</span>'
+      + '<input type="text" value="'+esc(st.label)+'" placeholder="Label" onchange="updateStat('+i+',\'label\',this.value)">'
+    + '</div>';
+  }).join('');
+}
+function updateStat(i,k,v){ if(content.studio&&content.studio.stats)content.studio.stats[i][k]=v; markDirty(); }
+
+function renderTeamList(team){
+  var list = document.getElementById('team-list');
+  list.innerHTML = team.map(function(m,i){
+    return '<div class="item-row">'
+      + (m.photo ? '<img class="item-row__thumb" src="'+m.photo+'" alt="" onerror="this.style.opacity=0">' : '<div class="item-row__thumb item-row__thumb--ph"><span>👤</span></div>')
+      + '<div class="item-row__info"><p class="item-row__name">'+esc(m.name)+'</p><p class="item-row__sub">'+esc(m.role)+'</p></div>'
+      + '<div class="item-row__actions">'
+        + '<button class="iabtn" onclick="openTeamModal('+i+')">Edit</button>'
+        + '<button class="iabtn iabtn--danger" onclick="deleteTeam('+i+')">Remove</button>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+}
+
+function openTeamModal(idx){
+  editingTeamIdx = idx;
+  var m = idx !== null ? (content.studio.team[idx] || {}) : {};
+  document.getElementById('team-modal-title').textContent = idx === null ? 'Add Team Member' : 'Edit Team Member';
+  v('tm-name', m.name || '');
+  v('tm-role', m.role || '');
+  v('tm-photo', m.photo || '');
+  previewTmImg();
+  openModal('team-modal');
+}
+
+function saveTeamFromModal(){
+  if (!content.studio) content.studio = {};
+  if (!content.studio.team) content.studio.team = [];
+  var m = { name: g('tm-name'), role: g('tm-role'), photo: g('tm-photo'), isFounder: false };
+  if (editingTeamIdx !== null){ m.isFounder = content.studio.team[editingTeamIdx].isFounder; content.studio.team[editingTeamIdx] = m; }
+  else { content.studio.team.push(m); }
+  closeModal('team-modal');
+  renderTeamList(content.studio.team);
+  markDirty();
+  toast('Team member saved');
+}
+
+function deleteTeam(idx){
+  if (!confirm('Remove "'+content.studio.team[idx].name+'"?')) return;
+  content.studio.team.splice(idx, 1);
+  renderTeamList(content.studio.team);
+  markDirty();
+}
+
+function previewTmImg(){
+  var src = g('tm-photo');
+  var pv  = document.getElementById('tm-img-preview');
+  if (src){ pv.innerHTML = '<img src="'+esc(src)+'" style="width:100%;height:100%;object-fit:cover">'; }
+  else { pv.innerHTML = '<span>No photo selected</span>'; }
+}
+
+async function handleTmImgUpload(input){
+  if (!input.files.length) return;
+  var file = input.files[0];
+  toast('Uploading '+file.name+'…');
+  var b64 = await fileToB64(file);
+  try {
+    await ghPut(ASSETS_PATH+file.name, b64, 'Upload team photo: '+file.name, null);
+    var imgPath = 'assets/img/'+file.name;
+    v('tm-photo', imgPath);
+    previewTmImg();
+    toast('Uploaded: '+file.name);
+  } catch(e){ toast('Upload failed: '+e.message, true); }
+}
+
+// ══════════════════════════════════════════════════════
+//  SERVICES
+// ══════════════════════════════════════════════════════
+function populateServices(){
+  var sv = content.services || {};
+  v('svc-headerQuote', sv.headerQuote || '');
+  v('svc-expertiseTitle', sv.expertiseTitle || '');
+  v('svc-quoteText', sv.quoteText || '');
+  v('svc-quoteAuthor', sv.quoteAuthor || '');
+  renderSvcList('svc-areas-list', sv.expertiseAreas || []);
+  renderSvcList('svc-list1', sv.servicesList1 || []);
+  renderSvcList('svc-list2', sv.servicesList2 || []);
+}
+
+function renderSvcList(containerId, items){
+  var el = document.getElementById(containerId);
+  el.innerHTML = items.map(function(item, i){
+    return '<div class="svc-item">'
+      + '<input type="text" value="'+esc(item)+'" onchange="updateSvcItem(\''+containerId+'\','+i+',this.value)" oninput="markDirty()">'
+      + '<button class="svc-item__del" onclick="removeSvcItem(\''+containerId+'\','+i+')">×</button>'
+    + '</div>';
+  }).join('');
+}
+
+function collectSvcList(containerId){
+  var items = document.querySelectorAll('#'+containerId+' input');
+  return Array.from(items).map(function(i){ return i.value; }).filter(Boolean);
+}
+
+function updateSvcItem(cid, idx, val){ markDirty(); }
+function removeSvcItem(cid, idx){ renderSvcList(cid, collectSvcList(cid).filter(function(_,i){ return i!==idx; })); markDirty(); }
+function addSvcArea(){ var items=collectSvcList('svc-areas-list'); items.push(''); renderSvcList('svc-areas-list',items); markDirty(); }
+function addSvcItem(col){ var cid='svc-list'+col; var items=collectSvcList(cid); items.push(''); renderSvcList(cid,items); markDirty(); }
+
+// ══════════════════════════════════════════════════════
+//  CONTACT
+// ══════════════════════════════════════════════════════
+function populateContact(){
+  var c = content.contact || {};
+  v('ct-heading', c.heading || '');
+  v('ct-subtext', c.subtext || '');
+  v('ct-email', c.email || '');
+  v('ct-phone', c.phone || '');
+  var sl = c.socialLinks || {};
+  v('ct-instagram', sl.instagram || '');
+  v('ct-linkedin', sl.linkedin || '');
+  v('ct-pinterest', sl.pinterest || '');
+}
+
+// ══════════════════════════════════════════════════════
+//  MEDIA
+// ══════════════════════════════════════════════════════
+async function loadMediaList(){
+  var grid = document.getElementById('media-grid');
+  try {
+    var files = await ghList(ASSETS_PATH.slice(0,-1));
+    if (!Array.isArray(files) || !files.length){
+      grid.innerHTML = '<p style="font-size:.7rem;color:var(--mid);grid-column:1/-1">No images found in assets/img/</p>';
+      return;
+    }
+    var imgs = files.filter(function(f){ return /\.(jpg|jpeg|png|webp|svg|gif)$/i.test(f.name); });
+    grid.innerHTML = imgs.map(function(f){
+      var path = 'assets/img/'+f.name;
+      return '<div class="media-item" onclick="copyPath(\''+path+'\',this)" title="Click to copy path">'
+        + '<img src="https://raw.githubusercontent.com/'+GH_OWNER+'/'+GH_REPO+'/'+GH_BRANCH+'/site/'+path+'" alt="'+esc(f.name)+'" loading="lazy">'
+        + '<div class="media-item__name">'+esc(f.name)+'</div>'
+      + '</div>';
+    }).join('');
+  } catch(e){
+    grid.innerHTML = '<p style="font-size:.7rem;color:var(--mid);grid-column:1/-1">Could not load media list.</p>';
+  }
+}
+
+async function uploadMediaFiles(files){
+  for (var i=0; i<files.length; i++){
+    var file = files[i];
+    toast('Uploading '+file.name+'…');
+    try {
+      var b64 = await fileToB64(file);
+      await ghPut(ASSETS_PATH+file.name, b64, 'Upload image: '+file.name, null);
+      toast('✓ Uploaded '+file.name);
+    } catch(e){ toast('Failed: '+file.name+' — '+e.message, true); }
+  }
+  loadMediaList();
+}
+
+function copyPath(path, el){
+  navigator.clipboard.writeText(path).catch(function(){});
+  toast('Copied: '+path);
+}
+
+// drag-and-drop
+var dz = document.getElementById('media-drop-zone');
+if(dz){
+  dz.addEventListener('dragover',function(e){ e.preventDefault(); dz.classList.add('drag'); });
+  dz.addEventListener('dragleave',function(){ dz.classList.remove('drag'); });
+  dz.addEventListener('drop',function(e){ e.preventDefault(); dz.classList.remove('drag'); uploadMediaFiles(e.dataTransfer.files); });
+}
+
+// ══════════════════════════════════════════════════════
+//  PUBLISH
+// ══════════════════════════════════════════════════════
+async function publishToSite(){
+  var btn = document.getElementById('btn-publish');
+  btn.disabled = true;
+  setStatus('Publishing…','saving');
+  pubLog('info','Collecting all edits…');
+
+  // collect all sections before publishing
+  ['home','studio','services','contact'].forEach(function(s){ try{ collectSection(s); }catch(e){} });
+
+  try {
+    var json = JSON.stringify(content, null, 2);
+    var b64  = b64encode(json);
+    var msg  = 'Update site content via admin panel';
+    pubLog('info','Committing content.json to GitHub…');
+    var result = await ghPut(CONTENT_PATH, b64, msg, contentSha || undefined);
+    contentSha = result.content.sha;
+    dirty = false;
+    setStatus('Published ✓','saved');
+    pubLog('ok','✓ Pushed to bokle-ai/studio-logan ('+GH_BRANCH+')');
+    pubLog('ok','✓ Cloudflare Pages rebuild triggered — live in ~30s');
+    pubLog('ok','Visit studiologan.in to see changes');
+    toast('Published! Site rebuilding now…');
+  } catch(e){
+    setStatus('Error','error');
+    pubLog('err','✗ Publish failed: '+e.message);
+    toast('Publish failed: '+e.message, true);
+  }
+  btn.disabled = false;
+}
+
+function pubLog(type, msg){
+  var log = document.getElementById('pub-log');
+  var line = document.createElement('div');
+  line.className = type;
+  line.textContent = msg;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+}
+
+async function discardChanges(){
+  if (dirty && !confirm('Discard all unsaved changes and reload from GitHub?')) return;
+  await loadDashboard();
+  toast('Reloaded from GitHub');
+}
+
+// ══════════════════════════════════════════════════════
+//  UI HELPERS
+// ══════════════════════════════════════════════════════
+function switchSec(name, el){
+  document.querySelectorAll('.section-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.sidebar-link').forEach(function(l){ l.classList.remove('active'); });
+  document.getElementById('sec-'+name).classList.add('active');
+  el.classList.add('active');
+  if (name === 'media') loadMediaList();
+  if (name === 'publish'){
+    var log = document.getElementById('pub-log');
+    if (log.children.length === 0) log.textContent = 'Ready. Press "Publish Now" to deploy.';
+  }
+}
+
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+// close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(function(mo){
+  mo.addEventListener('click',function(e){ if(e.target===mo) mo.classList.remove('open'); });
+});
+
+function markDirty(){
+  dirty = true;
+  setStatus('Unsaved changes','saving');
+}
+
+function setStatus(msg, cls){
+  var el = document.getElementById('admin-status');
+  el.textContent = msg;
+  el.className = 'admin-status '+(cls||'');
+}
+
+function flashMsg(id, msg){
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(function(){ el.classList.remove('show'); }, 3000);
+}
+
+var _toastTimer;
+function toast(msg, isErr){
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show'+(isErr?' error':'');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 3500);
+}
+
+function v(id, val){ var el=document.getElementById(id); if(el) el.value=val; }
+function g(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function getDefaultContent(){
+  return {
+    home:{ heroTitle:'We create spaces that tell stories', heroCta:'Start a project', heroImages:[] },
+    projects:[], awards:[],
+    studio:{ heroTitle:'', philosophyLead:'', philosophyBody1:'', philosophyBody2:'', stats:[], team:[], founderName:'', founderRole:'', founderQuote:'', founderBio1:'', founderBio2:'' },
+    services:{ headerQuote:'', expertiseTitle:'', expertiseAreas:[], servicesList1:[], servicesList2:[], quoteText:'', quoteAuthor:'' },
+    contact:{ heading:'', subtext:'', email:'', phone:'', socialLinks:{} },
+    global:{}
+  };
+}
+</script>
+</body>
+</html>

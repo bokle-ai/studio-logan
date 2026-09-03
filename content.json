@@ -1,0 +1,156 @@
+{
+  "home": {
+    "heroTitle": "We create spaces that tell stories",
+    "heroCta": "Start a project",
+    "heroImages": [
+      {"src": "assets/img/canter-hero.jpg", "alt": "Canter Hotel", "label": "Canter Hotel · Oklahoma City"},
+      {"src": "assets/img/hardrock-ext.jpg", "alt": "Hard Rock Athens", "label": "Hard Rock Athens · Greece"},
+      {"src": "assets/img/manhattan-living.jpg", "alt": "432 Park Avenue", "label": "432 Park Avenue · Manhattan"},
+      {"src": "assets/img/piertop-exterior.jpg", "alt": "Pier Top", "label": "Pier Top · Fort Lauderdale"}
+    ]
+  },
+  "projects": [
+    {
+      "id": "canter",
+      "title": "Canter Hotel",
+      "displayName": "Canter Hotel",
+      "location": "Oklahoma City · USA",
+      "category": "Hospitality",
+      "year": "2023",
+      "coverImage": "assets/img/canter-card.jpg",
+      "url": "canter.html",
+      "featured": true
+    },
+    {
+      "id": "hardrock",
+      "title": "Hard Rock Athens",
+      "displayName": "Hard Rock Athens",
+      "location": "Athens · Greece",
+      "category": "Hospitality",
+      "year": "2022",
+      "coverImage": "assets/img/hardrock-card.jpg",
+      "url": "hardrock.html",
+      "featured": true
+    },
+    {
+      "id": "park432",
+      "title": "432 Park Avenue",
+      "displayName": "Private Residence",
+      "location": "432 Park Avenue · Manhattan",
+      "category": "Residential",
+      "year": "2023",
+      "coverImage": "assets/img/manhattan-card.jpg",
+      "url": "park432.html",
+      "featured": true
+    },
+    {
+      "id": "piertop",
+      "title": "Pier Top",
+      "displayName": "Pier Top",
+      "location": "Fort Lauderdale · Florida",
+      "category": "Hospitality",
+      "year": "2024",
+      "coverImage": "assets/img/piertop-card.jpg",
+      "url": "piertop.html",
+      "featured": true
+    }
+  ],
+  "awards": [
+    {
+      "id": "award-1",
+      "year": "2024",
+      "title": "IIDA Design Excellence Award",
+      "organization": "Interior Design Excellence — Hospitality Category"
+    },
+    {
+      "id": "award-2",
+      "year": "2026",
+      "title": "Designer of the Year",
+      "organization": "Hospitality Design Awards — Las Vegas"
+    },
+    {
+      "id": "award-3",
+      "year": "2025",
+      "title": "NEWH Top Interior Designer",
+      "organization": "Network of Executive Women in Hospitality"
+    },
+    {
+      "id": "award-4",
+      "year": "2024",
+      "title": "David Saylor Interior Design Award",
+      "organization": "Pratt Institute — New York"
+    },
+    {
+      "id": "award-5",
+      "year": "2021",
+      "title": "Hyatt Design Excellence Award",
+      "organization": "Global Hospitality Design Excellence"
+    }
+  ],
+  "studio": {
+    "heroTitle": "Connecting meaning and purpose through innovation and design.",
+    "philosophyLead": "Every Space Tells a Story",
+    "philosophyBody1": "Studio Logan creates lasting experiences through their narrative. Every decision: material, proportion, light, sequence. Deliberate storytelling through spaces where every element serves the story.",
+    "philosophyBody2": "The spaces that resonate are the spaces with something to say. We listen, we understand, we build a narrative that is honest to the context. Then we make it unforgettable.",
+    "philosophySubtitle": "Our Philosophy",
+    "philosophyPrinciple": "Listen. Understand the story. Build it with precision. Make it unforgettable.",
+    "stats": [
+      {"value": "$2.7B", "label": "in built real estate"},
+      {"value": "3", "label": "Continents"},
+      {"value": "10+", "label": "international awards"}
+    ],
+    "founderName": "Loganathan Yeswanth",
+    "founderRole": "Founder & Principal Designer",
+    "founderQuote": "“We don’t design for aesthetics. We design for impact. Every narrative we build must change how people experience a space and how they remember it.”",
+    "founderBio1": "Yeswanth is a designer, storyteller, and former athlete who channels discipline and vision into creating spaces with purpose. Educated at the Pratt Institute, New York, he brings a globally-informed perspective to every project. He believes every project is an opportunity to craft a narrative that shapes human experience not just aesthetically, but emotionally and functionally.",
+    "founderBio2": "His award-winning work was recognized as Emerging Designer of the Year in Hospitality Design awards Las Vegas. His experience spans hospitality, commercial, and residential projects globally, all rooted in the conviction that design must have something to say. Context, culture, and intention drive every decision.",
+    "team": [
+      {"name": "Loganathan Yeswanth", "role": "Founder & Principal Designer", "photo": "assets/img/founder.jpg", "isFounder": true},
+      {"name": "Senior Architect", "role": "Architecture Lead", "photo": "", "isFounder": false},
+      {"name": "Interior Designer", "role": "Hospitality Design", "photo": "", "isFounder": false},
+      {"name": "Project Manager", "role": "Delivery & Coordination", "photo": "", "isFounder": false},
+      {"name": "Interior Designer", "role": "Residential Design", "photo": "", "isFounder": false},
+      {"name": "Design Researcher", "role": "Heritage & Materials", "photo": "", "isFounder": false}
+    ]
+  },
+  "services": {
+    "headerQuote": "From inception to opening & beyond we offer a 360° creative services",
+    "expertiseTitle": "Our Area of Expertise",
+    "expertiseAreas": ["Hospitality", "Residential", "Commercial & Workplace", "Branded Environments"],
+    "servicesList1": [
+      "Architecture Design",
+      "Interior Design",
+      "Custom Furniture and Lighting Design",
+      "Consulting and Strategic Collaborations",
+      "Exclusive Commissions",
+      "Concept Development"
+    ],
+    "servicesList2": [
+      "Creative Direction",
+      "Brand Strategy",
+      "Portfolio and Brand-Building",
+      "Art Direction",
+      "Styling",
+      "Legal / Intellectual Property Advisory"
+    ],
+    "quoteText": "“We don’t design for aesthetics. We design for impact. Every narrative we build must change how people experience a space and how they remember it.”",
+    "quoteAuthor": "— Loganathan Yeswanth, Founder"
+  },
+  "contact": {
+    "heading": "Let’s\nCollaborate",
+    "subtext": "Tell us about the space you want to create.",
+    "email": "loganathanyeswanth@gmail.com",
+    "phone": "+91 73050 82466",
+    "socialLinks": {
+      "instagram": "#",
+      "linkedin": "#",
+      "pinterest": "#"
+    }
+  },
+  "global": {
+    "footerEmail": "loganathanyeswanth@gmail.com",
+    "instagramUrl": "#",
+    "linkedinUrl": "#",
+    "pinterestUrl": "#"
+  }
+}
