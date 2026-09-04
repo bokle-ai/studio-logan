@@ -25,7 +25,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .top-nav { position: fixed; top: 0; left: 0; right: 0; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; background: var(--bg); border-bottom: 1px solid rgba(176,154,122,.2); z-index: 100; }
 .top-nav__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
 .top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
-.top-nav__name { font-family: var(--f-display); font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; }
+.top-nav__name { font-family: var(--f-display); font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
 .top-nav__links { display: flex; align-items: center; gap: 2.4rem; }
 .top-nav__links a { font-size: .68rem; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .25s; }
 .top-nav__links a:hover { color: var(--ink); }
@@ -212,6 +212,8 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .contact-left { padding: 5.5rem 1.5rem 2.5rem; }
   .form-row { grid-template-columns: 1fr; }
   .contact-info { gap: 2rem; flex-wrap: wrap; }
+  .top-nav__mark { width: 38px; height: 38px; }
+  .top-nav__name { font-size: 1rem; }
   .top-nav__links { gap: 1.2rem; }
   .top-nav__links a { font-size: .58rem; letter-spacing: .1em; }
   .top-nav__links a.nav-active { padding: .35rem .9rem; }
@@ -249,9 +251,9 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   </a>
   <div class="top-nav__links">
     <a href="projects.html">Projects</a>
-    <a href="awards.html">Awards</a>
-    <a href="services.html">Our Services</a>
     <a href="studio.html">Studio</a>
+    <a href="services.html">Our Services</a>
+    <a href="awards.html">Awards</a>
     <a href="contact.html" class="nav-active">Contact Us</a>
   </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
