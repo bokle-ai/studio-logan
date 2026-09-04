@@ -137,15 +137,11 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   border-bottom: 1px solid rgba(176,154,122,.15);
 }
 .sv-list__heading {
-  font-family: var(--f-sans);
-  font-size: .65rem;
-  font-weight: 500;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--gold);
-  border-bottom: 1px solid var(--gold);
-  padding-bottom: .25rem;
-  display: inline-block;
+  font-family: var(--f-display);
+  font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--ink);
+  display: block;
   margin-bottom: 2.5rem;
 }
 .sv-list__grid {
@@ -266,11 +262,11 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
     <span class="top-nav__name">Studio Logan</span>
   </a>
   <div class="top-nav__links">
-    <a href="studio.html">Studio</a>
     <a href="projects.html">Projects</a>
     <a href="awards.html">Awards</a>
     <a href="services.html" class="nav-active">Our Services</a>
-    <a href="contact.html" class="nav-contact">Contact</a>
+    <a href="studio.html">Studio</a>
+    <a href="contact.html" class="nav-contact">Contact Us</a>
   </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -281,7 +277,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   <div class="sv-header">
     <span class="sv-header__label">Our Services</span>
     <div class="sv-header__rule"></div>
-    <p class="sv-header__quote">From <strong>inception to opening &amp; beyond</strong> we offer a 360° creative services</p>
+    <p class="sv-header__quote">From <strong>inception, opening</strong> &amp; <strong>beyond</strong></p>
   </div>
 
   <!-- Expertise — text left, images right -->

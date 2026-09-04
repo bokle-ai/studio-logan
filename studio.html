@@ -44,8 +44,101 @@
   clip-path: none !important;
 }
 
-/* ── hide old nav / cursor / preloader ── */
-.nav, .menu, .cursor, .preloader, .curtain, .scroll-progress { display: none !important; }
+/* ── hide old nav / preloader ── */
+.nav, .menu, .preloader, .curtain, .scroll-progress { display: none !important; }
+
+/* ── CUSTOM CURSOR ── */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold); pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform .1s ease, opacity .3s;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9998;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(176,154,122,.55); pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform .18s ease, width .25s, height .25s, opacity .3s;
+}
+body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
+
+/* ── SCROLL DOT INDICATOR ── */
+.scroll-dots {
+  position: fixed; right: 1.6rem; top: 50%; transform: translateY(-50%);
+  z-index: 200; display: flex; flex-direction: column; gap: .65rem; pointer-events: none;
+}
+.scroll-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(176,154,122,.3);
+  transition: background .3s, transform .3s;
+  border: 1px solid rgba(176,154,122,.4);
+}
+.scroll-dot.active {
+  background: var(--gold); transform: scale(1.3);
+  border-color: var(--gold);
+}
+@media (max-width: 768px) { .scroll-dots { display: none; } }
+
+/* ── FIX "THE" → "The" ── */
+.sp-team__title-display { text-transform: none !important; }
+
+/* ── STATS: regular font + count-up ── */
+.sp-philosophy__stat strong {
+  font-family: var(--f-sans) !important;
+  font-weight: 600 !important;
+  font-size: clamp(2rem, 4vw, 3.2rem) !important;
+  color: var(--gold);
+  line-height: 1;
+}
+
+/* ── TEAM BIO MODAL ── */
+.team-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(26,23,18,.6); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center; padding: 1.5rem;
+}
+.team-modal-overlay.open { display: flex; }
+.team-modal {
+  background: #f7f5f2; max-width: 480px; width: 100%;
+  padding: 2.5rem; position: relative;
+  border: 1px solid rgba(176,154,122,.25);
+  animation: modalIn .25s ease;
+}
+@keyframes modalIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.team-modal__close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none; font-size: 1.5rem;
+  cursor: pointer; color: var(--mid); line-height: 1;
+}
+.team-modal__close:hover { color: var(--ink); }
+.team-modal__photo {
+  width: 80px; height: 80px; border-radius: 50%;
+  object-fit: cover; margin-bottom: 1.2rem;
+  border: 2px solid rgba(176,154,122,.3);
+}
+.team-modal__photo-ph {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--ink); margin-bottom: 1.2rem;
+  border: 2px solid rgba(176,154,122,.3);
+  display: flex; align-items: flex-end; justify-content: center;
+  overflow: hidden;
+}
+.team-modal__name {
+  font-family: var(--f-display); font-size: 1.35rem;
+  color: var(--ink); margin-bottom: .25rem;
+}
+.team-modal__role {
+  font-size: .6rem; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+  display: block;
+}
+.team-modal__bio {
+  font-size: .88rem; font-weight: 300; line-height: 1.75;
+  color: var(--mid);
+}
 
 /* ── TOP NAV ── */
 .top-nav {
@@ -206,11 +299,11 @@
     <span class="top-nav__name">Studio Logan</span>
   </a>
   <div class="top-nav__links">
-    <a href="studio.html" class="nav-active">Studio</a>
     <a href="projects.html">Projects</a>
     <a href="awards.html">Awards</a>
     <a href="services.html">Our Services</a>
-    <a href="contact.html" class="nav-contact">Contact</a>
+    <a href="studio.html" class="nav-active">Studio</a>
+    <a href="contact.html" class="nav-contact">Contact Us</a>
   </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -233,10 +326,6 @@
 
   <!-- ===== BRAND PHILOSOPHY ===== -->
   <section class="sp-philosophy" id="brand-philosophy">
-    <div class="sp-philosophy__head">
-      <h2 class="sp-philosophy__title reveal-up">Where Heritage<br>Meets Vision</h2>
-    </div>
-
     <div class="sp-philosophy__block sp-philosophy__block--text-left">
       <div class="sp-philosophy__text">
         <p class="sp-philosophy__lead reveal-up">Every Space Tells a Story</p>
@@ -255,10 +344,10 @@
       <div class="sp-philosophy__text">
         <h3 class="sp-philosophy__h3 reveal-up">Our Philosophy</h3>
         <p class="sp-philosophy__body reveal-up">Listen. Understand the story. Build it with precision. Make it unforgettable.</p>
-        <div class="sp-philosophy__stats reveal-up">
-          <div class="sp-philosophy__stat"><strong>$2.7B</strong><span>in built real estate</span></div>
-          <div class="sp-philosophy__stat"><strong>3</strong><span>Continents</span></div>
-          <div class="sp-philosophy__stat"><strong>10+</strong><span>international awards</span></div>
+        <div class="sp-philosophy__stats reveal-up" id="stats-row">
+          <div class="sp-philosophy__stat"><strong data-count="2.7" data-prefix="$" data-suffix="B">$2.7B</strong><span>in built real estate</span></div>
+          <div class="sp-philosophy__stat"><strong data-count="3">3</strong><span>Continents</span></div>
+          <div class="sp-philosophy__stat"><strong data-count="10" data-suffix="+">10+</strong><span>international awards</span></div>
         </div>
       </div>
     </div>
@@ -286,41 +375,52 @@
   <section class="sp-team" id="team">
     <div class="sp-team__head">
       <h2 class="sp-team__title reveal-up"><span class="sp-team__title-display">The </span><em class="script">People</em></h2>
-      <p class="sp-team__sub reveal-up">consultants, each bringing a unique perspective to every project</p>
+      <p class="sp-team__sub reveal-up">Each brings a unique perspective to every project.</p>
     </div>
     <div class="sp-team__grid">
-      <div class="sp-team__member sp-team__member--founder reveal-up">
+      <div class="sp-team__member sp-team__member--founder reveal-up" onclick="openTeamBio(this)" data-name="Loganathan Yeswanth" data-role="Founder &amp; Principal Designer" data-photo="assets/img/founder.jpg" data-bio="Yeswanth is a designer, storyteller, and former athlete who channels discipline and vision into creating spaces with purpose. Educated at the Pratt Institute, New York, he brings a globally-informed perspective to every project — believing each is an opportunity to craft a narrative that shapes human experience emotionally and functionally. His award-winning work was recognized as Emerging Designer of the Year at the Hospitality Design Awards, Las Vegas.">
         <div class="sp-team__photo"><img src="assets/img/founder.jpg" alt="Loganathan Yeswanth"></div>
         <span class="sp-team__name">Loganathan Yeswanth</span>
         <span class="sp-team__role">Founder &amp; Principal Designer</span>
       </div>
-      <div class="sp-team__member reveal-up">
+      <div class="sp-team__member reveal-up" onclick="openTeamBio(this)" data-name="Senior Architect" data-role="Architecture Lead" data-bio="Our Architecture Lead brings deep technical expertise in structural design and spatial planning, with a background spanning large-scale hospitality and residential projects across three continents. Every structure is conceived as a story in built form.">
         <div class="sp-team__photo sp-team__photo--ph"></div>
         <span class="sp-team__name">Senior Architect</span>
         <span class="sp-team__role">Architecture Lead</span>
       </div>
-      <div class="sp-team__member reveal-up">
+      <div class="sp-team__member reveal-up" onclick="openTeamBio(this)" data-name="Interior Designer" data-role="Hospitality Design" data-bio="Specialising in immersive hospitality interiors, she translates brand narratives into tactile, sensory experiences. Her work across hotels, restaurants, and resort spaces is defined by a meticulous attention to material, light, and guest journey.">
         <div class="sp-team__photo sp-team__photo--ph"></div>
         <span class="sp-team__name">Interior Designer</span>
         <span class="sp-team__role">Hospitality Design</span>
       </div>
-      <div class="sp-team__member reveal-up">
+      <div class="sp-team__member reveal-up" onclick="openTeamBio(this)" data-name="Project Manager" data-role="Delivery &amp; Coordination" data-bio="The operational backbone of Studio Logan — overseeing project timelines, contractor relationships, and delivery across every engagement. He ensures that the studio's creative vision translates precisely from concept to construction, on time and on brief.">
         <div class="sp-team__photo sp-team__photo--ph"></div>
         <span class="sp-team__name">Project Manager</span>
         <span class="sp-team__role">Delivery &amp; Coordination</span>
       </div>
-      <div class="sp-team__member reveal-up">
+      <div class="sp-team__member reveal-up" onclick="openTeamBio(this)" data-name="Interior Designer" data-role="Residential Design" data-bio="Focused on high-end private residences, her approach blends quiet luxury with deeply personal storytelling. Each home becomes a reflection of its owner's world — refined, livable, and unmistakably intentional.">
         <div class="sp-team__photo sp-team__photo--ph"></div>
         <span class="sp-team__name">Interior Designer</span>
         <span class="sp-team__role">Residential Design</span>
       </div>
-      <div class="sp-team__member reveal-up">
+      <div class="sp-team__member reveal-up" onclick="openTeamBio(this)" data-name="Design Researcher" data-role="Heritage &amp; Materials" data-bio="Our Materials and Heritage researcher grounds every project in cultural context and material authenticity. She sources rare and regionally significant materials, ensuring Studio Logan's spaces carry a sense of place and provenance that can't be replicated.">
         <div class="sp-team__photo sp-team__photo--ph"></div>
         <span class="sp-team__name">Design Researcher</span>
         <span class="sp-team__role">Heritage &amp; Materials</span>
       </div>
     </div>
   </section>
+
+  <!-- ===== TEAM BIO MODAL ===== -->
+  <div class="team-modal-overlay" id="teamModal" onclick="if(event.target===this)closeTeamBio()">
+    <div class="team-modal">
+      <button class="team-modal__close" onclick="closeTeamBio()">×</button>
+      <div id="teamModalPhoto"></div>
+      <p class="team-modal__name" id="teamModalName"></p>
+      <span class="team-modal__role" id="teamModalRole"></span>
+      <p class="team-modal__bio" id="teamModalBio"></p>
+    </div>
+  </div>
 
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
@@ -343,6 +443,16 @@
 
 </main>
 
+
+<!-- Cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Scroll dots -->
+<nav class="scroll-dots" id="scrollDots">
+  <div class="scroll-dot active" data-target="about-founder"></div>
+  <div class="scroll-dot" data-target="team"></div>
+</nav>
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -376,6 +486,116 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     }
   });
 })();
+</script>
+
+<script>
+// ── CUSTOM CURSOR ──
+(function(){
+  var dot = document.getElementById('cursorDot');
+  var ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+  var mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  });
+  (function animRing(){
+    rx += (mx - rx) * .12; ry += (my - ry) * .12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  })();
+})();
+
+// ── SCROLL DOTS ──
+(function(){
+  var sections = ['brand-philosophy','about-founder','team'];
+  var dots = document.querySelectorAll('.scroll-dot');
+  if (!dots.length) return;
+  var allDotSections = [
+    document.getElementById('brand-philosophy'),
+    document.getElementById('about-founder'),
+    document.getElementById('team')
+  ];
+  var allDots = document.querySelectorAll('.scroll-dot');
+  // rebuild dots to match sections
+  var dotsNav = document.getElementById('scrollDots');
+  dotsNav.innerHTML = sections.map(function(s){
+    return '<div class="scroll-dot" data-target="'+s+'"></div>';
+  }).join('');
+  var sdots = document.querySelectorAll('.scroll-dot');
+  function updateDots(){
+    var scrollY = window.scrollY + window.innerHeight * 0.4;
+    var active = 0;
+    allDotSections.forEach(function(sec, i){
+      if (sec && sec.offsetTop <= scrollY) active = i;
+    });
+    sdots.forEach(function(d, i){ d.classList.toggle('active', i === active); });
+  }
+  window.addEventListener('scroll', updateDots, {passive:true});
+  updateDots();
+  sdots.forEach(function(d){
+    d.addEventListener('click', function(){
+      var sec = document.getElementById(d.dataset.target);
+      if (sec) sec.scrollIntoView({behavior:'smooth'});
+    });
+    d.style.cursor = 'pointer';
+  });
+})();
+
+// ── STAT COUNT-UP ──
+(function(){
+  var row = document.getElementById('stats-row');
+  if (!row) return;
+  var done = false;
+  var observer = new IntersectionObserver(function(entries){
+    if (entries[0].isIntersecting && !done){
+      done = true;
+      document.querySelectorAll('.sp-philosophy__stat strong[data-count]').forEach(function(el){
+        var target = parseFloat(el.dataset.count);
+        var prefix = el.dataset.prefix || '';
+        var suffix = el.dataset.suffix || '';
+        var isDecimal = target % 1 !== 0;
+        var start = 0; var duration = 1600;
+        var startTime = null;
+        function animate(ts){
+          if (!startTime) startTime = ts;
+          var progress = Math.min((ts - startTime) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var val = start + (target - start) * eased;
+          el.textContent = prefix + (isDecimal ? val.toFixed(1) : Math.round(val)) + suffix;
+          if (progress < 1) requestAnimationFrame(animate);
+        }
+        el.textContent = prefix + '0' + suffix;
+        setTimeout(function(){ requestAnimationFrame(animate); }, 200);
+      });
+    }
+  }, { threshold: 0.5 });
+  observer.observe(row);
+})();
+
+// ── TEAM BIO MODAL ──
+function openTeamBio(el){
+  var name  = el.dataset.name;
+  var role  = el.dataset.role;
+  var photo = el.dataset.photo;
+  var bio   = el.dataset.bio;
+  document.getElementById('teamModalName').textContent = name;
+  document.getElementById('teamModalRole').innerHTML = role;
+  document.getElementById('teamModalBio').textContent = bio;
+  var photoEl = document.getElementById('teamModalPhoto');
+  if (photo){
+    photoEl.innerHTML = '<img class="team-modal__photo" src="'+photo+'" alt="'+name+'">';
+  } else {
+    photoEl.innerHTML = '<div class="team-modal__photo-ph"></div>';
+  }
+  document.getElementById('teamModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTeamBio(){
+  document.getElementById('teamModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeTeamBio(); });
 </script>
 </body>
 </html>

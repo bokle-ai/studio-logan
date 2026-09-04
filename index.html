@@ -30,28 +30,71 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── TOP LOGO ── */
-.site-logo {
+/* ── INTRO LOADER ── */
+.intro-loader {
   position: fixed;
-  top: 1.8rem;
-  left: 50%;
-  transform: translateX(-50%);
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  transition: opacity .7s ease;
+}
+.intro-loader.out { opacity: 0; pointer-events: none; }
+.intro-loader__mark {
+  width: 72px; height: 72px; object-fit: contain;
+  animation: loaderPulse 1.4s ease-in-out infinite;
+}
+.intro-loader__name {
+  font-family: var(--f-display);
+  font-size: 1.1rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0;
+  animation: loaderFade .9s .3s ease forwards;
+}
+.intro-loader__line {
+  width: 40px; height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  animation: loaderLine .8s .6s ease forwards;
+}
+@keyframes loaderPulse { 0%,100%{opacity:.5;transform:scale(.96)} 50%{opacity:1;transform:scale(1)} }
+@keyframes loaderFade  { to{opacity:1} }
+@keyframes loaderLine  { to{transform:scaleX(1)} }
+
+/* ── TOP HEADER (logo + nav band) ── */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
   z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.site-logo {
   display: flex;
   align-items: center;
   gap: .7rem;
   text-decoration: none;
   color: var(--ink);
   white-space: nowrap;
+  padding: 1.1rem 2rem .9rem;
+  background: var(--bg);
+  width: 100%;
+  justify-content: center;
 }
 .site-logo__mark {
-  width: 58px;
-  height: 58px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
 }
 .site-logo__name {
   font-family: var(--f-display);
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   letter-spacing: .14em;
   text-transform: uppercase;
 }
@@ -60,8 +103,8 @@ html, body {
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: calc(100vh - 72px);
-  padding-top: 6rem; /* space for the larger centered logo */
+  height: calc(100vh - 112px);
+  margin-top: 112px;
 }
 
 /* LEFT PANEL */
@@ -158,29 +201,24 @@ html, body {
   transition: opacity .4s;
 }
 
-/* ── BOTTOM NAV ── */
+/* ── NAV BAND ── */
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 72px;
+  width: 100%;
+  height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4rem;
-  padding: 0 2.5rem;
+  gap: 3.5rem;
   background: #3a312a;
-  z-index: 50;
 }
 .bottom-nav a {
   font-family: var(--f-sans);
-  font-size: .72rem;
+  font-size: .65rem;
   font-weight: 400;
   letter-spacing: .18em;
   text-transform: uppercase;
   text-decoration: none;
-  color: rgba(255,255,255,.75);
+  color: rgba(255,255,255,.72);
   transition: color .25s;
   white-space: nowrap;
 }
@@ -188,7 +226,7 @@ html, body {
 .bottom-nav a.nav-contact {
   border: 1px solid var(--gold);
   color: rgba(255,255,255,.85);
-  padding: .55rem 1.6rem;
+  padding: .4rem 1.3rem;
   transition: color .25s, border-color .25s;
 }
 .bottom-nav a.nav-contact:hover { color: var(--gold); border-color: var(--gold); }
@@ -196,60 +234,53 @@ html, body {
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   html, body { overflow: auto; height: auto; }
-
-  /* Logo: full-width bar pinned to very top, solid background */
-  .site-logo {
-    top: 0;
-    left: 0;
-    right: 0;
-    transform: none;
-    width: 100%;
-    justify-content: center;
-    height: 56px;
-    padding: 0 1.5rem;
-    background: var(--bg);
-    border-bottom: 1px solid rgba(176,154,122,.2);
-  }
-  .site-logo__mark { width: 32px; height: 32px; }
+  .site-header { position: relative; }
+  .site-logo { padding: .9rem 1.5rem .7rem; }
+  .site-logo__mark { width: 28px; height: 28px; }
   .site-logo__name { font-size: .9rem; }
-
   .hero {
     grid-template-columns: 1fr;
     grid-template-rows: 50vh auto;
     height: auto;
-    padding-top: 56px; /* clear the logo bar */
+    margin-top: 0;
   }
-
-  /* Full-bleed image, no side padding */
   .hero__right { order: -1; height: 50vh; padding: 0; }
-
-  .hero__left {
-    padding: 2rem 1.5rem 1.5rem;
-    justify-content: flex-start;
-  }
-
+  .hero__left { padding: 2rem 1.5rem 1.5rem; justify-content: flex-start; }
   .hero__title { font-size: 2.4rem; }
-
   .bottom-nav {
-    position: relative;
     height: auto;
     flex-wrap: wrap;
-    gap: .8rem 1.4rem;
-    padding: 1.2rem 1.5rem;
-    justify-content: center;
+    gap: .7rem 1.2rem;
+    padding: 1rem 1.5rem;
   }
-  .bottom-nav a, .bottom-nav a.nav-contact { font-size: .65rem; }
-  .bottom-nav a.nav-contact { width: 100%; text-align: center; margin-top: .4rem; }
+  .bottom-nav a, .bottom-nav a.nav-contact { font-size: .62rem; }
+  .bottom-nav a.nav-contact { width: 100%; text-align: center; margin-top: .2rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- Logo -->
-<a href="index.html" class="site-logo">
-  <img src="assets/img/lion-double.png" alt="Studio Logan" class="site-logo__mark">
-  <span class="site-logo__name">Studio Logan</span>
-</a>
+<!-- Intro loader -->
+<div class="intro-loader" id="introLoader">
+  <img src="assets/img/lion-double.png" alt="Studio Logan" class="intro-loader__mark">
+  <span class="intro-loader__name">Studio Logan</span>
+  <div class="intro-loader__line"></div>
+</div>
+
+<!-- Header: logo + nav band -->
+<header class="site-header">
+  <a href="index.html" class="site-logo">
+    <img src="assets/img/lion-double.png" alt="Studio Logan" class="site-logo__mark">
+    <span class="site-logo__name">Studio Logan</span>
+  </a>
+  <nav class="bottom-nav">
+    <a href="projects.html">Projects</a>
+    <a href="awards.html">Awards</a>
+    <a href="services.html">Our Services</a>
+    <a href="studio.html">Studio</a>
+    <a href="contact.html" class="nav-contact">Contact Us</a>
+  </nav>
+</header>
 
 <!-- Hero -->
 <main class="hero">
@@ -273,17 +304,17 @@ html, body {
 
 </main>
 
-<!-- Bottom Navigation -->
-<nav class="bottom-nav">
-  <a href="studio.html">Studio</a>
-  <a href="projects.html">Projects</a>
-  <a href="awards.html">Awards</a>
-  <a href="services.html">Our Services</a>
-  <a href="contact.html" class="nav-contact">Contact</a>
-</nav>
-
-
 <script>
+// Intro loader
+(function(){
+  var loader = document.getElementById('introLoader');
+  if (!loader) return;
+  setTimeout(function(){
+    loader.classList.add('out');
+    setTimeout(function(){ loader.style.display='none'; }, 750);
+  }, 1800);
+})();
+
 (function(){
   var imgs = document.querySelectorAll('.hero__img');
   var label = document.getElementById('imgLabel');

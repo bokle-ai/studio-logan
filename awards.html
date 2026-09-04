@@ -176,11 +176,11 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
     <span class="top-nav__name">Studio Logan</span>
   </a>
   <div class="top-nav__links">
-    <a href="studio.html">Studio</a>
     <a href="projects.html">Projects</a>
     <a href="awards.html" class="nav-active">Awards</a>
     <a href="services.html">Our Services</a>
-    <a href="contact.html" class="nav-contact">Contact</a>
+    <a href="studio.html">Studio</a>
+    <a href="contact.html" class="nav-contact">Contact Us</a>
   </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -241,7 +241,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
-var TROPHY_SVG = '<svg class="award-card__trophy" viewBox="0 0 52 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 6h20l-5 26H21L16 6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M16 10c-5.5 0-9 3.5-9 8s3.5 8 9 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M36 10c5.5 0 9 3.5 9 8s-3.5 8-9 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="26" y1="32" x2="26" y2="46" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M16 46h20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><rect x="12" y="49" width="28" height="5" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg>';
+var TROPHY_SVG = '<svg class="award-card__trophy" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="1.5" d="M32 14c0 0-2-6-8-8 0 0 0 8 8 12"/><path stroke-width="1.5" d="M32 14c0 0 2-6 8-8 0 0 0 8-8 12"/><path stroke-width="1.5" d="M32 14c0 0-5-4-12-3 0 0 2 8 12 9"/><path stroke-width="1.5" d="M32 14c0 0 5-4 12-3 0 0-2 8-12 9"/><path stroke-width="1.5" d="M32 14c0 0-3 2-4 9 0 0-6-1-8-6 3-5 12-3 12-3Z"/><path stroke-width="1.5" d="M32 14c0 0 3 2 4 9 0 0 6-1 8-6-3-5-12-3-12-3Z"/><circle cx="32" cy="26" r="7" stroke-width="1.5"/><line x1="32" y1="33" x2="32" y2="44" stroke-width="1.5"/><path stroke-width="1.5" d="M24 44h16"/><path stroke-width="1.5" d="M21 47h22v3H21z"/></g></svg>';
 (function(){
   fetch('content.json?v=' + Date.now())
     .then(function(r){ return r.json(); })
