@@ -103,7 +103,7 @@ html, body {
 /* ── HERO SPLIT ── */
 .hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 5fr 7fr;
   height: calc(100vh - 112px);
   margin-top: 112px;
 }
@@ -158,6 +158,7 @@ html, body {
   color: var(--ink);
   border-bottom: 1px solid var(--ink);
   padding-bottom: .2rem;
+  align-self: flex-start;
   transition: color .3s, border-color .3s;
 }
 .hero__cta:hover { color: var(--gold); border-color: var(--gold); }
@@ -165,7 +166,7 @@ html, body {
 /* RIGHT PANEL */
 .hero__right {
   background: var(--bg);
-  padding: 0 1.5rem .8rem;
+  padding: 0;
   display: flex;
   align-items: stretch;
 }
@@ -189,14 +190,17 @@ html, body {
 
 .hero__img-label {
   position: absolute;
-  bottom: 1.8rem;
-  left: 2rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(58,49,42,.88);
+  padding: .6rem 1.5rem;
   font-family: var(--f-sans);
-  font-size: .7rem;
+  font-size: .65rem;
   font-weight: 400;
-  letter-spacing: .12em;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.75);
+  color: rgba(255,255,255,.92);
   z-index: 5;
   pointer-events: none;
   transition: opacity .4s;
