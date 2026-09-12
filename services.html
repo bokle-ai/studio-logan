@@ -226,6 +226,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .sv-list { padding: 2.5rem 1.5rem; }
   .sv-list__grid { grid-template-columns: 1fr; gap: 0; }
   .sv-quote__inner { padding: 3rem 1.5rem; }
+  .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
   .site-footer { padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .site-footer__right { align-items: flex-start; }
   .top-nav__mark { width: 38px; height: 38px; }
@@ -253,6 +254,10 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .top-nav__links.is-open { display: flex; }
   .top-nav__links a { font-size: .78rem; }
 }
+.cta-strip { display: flex; align-items: center; justify-content: space-between; padding: 2.5rem 2.5rem; border-top: 1px solid rgba(101,80,70,.2); }
+.cta-strip__text { font-family: var(--f-display); font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink); }
+.cta-strip__btn { font-size: .68rem; font-weight: .5; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
+.cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
 </style>
 </head>
 <body>
@@ -335,7 +340,12 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   </div>
 
   <!-- Footer -->
-  <footer class="site-footer">
+  <div class="cta-strip">
+  <span class="cta-strip__text">Ready to start your project?</span>
+  <a href="contact.html" class="cta-strip__btn">Start a Project &nbsp;&rarr;</a>
+</div>
+
+<footer class="site-footer">
   <div class="site-footer__left">
     <a href="index.html" class="site-footer__brand">
       <img src="assets/img/lion-double.png" alt="" class="site-footer__mark">
