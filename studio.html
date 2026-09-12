@@ -149,8 +149,8 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
   align-items: center;
   justify-content: space-between;
   padding: 0 2.5rem;
-  background: #f7f5f2;
-  border-bottom: none;
+  background: var(--gold);
+  border-bottom: 1px solid rgba(255,255,255,.15);
   z-index: 100;
 }
 .top-nav__brand {
@@ -166,7 +166,7 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
   font-size: .82rem;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: rgba(255,255,255,.9);
 }
 .top-nav__links {
   display: flex;
@@ -179,17 +179,17 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
   letter-spacing: .16em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #8a7f72;
+  color: rgba(255,255,255,.72);
   transition: color .25s;
 }
-.top-nav__links a:hover { color: #1a1712; }
-.top-nav__links a.nav-active { color: #1a1712; font-weight: 500; }
+.top-nav__links a:hover { color: #fff; }
+.top-nav__links a.nav-active { color: #fff; font-weight: 500; }
 .top-nav__links a.nav-contact {
-  border: 1px solid #655046;
-  color: #1a1712;
+  border: 1px solid rgba(255,255,255,.6);
+  color: #fff;
   padding: .45rem 1.3rem;
 }
-.top-nav__links a.nav-contact:hover { color: #655046; }
+.top-nav__links a.nav-contact:hover { color: rgba(255,255,255,.6); }
 
 /* ── SPLIT HERO ── */
 .studio-hero {
@@ -279,14 +279,14 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
     display: flex; flex-direction: column; justify-content: center; gap: 5px;
     cursor: pointer; padding: 4px; background: none; border: none; flex-shrink: 0;
   }
-  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: transform .25s, opacity .25s; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: transform .25s, opacity .25s; }
   .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
   .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   .top-nav__links {
     display: none; position: fixed; top: 68px; left: 0; right: 0;
     background: var(--bg); flex-direction: column; padding: 1.8rem 2.5rem;
-    gap: 1.4rem; border-bottom: 1px solid rgba(101,80,70,.2); z-index: 99;
+    gap: 1.4rem; border-bottom: 1px solid rgba(255,255,255,.15); z-index: 99;
   }
   .top-nav__links.is-open { display: flex; }
   .top-nav__links a { font-size: .78rem; }
