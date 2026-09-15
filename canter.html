@@ -98,6 +98,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .cta-strip__text { font-family: var(--f-display); font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink); }
 .cta-strip__btn { font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
 .cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
+@media (max-width: 768px) { .cta-strip__btn { min-height: 44px; display: inline-flex; align-items: center; } }
 /* FOOTER */
 /* ── FOOTER ── */
 .site-footer { padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-top: 1px solid rgba(101,80,70,.28); flex-wrap: wrap; background: var(--bg); flex-shrink: 0; }
@@ -135,7 +136,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 @media (max-width: 768px) {
   .nav-hamburger {
     display: flex; flex-direction: column; justify-content: center; gap: 5px;
-    cursor: pointer; padding: 4px; background: none; border: none; flex-shrink: 0;
+    cursor: pointer; padding: 14px 11px; background: none; border: none; flex-shrink: 0; min-width: 44px; min-height: 44px;
   }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: transform .25s, opacity .25s; }
   .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -191,7 +192,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
     <img class="proj-hero__carousel-img"           src="assets/img/canter-ballroom.jpg" alt="Canter Ballroom">
     <img class="proj-hero__carousel-img"           src="assets/img/canter-king.jpg"    alt="Canter King Room">
     <video class="proj-hero__video" webkit-playsinline autoplay muted loop playsinline>
-      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3HiJm4PQMqCJ0ZuGEAan5mkwSTZ/hf_20260902_195216_883a20b0-2acb-4ca3-9d99-b49a62076277.mp4" type="video/mp4">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3HiJm4PQMqCJ0ZuGEAan5mkwSTZ/hf_20260915_170209_45d6094e-06c6-4dc8-854b-8ffeda878aa6.mp4" type="video/mp4">
     </video>
   </div>
 

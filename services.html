@@ -240,7 +240,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 @media (max-width: 768px) {
   .nav-hamburger {
     display: flex; flex-direction: column; justify-content: center; gap: 5px;
-    cursor: pointer; padding: 4px; background: none; border: none; flex-shrink: 0;
+    cursor: pointer; padding: 14px 11px; background: none; border: none; flex-shrink: 0; min-width: 44px; min-height: 44px;
   }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: transform .25s, opacity .25s; }
   .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -258,6 +258,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .cta-strip__text { font-family: var(--f-display); font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink); }
 .cta-strip__btn { font-size: .68rem; font-weight: .5; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
 .cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
+@media (max-width: 768px) { .cta-strip__btn { min-height: 44px; display: inline-flex; align-items: center; } }
 </style>
 </head>
 <body>

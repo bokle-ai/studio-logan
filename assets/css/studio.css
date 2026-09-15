@@ -119,6 +119,7 @@
   .sp-hero__down{display:none}
   .sp-philosophy__block{grid-template-columns:1fr}
   .sp-founder__grid{grid-template-columns:1fr}
+  .sp-founder__portrait{max-height:60vw}
 }
 @media(max-width:480px){
   .sp-team__grid{grid-template-columns:1fr 1fr}
