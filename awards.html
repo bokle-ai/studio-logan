@@ -19,7 +19,7 @@
   --f-display: "Tenor Sans", sans-serif;
   --f-sans:    "Poppins", system-ui, sans-serif;
 }
-html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); -webkit-font-smoothing: antialiased; }
+html, body { height: 100vh; overflow: hidden; background: var(--bg); color: var(--ink); font-family: var(--f-sans); -webkit-font-smoothing: antialiased; }
 
 /* TOP NAV */
 .top-nav { position: fixed; top: 0; left: 0; right: 0; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; background: var(--gold); border-bottom: 1px solid rgba(255,255,255,.15); z-index: 100; }
@@ -36,48 +36,50 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 /* PAGE */
 .awards-page {
   margin-top: 68px;
-  padding: 2.5rem 3.5rem 0;
+  height: calc(100vh - 68px);
+  padding: 1.4rem 3.5rem 0;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  min-height: calc(100vh - 68px);
+  gap: 0.9rem;
+  overflow: hidden;
 }
 
 /* HEADER */
-.awards-header { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1rem; }
+.awards-header { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .4rem; flex-shrink: 0; }
 .awards-label { font-family: var(--f-sans); font-size: .6rem; font-weight: 400; letter-spacing: .18em; text-transform: uppercase; color: var(--mid); display: inline-block; margin-bottom: 0; }
-.awards-title { font-family: var(--f-display); font-size: clamp(2.8rem, 4.5vw, 4rem); line-height: 1.05; color: var(--ink); text-align: center; }
+.awards-title { font-family: var(--f-display); font-size: clamp(1.7rem, 2.6vw, 2.4rem); line-height: 1.1; color: var(--ink); text-align: center; }
 .awards-header__right { font-family: var(--f-sans); font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--mid); max-width: 52ch; text-align: center; }
 .awards-rule { height: 1px; background: rgba(101,80,70,.25); flex-shrink: 0; }
 
 /* CARDS */
-.awards-cards { display: flex; gap: 1.2rem; align-items: stretch; padding-bottom: 2.5rem; }
-.award-card { flex: 1; border: 1px solid rgba(101,80,70,.3); padding: 1.8rem 1.2rem 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; background: rgba(255,255,255,.5); transition: border-color .3s, background .3s; cursor: default; position: relative; overflow: hidden; }
+.awards-cards { display: flex; gap: 1rem; align-items: stretch; flex: 1; min-height: 0; }
+.award-card { flex: 1; border: 1px solid rgba(101,80,70,.3); padding: 1.2rem 1rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; background: rgba(255,255,255,.5); transition: border-color .3s, background .3s; cursor: default; position: relative; overflow: hidden; }
 .award-card:hover { border-color: var(--gold); background: rgba(101,80,70,.05); }
 .award-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(101,80,70,.04) 0%, transparent 60%); pointer-events: none; }
-.award-card__trophy { width: 52px; height: 65px; flex-shrink: 0; background-color: var(--gold); -webkit-mask-image: url('assets/img/laurel.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('assets/img/laurel.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
-.award-card__body { display: flex; flex-direction: column; align-items: center; gap: .4rem; text-align: center; flex: 1; }
-.award-card__year { font-size: .62rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
-.award-card__name { font-family: var(--f-display); font-size: .88rem; line-height: 1.35; color: var(--ink); }
-.award-card__org { font-size: .68rem; font-weight: 300; color: var(--mid); letter-spacing: .04em; line-height: 1.5; }
+.award-card__trophy { width: 42px; height: 52px; flex-shrink: 0; background-color: var(--gold); -webkit-mask-image: url('assets/img/laurel.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('assets/img/laurel.png'); mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
+.award-card__body { display: flex; flex-direction: column; align-items: center; gap: .35rem; text-align: center; flex: 1; }
+.award-card__year { font-size: .6rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+.award-card__name { font-family: var(--f-display); font-size: .82rem; line-height: 1.3; color: var(--ink); }
+.award-card__org { font-size: .64rem; font-weight: 300; color: var(--mid); letter-spacing: .04em; line-height: 1.4; }
 
 /* LOGO MARQUEE */
 .logos-band {
   border-top: 1px solid rgba(101,80,70,.2);
   border-bottom: 1px solid rgba(101,80,70,.2);
   background: var(--ink);
-  padding: 2rem 0;
+  padding: 1rem 0;
   margin: 0 -3.5rem;
   overflow: hidden;
+  flex-shrink: 0;
 }
 .logos-band__label {
   text-align: center;
-  font-size: .72rem;
+  font-size: .65rem;
   font-weight: 500;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: rgba(101,80,70,.85);
-  margin-bottom: 1.8rem;
+  margin-bottom: 0.9rem;
 }
 .logos-marquee-wrap {
   overflow: hidden;
@@ -86,7 +88,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .logos-marquee {
   display: flex;
   align-items: center;
-  gap: 5rem;
+  gap: 4rem;
   width: max-content;
   animation: marquee-scroll 20s linear infinite;
 }
@@ -95,7 +97,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   to   { transform: translateX(-50%); }
 }
 .logos-marquee img {
-  height: 56px;
+  height: 36px;
   width: auto;
   flex-shrink: 0;
   filter: brightness(0) invert(1);
@@ -117,7 +119,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
 
 /* ── FOOTER ── */
-.site-footer { padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-top: 1px solid rgba(101,80,70,.28); flex-wrap: wrap; background: var(--bg); flex-shrink: 0; }
+.site-footer { padding: 0.75rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-top: 1px solid rgba(101,80,70,.28); flex-wrap: wrap; background: var(--bg); flex-shrink: 0; }
 .site-footer__left { display: flex; flex-direction: column; gap: .5rem; }
 .site-footer__brand { display: flex; align-items: center; gap: .55rem; text-decoration: none; color: var(--ink); }
 .site-footer__mark { width: 20px; height: 20px; object-fit: contain; opacity: .45; }
