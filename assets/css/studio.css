@@ -120,6 +120,9 @@
   .sp-philosophy__block{grid-template-columns:1fr}
   .sp-founder__grid{grid-template-columns:1fr}
   .sp-founder__portrait{max-height:60vw}
+  .sp-team__photo::before{clip-path:inset(0 0 0% 0)}
+  .sp-team__photo .sp-team__hover-label{opacity:1;transform:translateY(0)}
+  .sp-team__name,.sp-team__role{display:none}
 }
 @media(max-width:480px){
   .sp-team__grid{grid-template-columns:1fr 1fr}
