@@ -23,7 +23,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .top-nav__links a.nav-contact { border: 1px solid rgba(255,255,255,.6); color: #fff; padding: .45rem 1.3rem; }
 .top-nav__links a.nav-contact:hover { color: rgba(255,255,255,.6); }
 .proj-hero { display: grid; grid-template-columns: 1fr 1.4fr; height: calc(100vh - 68px); margin-top: 68px; }
-.proj-hero__left { display: flex; flex-direction: column; justify-content: center; padding: 3rem 3rem; border-right: 1px solid rgba(101,80,70,.15); overflow-y: auto; }
+.proj-hero__left { display: flex; flex-direction: column; justify-content: center; padding: 3rem 3rem; border-right: 1px solid rgba(101,80,70,.15); overflow: hidden; }
 .proj-hero__back { display: inline-flex; align-items: center; gap: .5rem; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--mid); text-decoration: none; margin-bottom: 2rem; transition: color .25s; }
 .proj-hero__back:hover { color: var(--gold); }
 .proj-hero__label { font-size: .6rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: .25rem; display: inline-block; margin-bottom: .9rem; }
@@ -39,18 +39,15 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .proj-hero__carousel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; transform: scale(1.06); }
 .proj-hero__carousel-img.is-active { opacity: 1; animation: kb 9s ease-in-out forwards; }
 .proj-hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
-.proj-master { width: 100%; height: 100vh; overflow: hidden; }
-.proj-master img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.proj-gallery-intro { display: grid; grid-template-columns: 1fr 1fr; min-height: 55vh; border-top: 1px solid rgba(101,80,70,.15); }
-.proj-gallery-intro__left { display: flex; align-items: center; padding: 4rem 3.5rem; border-right: 1px solid rgba(101,80,70,.15); }
-.proj-gallery-intro__text { font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--mid); max-width: 44ch; }
-.proj-gallery-intro__right { overflow: hidden; }
-.proj-gallery-intro__right img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.proj-gallery-more { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(101,80,70,.15); gap: .5rem; padding: .5rem; }
-.proj-gallery-more img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; cursor: pointer; transition: opacity .3s; }
-.proj-gallery-more img:hover { opacity: .88; }
-.proj-gallery-intro__right img { cursor: pointer; transition: opacity .3s; }
-.proj-gallery-intro__right img:hover { opacity: .88; }
+.proj-detail-row { display: grid; grid-template-columns: 1.4fr 1fr; min-height: 55vh; border-top: 1px solid rgba(101,80,70,.15); }
+.proj-detail-row__img { overflow: hidden; }
+.proj-detail-row__img img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; transition: opacity .3s; }
+.proj-detail-row__img img:hover { opacity: .88; }
+.proj-detail-row__text { display: flex; align-items: center; padding: 4rem 3.5rem; border-left: 1px solid rgba(101,80,70,.15); }
+.proj-detail-row__body { font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--mid); max-width: 44ch; }
+.proj-detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; padding: .5rem; border-top: 1px solid rgba(101,80,70,.15); }
+.proj-detail-grid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; cursor: pointer; transition: opacity .3s; }
+.proj-detail-grid img:hover { opacity: .88; }
 .lb-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s; }
 .lb-overlay.is-open { opacity: 1; pointer-events: all; }
 .lb-img { max-width: 90vw; max-height: 85vh; object-fit: contain; display: block; }
@@ -82,9 +79,10 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .proj-hero { grid-template-columns: 1fr; height: auto; }
   .proj-hero__left { padding: 5.5rem 1.5rem 2rem; }
   .proj-hero__carousel { height: 65vw; }
-  .proj-gallery-intro { grid-template-columns: 1fr; min-height: auto; }
-  .proj-gallery-intro__right { height: 65vw; }
-  .proj-gallery-more { grid-template-columns: 1fr; }
+  .proj-detail-row { grid-template-columns: 1fr; min-height: auto; }
+  .proj-detail-row__img { height: 65vw; }
+  .proj-detail-row__text { padding: 2rem 1.5rem; border-left: none; border-top: 1px solid rgba(101,80,70,.15); }
+  .proj-detail-grid { grid-template-columns: 1fr 1fr; }
   .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
   .site-footer { padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .site-footer__right { align-items: flex-start; }
@@ -155,23 +153,34 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   </div>
 </section>
 
-<div class="proj-master">
-  <img src="assets/img/piertop-hires.jpg" alt="Pier Top — Master View">
-</div>
-
-<div class="proj-gallery-intro">
-  <div class="proj-gallery-intro__left">
-    <p class="proj-gallery-intro__text">Warm leather seating, burnished brass, and panoramic glass walls that dissolve the boundary between interior and horizon. The Pier Top experience begins the moment the elevator doors open.</p>
+<div class="proj-detail-row">
+  <div class="proj-detail-row__img">
+    <img src="assets/img/piertop-bar-interior.jpg" alt="Pier Top Bar Interior">
   </div>
-  <div class="proj-gallery-intro__right">
-    <img src="assets/img/piertop-bar.jpg" alt="Pier Top Bar Interior">
+  <div class="proj-detail-row__text">
+    <p class="proj-detail-row__body">Warm leather seating, burnished brass, and panoramic glass walls dissolve the boundary between interior and horizon. The Pier Top experience begins the moment the elevator doors open — a rooftop world suspended between city and sky, designed for the discerning guest.</p>
   </div>
 </div>
 
-<div class="proj-gallery-more">
-  <img src="assets/img/piertop-lounge.jpg"     alt="Pier Top Lounge">
-  <img src="assets/img/piertop-restaurant.jpg" alt="Pier Top Restaurant">
-  <img src="assets/img/piertop-exterior.jpg"   alt="Pier Top Exterior">
+<div class="proj-detail-row">
+  <div class="proj-detail-row__img">
+    <img src="assets/img/piertop-bed-view.jpg" alt="Pier Top Bed View">
+  </div>
+  <div class="proj-detail-row__text">
+    <p class="proj-detail-row__body">The guest rooms carry the same language of restrained luxury — bespoke joinery, custom textiles, and an edit of materials chosen for their ability to age beautifully. Every view was framed deliberately, turning the Fort Lauderdale skyline into living art.</p>
+  </div>
+</div>
+
+<div class="proj-detail-grid">
+  <img src="assets/img/piertop-view-lounge.jpg" alt="Pier Top View Lounge">
+  <img src="assets/img/piertop-view2.webp"      alt="Pier Top View">
+  <img src="assets/img/piertop-room2.jpg"       alt="Pier Top Room">
+  <img src="assets/img/piertop-exterior.jpg"    alt="Pier Top Exterior">
+  <img src="assets/img/piertop-allday.jpg"      alt="Pier Top All Day Dining">
+  <img src="assets/img/piertop-dl.jpg"          alt="Pier Top Detail">
+  <img src="assets/img/piertop-gallery3.jpg"    alt="Pier Top Gallery">
+  <img src="assets/img/piertop-bed.jpg"         alt="Pier Top Bedroom">
+  <img src="assets/img/piertop-1.jpg"           alt="Pier Top Interior">
 </div>
 
 <div class="cta-strip">
@@ -212,7 +221,7 @@ document.getElementById('yr').textContent = new Date().getFullYear();
   setInterval(function(){ imgs[cur].classList.remove('is-active'); cur=(cur+1)%imgs.length; imgs[cur].classList.add('is-active'); }, 4500);
 })();
 (function(){
-  var gImgs = Array.from(document.querySelectorAll('.proj-gallery-more img, .proj-gallery-intro__right img'));
+  var gImgs = Array.from(document.querySelectorAll('.proj-detail-row__img img, .proj-detail-grid img'));
   var overlay = document.getElementById('lightbox');
   var lbImg = document.getElementById('lbImg');
   var cur = 0;

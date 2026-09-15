@@ -46,7 +46,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   justify-content: center;
   padding: 3rem 3rem;
   border-right: 1px solid rgba(101,80,70,.15);
-  overflow-y: auto;
+  overflow: hidden;
   gap: 0;
 }
 .proj-hero__back { display: inline-flex; align-items: center; gap: .5rem; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--mid); text-decoration: none; margin-bottom: 2rem; transition: color .25s; }
@@ -62,50 +62,25 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .proj-meta__key { font-size: .56rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
 .proj-meta__val { font-family: var(--f-display); font-size: .88rem; color: var(--ink); }
 
-/* Hero video — full right */
+/* Hero carousel — full right */
 .proj-hero__carousel { position: relative; overflow: hidden; background: #111; }
-.proj-hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+@keyframes kb { 0% { transform: scale(1.06) translate(0%,0%); } 100% { transform: scale(1.14) translate(-1.5%,-1%); } }
+.proj-hero__carousel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; transform: scale(1.06); }
+.proj-hero__carousel-img.is-active { opacity: 1; animation: kb 9s ease-in-out forwards; }
+.proj-hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
 
-/* MASTER IMAGE */
-.proj-master { width: 100%; height: 100vh; overflow: hidden; }
-.proj-master img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* DETAIL ROWS: image left + text right */
+.proj-detail-row { display: grid; grid-template-columns: 1.4fr 1fr; min-height: 55vh; border-top: 1px solid rgba(101,80,70,.15); }
+.proj-detail-row__img { overflow: hidden; }
+.proj-detail-row__img img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; transition: opacity .3s; }
+.proj-detail-row__img img:hover { opacity: .88; }
+.proj-detail-row__text { display: flex; align-items: center; padding: 4rem 3.5rem; border-left: 1px solid rgba(101,80,70,.15); }
+.proj-detail-row__body { font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--mid); max-width: 44ch; }
 
-/* GALLERY: text | image */
-.proj-gallery-intro {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 55vh;
-  border-top: 1px solid rgba(101,80,70,.15);
-}
-.proj-gallery-intro__left {
-  display: flex;
-  align-items: center;
-  padding: 4rem 3.5rem;
-  border-right: 1px solid rgba(101,80,70,.15);
-}
-.proj-gallery-intro__text { font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--mid); max-width: 44ch; }
-.proj-gallery-intro__right { overflow: hidden; }
-.proj-gallery-intro__right img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-/* MORE IMAGES */
-.proj-gallery-more {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-top: 1px solid rgba(101,80,70,.15);
-  gap: .5rem;
-  padding: .5rem;
-}
-.proj-gallery-more img {
-  width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-  display: block;
-  cursor: pointer;
-  transition: opacity .3s;
-}
-.proj-gallery-more img:hover { opacity: .88; }
-.proj-gallery-intro__right img { cursor: pointer; transition: opacity .3s; }
-.proj-gallery-intro__right img:hover { opacity: .88; }
+/* DETAIL GRID: 3-col image grid */
+.proj-detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; padding: .5rem; border-top: 1px solid rgba(101,80,70,.15); }
+.proj-detail-grid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; cursor: pointer; transition: opacity .3s; }
+.proj-detail-grid img:hover { opacity: .88; }
 
 /* LIGHTBOX */
 .lb-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s; }
@@ -144,9 +119,10 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .proj-hero { grid-template-columns: 1fr; height: auto; }
   .proj-hero__left { padding: 5.5rem 1.5rem 2rem; }
   .proj-hero__carousel { height: 65vw; }
-  .proj-gallery-intro { grid-template-columns: 1fr; min-height: auto; }
-  .proj-gallery-intro__right { height: 65vw; }
-  .proj-gallery-more { grid-template-columns: 1fr; }
+  .proj-detail-row { grid-template-columns: 1fr; min-height: auto; }
+  .proj-detail-row__img { height: 65vw; }
+  .proj-detail-row__text { padding: 2rem 1.5rem; border-left: none; border-top: 1px solid rgba(101,80,70,.15); }
+  .proj-detail-grid { grid-template-columns: 1fr 1fr; }
   .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
   .site-footer { padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .site-footer__right { align-items: flex-start; }
@@ -210,6 +186,10 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   </div>
 
   <div class="proj-hero__carousel">
+    <img class="proj-hero__carousel-img is-active" src="assets/img/canter-1.jpg"      alt="Canter Bar Interior">
+    <img class="proj-hero__carousel-img"           src="assets/img/canter-exterior.jpg" alt="Canter Exterior">
+    <img class="proj-hero__carousel-img"           src="assets/img/canter-ballroom.jpg" alt="Canter Ballroom">
+    <img class="proj-hero__carousel-img"           src="assets/img/canter-king.jpg"    alt="Canter King Room">
     <video class="proj-hero__video" webkit-playsinline autoplay muted loop playsinline>
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3HiJm4PQMqCJ0ZuGEAan5mkwSTZ/hf_20260902_195216_883a20b0-2acb-4ca3-9d99-b49a62076277.mp4" type="video/mp4">
     </video>
@@ -217,26 +197,37 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 
 </section>
 
-<!-- MASTER IMAGE -->
-<div class="proj-master">
-  <img src="assets/img/canter-1.jpg" alt="Canter Hotel — Master View">
-</div>
-
-<!-- GALLERY: text + image -->
-<div class="proj-gallery-intro">
-  <div class="proj-gallery-intro__left">
-    <p class="proj-gallery-intro__text">The hotel's interior language draws from Oklahoma's equestrian heritage — antler fixtures, hand-stitched leather, reclaimed timber. Every material was chosen to tell a story of place, not just luxury.</p>
+<!-- DETAIL ROW 1 -->
+<div class="proj-detail-row">
+  <div class="proj-detail-row__img">
+    <img src="assets/img/canter-arrival.webp" alt="Canter Arrival">
   </div>
-  <div class="proj-gallery-intro__right">
-    <img src="assets/img/canter-ballroom.jpg" alt="Canter Ballroom">
+  <div class="proj-detail-row__text">
+    <p class="proj-detail-row__body">The arrival sequence sets the tone — warm timber, hand-hammered metal, and a sense of arrival that is unmistakably American West. Every threshold was designed to be a moment in itself, drawing guests deeper into the narrative we built from the ground up.</p>
   </div>
 </div>
 
-<!-- MORE IMAGES -->
-<div class="proj-gallery-more">
-  <img src="assets/img/canter-exterior.jpg"   alt="Canter Exterior">
+<!-- DETAIL ROW 2 -->
+<div class="proj-detail-row">
+  <div class="proj-detail-row__img">
+    <img src="assets/img/canter-checkin.webp" alt="Canter Check-in">
+  </div>
+  <div class="proj-detail-row__text">
+    <p class="proj-detail-row__body">The front-of-house experience was crafted to feel both grand and intimate. Custom millwork, curated art, and an unhurried palette of earth and amber guide guests from the street into a world entirely their own — a study in restrained hospitality design.</p>
+  </div>
+</div>
+
+<!-- IMAGE GRID -->
+<div class="proj-detail-grid">
+  <img src="assets/img/canter-2.jpg"        alt="Canter Interior">
+  <img src="assets/img/canter-3.jpg"        alt="Canter Interior">
+  <img src="assets/img/canter-4.jpg"        alt="Canter Interior">
   <img src="assets/img/canter-king-suite.jpg" alt="Canter King Suite">
-  <img src="assets/img/canter-room.jpg"       alt="Canter Room">
+  <img src="assets/img/canter-queen.jpg"    alt="Canter Queen Room">
+  <img src="assets/img/canter-room.jpg"     alt="Canter Room">
+  <img src="assets/img/canter-suite.jpg"    alt="Canter Suite">
+  <img src="assets/img/canter-ballroom2.jpg" alt="Canter Ballroom">
+  <img src="assets/img/canter-hero.jpg"     alt="Canter Hotel">
 </div>
 
 <!-- CTA -->
@@ -275,7 +266,12 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
 (function(){
-  var gImgs = Array.from(document.querySelectorAll('.proj-gallery-more img, .proj-gallery-intro__right img'));
+  var imgs = document.querySelectorAll('.proj-hero__carousel-img');
+  var cur = 0;
+  if(imgs.length > 1) setInterval(function(){ imgs[cur].classList.remove('is-active'); cur=(cur+1)%imgs.length; imgs[cur].classList.add('is-active'); }, 4500);
+})();
+(function(){
+  var gImgs = Array.from(document.querySelectorAll('.proj-detail-row__img img, .proj-detail-grid img'));
   var overlay = document.getElementById('lightbox');
   var lbImg = document.getElementById('lbImg');
   var cur = 0;
