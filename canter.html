@@ -124,6 +124,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .proj-detail-row__img { height: 65vw; }
   .proj-detail-row__text { padding: 2rem 1.5rem; border-left: none; border-top: 1px solid rgba(101,80,70,.15); }
   .proj-detail-grid { grid-template-columns: 1fr 1fr; }
+  .proj-detail-grid img:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
   .site-footer { padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .site-footer__right { align-items: flex-start; }
@@ -149,6 +150,9 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   }
   .top-nav__links.is-open { display: flex; }
   .top-nav__links a { font-size: .78rem; }
+}
+@media (hover: none) and (pointer: coarse) {
+  * { cursor: default !important; }
 }
 </style>
 </head>
@@ -211,7 +215,7 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 <!-- DETAIL ROW 2 -->
 <div class="proj-detail-row">
   <div class="proj-detail-row__img">
-    <img src="assets/img/canter-ballroom.jpg" alt="Canter Ballroom">
+    <img src="assets/img/canter-suite.jpg" alt="Canter Suite">
   </div>
   <div class="proj-detail-row__text">
     <p class="proj-detail-row__body">The front-of-house experience was crafted to feel both grand and intimate. Custom millwork, curated art, and an unhurried palette of earth and amber guide guests from the street into a world entirely their own — a study in restrained hospitality design.</p>

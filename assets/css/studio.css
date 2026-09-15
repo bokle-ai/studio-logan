@@ -127,3 +127,6 @@
 @media(max-width:480px){
   .sp-team__grid{grid-template-columns:1fr 1fr}
 }
+@media (hover: none) and (pointer: coarse) {
+  * { cursor: default !important; }
+}

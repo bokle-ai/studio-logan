@@ -110,6 +110,9 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
   .top-nav__links.is-open { display: flex; }
   .top-nav__links a { font-size: .78rem; }
 }
+@media (hover: none) and (pointer: coarse) {
+  * { cursor: default !important; }
+}
 </style>
 </head>
 <body>

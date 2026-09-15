@@ -259,6 +259,9 @@ html, body { background: var(--bg); color: var(--ink); font-family: var(--f-sans
 .cta-strip__btn { font-size: .68rem; font-weight: .5; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1px solid var(--gold); padding: .7rem 2rem; transition: background .25s, color .25s; white-space: nowrap; }
 .cta-strip__btn:hover { background: var(--gold); color: var(--bg); }
 @media (max-width: 768px) { .cta-strip__btn { min-height: 44px; display: inline-flex; align-items: center; } }
+@media (hover: none) and (pointer: coarse) {
+  * { cursor: default !important; }
+}
 </style>
 </head>
 <body>
