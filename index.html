@@ -253,30 +253,61 @@ html, body {
 .site-footer__social:hover { color: var(--gold); border-color: var(--gold); }
 .site-footer__social svg { width: 14px; height: 14px; fill: currentColor; }
 
+/* ── HAMBURGER ── */
+.nav-hamburger { display: none; }
+
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   html, body { height: auto; }
-  .site-header { position: relative; }
-  .site-logo { padding: .9rem 1.5rem .7rem; }
-  .site-logo__mark { width: 38px; height: 38px; }
-  .site-logo__name { font-size: 1.05rem; }
+  .site-header {
+    position: fixed !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    height: 60px;
+    border-bottom: 1px solid rgba(101,80,70,.12);
+  }
+  .site-logo {
+    padding: 0;
+    width: auto;
+    background: transparent;
+    justify-content: flex-start;
+  }
+  .site-logo__mark { width: 34px; height: 34px; }
+  .site-logo__name { font-size: .95rem; }
+  .nav-hamburger {
+    display: flex; flex-direction: column; justify-content: center; gap: 5px;
+    cursor: pointer; padding: 4px; background: none; border: none; flex-shrink: 0;
+  }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gold); transition: transform .25s, opacity .25s; }
+  .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    top: 60px; left: 0; right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.4rem;
+    padding: 2rem 2rem;
+    background: var(--gold);
+    z-index: 99;
+    height: auto;
+  }
+  .bottom-nav.is-open { display: flex; }
+  .bottom-nav a { font-size: .78rem; }
+  .bottom-nav a.nav-contact { width: auto; text-align: left; padding: .5rem 1.2rem; }
   .hero {
     grid-template-columns: 1fr;
     grid-template-rows: 50vh auto;
     height: auto;
-    margin-top: 0;
+    margin-top: 60px;
   }
   .hero__right { order: -1; height: 50vh; padding: 0; }
   .hero__left { padding: 2rem 1.5rem 1.5rem; justify-content: flex-start; align-items: center; text-align: center; }
   .hero__title { font-size: 2.4rem; }
-  .bottom-nav {
-    height: auto;
-    flex-wrap: wrap;
-    gap: .7rem 1.2rem;
-    padding: 1rem 1.5rem;
-  }
-  .bottom-nav a, .bottom-nav a.nav-contact { font-size: .62rem; }
-  .bottom-nav a.nav-contact { width: 100%; text-align: center; margin-top: .2rem; }
   .cta-strip { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2rem 1.5rem; }
   .site-footer { padding: 1.8rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .site-footer__right { align-items: flex-start; }
@@ -298,7 +329,8 @@ html, body {
     <img src="assets/img/lion-double.png" alt="Studio Logan" class="site-logo__mark">
     <span class="site-logo__name">Studio Logan</span>
   </a>
-  <nav class="bottom-nav">
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <nav class="bottom-nav" id="mobileNav">
     <a href="projects.html">Projects</a>
     <a href="studio.html">Studio</a>
     <a href="services.html">Our Services</a>
@@ -376,6 +408,23 @@ html, body {
     </div>
   </div>
 </footer>
-<script>var e=document.getElementById('yr');if(e)e.textContent=new Date().getFullYear();</script>
+<script>
+var e=document.getElementById('yr');if(e)e.textContent=new Date().getFullYear();
+(function(){
+  var btn=document.getElementById('navHamburger');
+  var nav=document.getElementById('mobileNav');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',function(){
+    btn.classList.toggle('is-open');
+    nav.classList.toggle('is-open');
+  });
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      btn.classList.remove('is-open');
+      nav.classList.remove('is-open');
+    });
+  });
+})();
+</script>
 </body>
 </html>

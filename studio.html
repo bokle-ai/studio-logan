@@ -102,42 +102,42 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
 }
 .team-modal-overlay.open { display: flex; }
 .team-modal {
-  background: #f7f5f2; max-width: 480px; width: 100%;
-  padding: 2.5rem; position: relative;
+  background: #f7f5f2; max-width: 720px; width: 100%;
+  display: grid; grid-template-columns: 240px 1fr;
+  position: relative; overflow: hidden;
   border: 1px solid rgba(101,80,70,.25);
-  animation: modalIn .25s ease;
+  animation: modalIn .3s ease;
 }
 @keyframes modalIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.team-modal__left { overflow: hidden; min-height: 340px; background: var(--ink); }
+.team-modal__left img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.team-modal__left-ph { width: 100%; height: 100%; min-height: 340px; background: #2b1f16; position: relative; overflow: hidden; }
+.team-modal__right { padding: 2.5rem 2.2rem; display: flex; flex-direction: column; justify-content: center; }
 .team-modal__close {
-  position: absolute; top: 1rem; right: 1rem;
-  background: none; border: none; font-size: 1.5rem;
-  cursor: pointer; color: var(--mid); line-height: 1;
+  position: absolute; top: .8rem; right: .8rem; z-index: 10;
+  background: rgba(247,245,242,.85); border: none; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; cursor: pointer; color: var(--mid); line-height: 1;
 }
-.team-modal__close:hover { color: var(--ink); }
-.team-modal__photo {
-  width: 80px; height: 80px; border-radius: 50%;
-  object-fit: cover; margin-bottom: 1.2rem;
-  border: 2px solid rgba(101,80,70,.3);
-}
-.team-modal__photo-ph {
-  width: 80px; height: 80px; border-radius: 50%;
-  background: var(--ink); margin-bottom: 1.2rem;
-  border: 2px solid rgba(101,80,70,.3);
-  display: flex; align-items: flex-end; justify-content: center;
-  overflow: hidden;
-}
+.team-modal__close:hover { color: var(--ink); background: #f7f5f2; }
 .team-modal__name {
-  font-family: var(--f-display); font-size: 1.35rem;
-  color: var(--ink); margin-bottom: .25rem;
+  font-family: var(--f-display); font-size: 1.5rem;
+  color: var(--ink); margin-bottom: .3rem;
 }
 .team-modal__role {
   font-size: .6rem; font-weight: 600; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem;
   display: block;
 }
 .team-modal__bio {
-  font-size: .88rem; font-weight: 300; line-height: 1.75;
+  font-size: .88rem; font-weight: 300; line-height: 1.8;
   color: var(--mid);
+}
+@media (max-width: 600px) {
+  .team-modal { grid-template-columns: 1fr; }
+  .team-modal__left { height: 220px; min-height: auto; }
+  .team-modal__left-ph { min-height: 220px; }
+  .team-modal__right { padding: 1.8rem 1.5rem; }
 }
 
 /* ── TOP NAV ── */
@@ -423,10 +423,12 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
   <div class="team-modal-overlay" id="teamModal" onclick="if(event.target===this)closeTeamBio()">
     <div class="team-modal">
       <button class="team-modal__close" onclick="closeTeamBio()">×</button>
-      <div id="teamModalPhoto"></div>
-      <p class="team-modal__name" id="teamModalName"></p>
-      <span class="team-modal__role" id="teamModalRole"></span>
-      <p class="team-modal__bio" id="teamModalBio"></p>
+      <div class="team-modal__left" id="teamModalLeft"></div>
+      <div class="team-modal__right">
+        <p class="team-modal__name" id="teamModalName"></p>
+        <span class="team-modal__role" id="teamModalRole"></span>
+        <p class="team-modal__bio" id="teamModalBio"></p>
+      </div>
     </div>
   </div>
 
@@ -586,6 +588,18 @@ document.getElementById('yr').textContent = new Date().getFullYear();
   observer.observe(row);
 })();
 
+// ── TEAM HOVER LABELS ──
+document.querySelectorAll('.sp-team__member').forEach(function(member){
+  var name = member.dataset.name;
+  var role = member.dataset.role;
+  var photo = member.querySelector('.sp-team__photo');
+  if(!photo) return;
+  var label = document.createElement('div');
+  label.className = 'sp-team__hover-label';
+  label.innerHTML = '<span class="sp-team__hover-label__name">'+name+'</span><span class="sp-team__hover-label__role">'+role+'</span>';
+  photo.appendChild(label);
+});
+
 // ── TEAM BIO MODAL ──
 function openTeamBio(el){
   var name  = el.dataset.name;
@@ -595,11 +609,11 @@ function openTeamBio(el){
   document.getElementById('teamModalName').textContent = name;
   document.getElementById('teamModalRole').innerHTML = role;
   document.getElementById('teamModalBio').textContent = bio;
-  var photoEl = document.getElementById('teamModalPhoto');
+  var leftEl = document.getElementById('teamModalLeft');
   if (photo){
-    photoEl.innerHTML = '<img class="team-modal__photo" src="'+photo+'" alt="'+name+'">';
+    leftEl.innerHTML = '<img src="'+photo+'" alt="'+name+'" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;">';
   } else {
-    photoEl.innerHTML = '<div class="team-modal__photo-ph"></div>';
+    leftEl.innerHTML = '<div class="team-modal__left-ph"></div>';
   }
   document.getElementById('teamModal').classList.add('open');
   document.body.style.overflow = 'hidden';
