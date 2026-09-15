@@ -52,7 +52,7 @@ html, body { height: 100vh; overflow: hidden; background: var(--bg); color: var(
 .awards-rule { height: 1px; background: rgba(101,80,70,.25); flex-shrink: 0; }
 
 /* CARDS */
-.awards-cards { display: flex; gap: 1rem; align-items: stretch; flex: 1; min-height: 0; }
+.awards-cards { display: flex; gap: 1rem; align-items: stretch; flex: 1; min-height: 0; max-height: 260px; }
 .award-card { flex: 1; border: 1px solid rgba(101,80,70,.3); padding: 1.2rem 1rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; background: rgba(255,255,255,.5); transition: border-color .3s, background .3s; cursor: default; position: relative; overflow: hidden; }
 .award-card:hover { border-color: var(--gold); background: rgba(101,80,70,.05); }
 .award-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(101,80,70,.04) 0%, transparent 60%); pointer-events: none; }
@@ -97,7 +97,7 @@ html, body { height: 100vh; overflow: hidden; background: var(--bg); color: var(
   to   { transform: translateX(-50%); }
 }
 .logos-marquee img {
-  height: 36px;
+  height: 56px;
   width: auto;
   flex-shrink: 0;
   filter: brightness(0) invert(1);
@@ -135,10 +135,11 @@ html, body { height: 100vh; overflow: hidden; background: var(--bg); color: var(
 
 /* MOBILE */
 @media (max-width: 768px) {
-  .awards-page { padding: 5.5rem 1.5rem 0; gap: 1.5rem; }
+  html, body { height: auto; overflow: auto; }
+  .awards-page { height: auto; overflow: visible; padding: 5.5rem 1.5rem 2rem; gap: 1.5rem; max-height: none; }
   .awards-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .awards-header__right { text-align: left; }
-  .awards-cards { flex-direction: column; }
+  .awards-cards { flex-direction: column; max-height: none; }
   .award-card { flex-direction: row; align-items: center; text-align: left; }
   .award-card__body { align-items: flex-start; text-align: left; }
   .logos-band { margin: 0 -1.5rem; }
