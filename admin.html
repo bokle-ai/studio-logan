@@ -281,7 +281,13 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
     <div class="auth-err" id="authErr"></div>
     <div class="auth-form">
       <div class="f"><label class="auth-lbl">Email</label><input class="auth-inp" type="email" id="lgEmail" placeholder="your@email.com" autocomplete="email"></div>
-      <div class="f"><label class="auth-lbl">Password</label><input class="auth-inp" type="password" id="lgPw" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="f">
+        <label class="auth-lbl">Password</label>
+        <div style="position:relative">
+          <input class="auth-inp" type="password" id="lgPw" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" style="padding-right:2.6rem">
+          <button type="button" onclick="var i=document.getElementById('lgPw');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁':'🙈';" style="position:absolute;right:.55rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:.9rem;color:rgba(255,255,255,.35);line-height:1;padding:.2rem">👁</button>
+        </div>
+      </div>
       <button class="auth-btn" onclick="doLogin()">Sign In</button>
     </div>
   </div>
