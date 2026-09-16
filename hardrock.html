@@ -333,6 +333,7 @@ window.initLightbox();
     }
 
     if(typeof window.initLightbox==='function') window.initLightbox();
+    document.dispatchEvent(new CustomEvent('sl:ready'));
   });
 })();
 </script>

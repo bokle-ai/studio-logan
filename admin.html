@@ -238,6 +238,37 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
 .up-progress.on{display:flex}
 .up-progress__txt{color:#f7f5f2;font-size:.72rem;letter-spacing:.08em}
 .up-progress__spin{width:36px;height:36px;border:3px solid rgba(255,255,255,.15);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite}
+
+/* ── LIVE PREVIEW PANEL ── */
+.lprev{margin-top:1.4rem;border:1px solid rgba(101,80,70,.18);border-radius:var(--r);overflow:hidden;background:#fff}
+.lprev__hd{display:flex;align-items:center;justify-content:space-between;padding:.55rem .85rem;background:rgba(101,80,70,.05);border-bottom:1px solid rgba(101,80,70,.1)}
+.lprev__label{font-size:.52rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.lprev__open{font-size:.52rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);cursor:pointer;background:none;border:1px solid rgba(101,80,70,.22);padding:.2rem .55rem;border-radius:2px;font-family:var(--f-sans);transition:all .2s}
+.lprev__open:hover{border-color:var(--gold);color:var(--ink)}
+.lprev__body{padding:1rem}
+/* project hero preview */
+.lp-hero{display:flex;gap:.7rem;align-items:flex-start}
+.lp-hero__img{width:140px;height:90px;object-fit:cover;border-radius:2px;background:rgba(101,80,70,.08);flex-shrink:0}
+.lp-hero__info{flex:1;min-width:0}
+.lp-cat{font-size:.45rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}
+.lp-title{font-family:var(--f-display);font-size:1rem;color:var(--ink);line-height:1.2;margin-bottom:.18rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lp-loc{font-size:.58rem;color:var(--mid);margin-bottom:.4rem}
+.lp-desc{font-size:.62rem;color:var(--ink);line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.lp-meta{display:flex;flex-wrap:wrap;gap:.3rem .7rem;margin-top:.5rem;padding-top:.5rem;border-top:1px solid rgba(101,80,70,.1)}
+.lp-meta span{font-size:.5rem;color:var(--ink)}
+.lp-meta span b{color:var(--gold);font-weight:600}
+/* preview carousel strip */
+.lp-strip{display:flex;gap:.3rem;overflow-x:auto;padding:.2rem 0}
+.lp-strip img{width:80px;height:52px;object-fit:cover;border-radius:2px;flex-shrink:0}
+.lp-strip__ph{width:80px;height:52px;background:rgba(101,80,70,.08);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.48rem;color:rgba(101,80,70,.35)}
+/* preview gallery */
+.lp-gal{display:grid;grid-template-columns:repeat(4,1fr);gap:.28rem}
+.lp-gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
+
+/* ── VISUAL EDIT MODE (iframe bar) ── */
+.ve-bar{display:flex;align-items:center;gap:.7rem;margin-bottom:.55rem;flex-wrap:wrap}
+.ve-hint{font-size:.58rem;color:var(--mid);font-style:italic}
+.ve-hint.active{color:#7ec87e;font-style:normal;font-weight:500}
 </style>
 </head>
 <body>
@@ -342,15 +373,15 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
           <div class="ptab-panel on" id="ptab-info">
             <div class="fg">
               <div class="frow">
-                <div class="f"><label>Project Name</label><input type="text" id="pe-title" placeholder="e.g. Canter Hotel" oninput="autoSlug()"></div>
-                <div class="f"><label>Category</label><select id="pe-cat"><option>Hospitality</option><option>Residential</option><option>Commercial &amp; Workplace</option><option>Branded Environments</option></select></div>
+                <div class="f"><label>Project Name</label><input type="text" id="pe-title" placeholder="e.g. Canter Hotel" oninput="autoSlug();renderLivePreview()"></div>
+                <div class="f"><label>Category</label><select id="pe-cat" onchange="renderLivePreview()"><option>Hospitality</option><option>Residential</option><option>Commercial &amp; Workplace</option><option>Branded Environments</option></select></div>
               </div>
               <div class="frow">
-                <div class="f"><label>Location</label><input type="text" id="pe-loc" placeholder="e.g. Oklahoma City · USA"></div>
-                <div class="f"><label>Year</label><input type="text" id="pe-year" placeholder="e.g. 2024"></div>
+                <div class="f"><label>Location</label><input type="text" id="pe-loc" placeholder="e.g. Oklahoma City · USA" oninput="renderLivePreview()"></div>
+                <div class="f"><label>Year</label><input type="text" id="pe-year" placeholder="e.g. 2024" oninput="renderLivePreview()"></div>
               </div>
-              <div class="f"><label>Short Tagline</label><input type="text" id="pe-tagline" placeholder="One-line description shown in project cards"></div>
-              <div class="f"><label>Project Description</label><textarea id="pe-desc" placeholder="The paragraph shown on the project page alongside the hero photos"></textarea></div>
+              <div class="f"><label>Short Tagline</label><input type="text" id="pe-tagline" placeholder="One-line description shown in project cards" oninput="renderLivePreview()"></div>
+              <div class="f"><label>Project Description</label><textarea id="pe-desc" placeholder="The paragraph shown on the project page alongside the hero photos" oninput="renderLivePreview()"></textarea></div>
               <div class="f">
                 <label>Cover Photo <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--mid)">(shown on the projects grid)</span></label>
                 <div class="up-box up-box--lg" id="pe-cover-box" onclick="document.getElementById('pe-cover-file').click()" title="Click to upload cover photo">
@@ -373,6 +404,15 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
             <p class="f-hint" style="margin-bottom:.65rem">The key/value rows shown on the project page — e.g. "Scale — 180 Keys". Edit the labels and values below.</p>
             <div class="meta-rows" id="pe-meta-rows"></div>
             <button class="svc-add" onclick="addMetaRow()">+ Add row</button>
+
+            <!-- Live preview -->
+            <div class="lprev" style="margin-top:1.6rem">
+              <div class="lprev__hd">
+                <span class="lprev__label">Live Preview</span>
+                <button class="lprev__open" onclick="switchPTab('preview',document.querySelectorAll('.ptab')[4])">Open Full Page →</button>
+              </div>
+              <div class="lprev__body"><div id="lp-info"></div></div>
+            </div>
           </div>
 
           <!-- CAROUSEL TAB -->
@@ -385,6 +425,10 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
             </div>
             <input type="file" id="crl-file" style="display:none" accept="image/*" multiple onchange="handleCrlUpload(this)">
             <div class="crl-list" id="pe-carousel"></div>
+            <div class="lprev">
+              <div class="lprev__hd"><span class="lprev__label">Slideshow Preview</span></div>
+              <div class="lprev__body"><div id="lp-carousel" class="lp-strip"></div></div>
+            </div>
           </div>
 
           <!-- STORY TAB -->
@@ -404,13 +448,18 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
             </div>
             <input type="file" id="gal-file" style="display:none" accept="image/*" multiple onchange="handleGalUpload(this)">
             <div class="gal-grid" id="pe-gallery"></div>
+            <div class="lprev" id="lprev-gal" style="display:none">
+              <div class="lprev__hd"><span class="lprev__label">Gallery Preview</span></div>
+              <div class="lprev__body"><div id="lp-gallery" class="lp-gal"></div></div>
+            </div>
           </div>
 
           <!-- PREVIEW TAB -->
           <div class="ptab-panel" id="ptab-preview">
-            <div class="preview-bar">
-              <button class="sbtn sbtn--g" onclick="refreshPreviewFrame()">↺ Refresh Preview</button>
-              <p class="preview-note">Save your changes first, then click Refresh to see them on the live page.</p>
+            <div class="ve-bar">
+              <button class="sbtn sbtn--p" onclick="enableVisualEdit()">✏ Enable Visual Editing</button>
+              <button class="sbtn sbtn--g" onclick="refreshPreviewFrame()">↺ Refresh</button>
+              <p class="ve-hint" id="previewNote">Click "Enable Visual Editing" to click and edit text directly on the page below.</p>
             </div>
             <div class="preview-wrap"><iframe id="preview-iframe" src="about:blank"></iframe></div>
           </div>
@@ -768,6 +817,8 @@ function openProjEditor(id){
   renderStory(ps.detail_rows||[]);
   renderGallery(p&&p.gallery_images||[]);
   document.getElementById('preview-iframe').src='about:blank';
+  document.getElementById('preview-iframe').dataset.editModeActive='';
+  setTimeout(renderLivePreview,50);
 }
 function closeProjEditor(){
   document.getElementById('projListView').classList.remove('off');
@@ -993,11 +1044,11 @@ async function handleBoxUpload(inp,hiddenId,boxId,phId,spinId){
   if(spin)spin.classList.add('on');
   var u=await uploadFile(inp.files[0]);
   if(spin)spin.classList.remove('on');
-  if(u){document.getElementById(hiddenId).value=u;setBoxPhoto(boxId,phId,u);}
+  if(u){document.getElementById(hiddenId).value=u;setBoxPhoto(boxId,phId,u);renderLivePreview();}
   inp.value='';
 }
 
-// ── PREVIEW ──
+// ── PREVIEW & LIVE EDIT ──
 function switchPTab(name,btn){
   document.querySelectorAll('.ptab').forEach(function(b){b.classList.remove('on');});
   document.querySelectorAll('.ptab-panel').forEach(function(p){p.classList.remove('on');});
@@ -1007,14 +1058,218 @@ function switchPTab(name,btn){
     var p=editProjId?projects.find(function(x){return x.id===editProjId;}):null;
     var url=p&&(p.url||p.id+'.html');
     if(url&&document.getElementById('preview-iframe').src==='about:blank')
-      document.getElementById('preview-iframe').src=url;
+      document.getElementById('preview-iframe').src=url+'?t='+Date.now();
   }
 }
 function refreshPreviewFrame(){
+  var iframe=document.getElementById('preview-iframe');
+  iframe.dataset.editModeActive='';
   var p=editProjId?projects.find(function(x){return x.id===editProjId;}):null;
   var url=p&&(p.url||p.id+'.html');
-  if(url)document.getElementById('preview-iframe').src=url+'?t='+Date.now();
+  if(url)iframe.src=url+'?t='+Date.now();
+  document.getElementById('previewNote').className='ve-hint';
+  document.getElementById('previewNote').textContent='Click "Enable Visual Editing" to click and edit text directly on the page below.';
 }
+
+function enableVisualEdit(){
+  var iframe=document.getElementById('preview-iframe');
+  var p=editProjId?projects.find(function(x){return x.id===editProjId;}):null;
+  var url=p&&(p.url||p.id+'.html');
+  if(!url){showToast('Save the project first, then enable visual editing.',true);return;}
+  document.getElementById('previewNote').textContent='Loading page…';
+  if(iframe.src==='about:blank'||!iframe.src||iframe.dataset.editModeActive){
+    iframe.dataset.editModeActive='';
+    iframe.src=url+'?t='+Date.now();
+  }
+  iframe.onload=null;
+  iframe.onload=function(){
+    var doc=iframe.contentDocument;
+    var done=false;
+    function doInject(){if(done)return;done=true;setTimeout(function(){injectEditMode(iframe);},250);}
+    doc.addEventListener('sl:ready',doInject);
+    setTimeout(doInject,3500);
+  };
+  if(iframe.src!=='about:blank'&&!iframe.dataset.editModeActive){
+    // page might already be loaded — try injecting now
+    try{
+      var doc=iframe.contentDocument;
+      if(doc&&doc.body&&doc.body.innerHTML.length>100){injectEditMode(iframe);return;}
+    }catch(e){}
+  }
+}
+
+function injectEditMode(iframe){
+  if(iframe.dataset.editModeActive==='1')return;
+  iframe.dataset.editModeActive='1';
+  var doc=iframe.contentDocument;
+  if(!doc||!doc.body)return;
+
+  // Styles
+  var st=doc.createElement('style');
+  st.textContent=
+    'body{padding-top:54px!important}'+
+    '.sl-bar{position:fixed;top:0;left:0;right:0;height:54px;background:#1e1b16;'+
+      'display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;'+
+      'z-index:99999;border-bottom:3px solid #655046;font-family:system-ui,sans-serif;gap:.8rem}'+
+    '.sl-bar__info{color:rgba(255,255,255,.55);font-size:.6rem;letter-spacing:.05em;flex:1}'+
+    '.sl-bar__info strong{color:#f7f5f2;margin-right:.4rem}'+
+    '.sl-bar__acts{display:flex;gap:.45rem;flex-shrink:0}'+
+    '.sl-ebtn{border:none;padding:.4rem .9rem;font-size:.56rem;font-weight:600;'+
+      'letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:3px;font-family:system-ui}'+
+    '.sl-ebtn--p{background:#655046;color:#fff}.sl-ebtn--p:hover{background:#9a866a}'+
+    '.sl-ebtn--g{background:rgba(255,255,255,.07);color:rgba(255,255,255,.5)}'+
+    '.sl-ebtn--g:hover{background:rgba(255,255,255,.14);color:#fff}'+
+    '[data-sle]:hover{outline:2px dashed rgba(101,80,70,.55)!important;outline-offset:3px;cursor:text}'+
+    '[data-sle]:focus{outline:2px solid #655046!important;outline-offset:3px;background:rgba(101,80,70,.04)}'+
+    '.sl-edited{outline:2px solid #7ec87e!important;outline-offset:3px}';
+  doc.head.appendChild(st);
+
+  // Toolbar
+  var bar=doc.createElement('div');bar.className='sl-bar';
+  bar.innerHTML='<div class="sl-bar__info"><strong>✏ Visual Edit Mode</strong>Click any highlighted text to edit it in place</div>'+
+    '<div class="sl-bar__acts">'+
+      '<button class="sl-ebtn sl-ebtn--p" id="sl-save-btn">Save Changes</button>'+
+      '<button class="sl-ebtn sl-ebtn--g" id="sl-exit-btn">Exit</button>'+
+    '</div>';
+  doc.body.insertBefore(bar,doc.body.firstChild);
+
+  // Map selector → admin field id
+  var map=[
+    {sel:'.proj-hero__label',field:'pe-cat'},
+    {sel:'.proj-hero__name',field:'pe-title'},
+    {sel:'.proj-hero__location',field:'pe-loc'},
+    {sel:'.proj-hero__desc',field:'pe-desc'}
+  ];
+  map.forEach(function(m){
+    doc.querySelectorAll(m.sel).forEach(function(el){
+      el.contentEditable='true';el.dataset.sle=m.field;
+      el.addEventListener('input',function(){el.classList.add('sl-edited');});
+    });
+  });
+  // Meta vals
+  doc.querySelectorAll('.proj-meta__val').forEach(function(el,i){
+    el.contentEditable='true';el.dataset.sle='meta-val-'+i;
+    el.addEventListener('input',function(){el.classList.add('sl-edited');});
+  });
+  doc.querySelectorAll('.proj-meta__key').forEach(function(el,i){
+    el.contentEditable='true';el.dataset.sle='meta-key-'+i;
+    el.addEventListener('input',function(){el.classList.add('sl-edited');});
+  });
+  // Story text
+  doc.querySelectorAll('.proj-detail-row__body').forEach(function(el,i){
+    el.contentEditable='true';el.dataset.sle='story-'+i;
+    el.addEventListener('input',function(){el.classList.add('sl-edited');});
+  });
+
+  doc.getElementById('sl-save-btn').addEventListener('click',function(){
+    var changes={};
+    doc.querySelectorAll('[data-sle]').forEach(function(el){changes[el.dataset.sle]=el.innerText.trim();});
+    window.parent.postMessage({type:'SL_SAVE',changes:changes},'*');
+  });
+  doc.getElementById('sl-exit-btn').addEventListener('click',function(){
+    window.parent.postMessage({type:'SL_EXIT'},'*');
+  });
+
+  var note=window.document.getElementById('previewNote');
+  if(note){note.className='ve-hint active';note.textContent='Visual editing active — click any text to edit it, then click Save Changes.';}
+}
+
+window.addEventListener('message',function(e){
+  if(!e.data||!e.data.type)return;
+  if(e.data.type==='SL_SAVE'){
+    var ch=e.data.changes||{};
+    if(ch['pe-cat'])sv('pe-cat',ch['pe-cat']);
+    if(ch['pe-title'])sv('pe-title',ch['pe-title']);
+    if(ch['pe-loc'])sv('pe-loc',ch['pe-loc']);
+    if(ch['pe-desc'])sv('pe-desc',ch['pe-desc']);
+    // Meta
+    var meta=gatherMetaRows();
+    Object.keys(ch).forEach(function(k){
+      var mv=k.match(/^meta-val-(\d+)$/),mk=k.match(/^meta-key-(\d+)$/);
+      if(mv&&meta[+mv[1]])meta[+mv[1]].val=ch[k];
+      if(mk&&meta[+mk[1]])meta[+mk[1]].key=ch[k];
+    });
+    renderMetaRows(meta);
+    // Story
+    var story=gatherStory();
+    Object.keys(ch).forEach(function(k){
+      var ms=k.match(/^story-(\d+)$/);
+      if(ms&&story[+ms[1]])story[+ms[1]].text=ch[k];
+    });
+    renderStory(story);
+    saveProjFromEditor().then(function(){
+      showToast('Changes saved from visual editor!');
+      var iframe=document.getElementById('preview-iframe');
+      iframe.dataset.editModeActive='';
+      var p=editProjId?projects.find(function(x){return x.id===editProjId;}):null;
+      var url=p&&(p.url||p.id+'.html');
+      if(url)setTimeout(function(){iframe.src=url+'?t='+Date.now();enableVisualEdit();},800);
+    });
+  }
+  if(e.data.type==='SL_EXIT'){
+    refreshPreviewFrame();
+  }
+});
+
+// ── LIVE PREVIEW RENDERER ──
+function renderLivePreview(){
+  // Info panel preview
+  var lp=document.getElementById('lp-info');if(!lp)return;
+  var title=gv('pe-title')||'Project Title';
+  var cat=gv('pe-cat')||'Category';
+  var loc=gv('pe-loc')||'Location';
+  var desc=gv('pe-desc')||'Description will appear here…';
+  var cover=gv('pe-cover');
+  var meta=gatherMetaRows();
+  var metaHtml=meta.map(function(r){
+    return r.key||r.val?'<span><b>'+escH(r.key)+'</b> — '+escH(r.val)+'</span>':'';
+  }).join('');
+  lp.innerHTML=
+    '<div class="lp-hero">'+
+      (cover?'<img class="lp-hero__img" src="'+cover+'" onerror="this.style.opacity=0">':
+        '<div class="lp-hero__img" style="display:flex;align-items:center;justify-content:center;font-size:.52rem;color:rgba(101,80,70,.35)">Cover Photo</div>')+
+      '<div class="lp-hero__info">'+
+        '<p class="lp-cat">'+escH(cat)+'</p>'+
+        '<p class="lp-title">'+escH(title)+'</p>'+
+        '<p class="lp-loc">'+escH(loc)+'</p>'+
+        '<p class="lp-desc">'+escH(desc)+'</p>'+
+        (metaHtml?'<div class="lp-meta">'+metaHtml+'</div>':'')+
+      '</div>'+
+    '</div>';
+
+  // Carousel strip preview
+  var lpCrl=document.getElementById('lp-carousel');
+  if(lpCrl){
+    var crl=gatherCarousel();
+    lpCrl.innerHTML=crl.length
+      ?crl.map(function(c){return c.src?'<img src="'+c.src+'" onerror="this.style.opacity=0">':'';}).join('')
+      :'<div class="lp-strip__ph">No photos yet</div>';
+  }
+
+  // Gallery preview
+  var lpGal=document.getElementById('lp-gallery');
+  var lpGalWrap=document.getElementById('lprev-gal');
+  if(lpGal){
+    var gal=gatherGallery();
+    if(gal.length){
+      lpGal.innerHTML=gal.slice(0,8).map(function(g){return'<img src="'+(g.src||g)+'" onerror="this.style.opacity=0">';}).join('');
+      if(lpGalWrap)lpGalWrap.style.display='';
+    }else{
+      if(lpGalWrap)lpGalWrap.style.display='none';
+    }
+  }
+}
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// call live preview after carousel/gallery/story changes
+var _origRenderCarousel=renderCarousel;
+renderCarousel=function(imgs){_origRenderCarousel(imgs);renderLivePreview();};
+var _origRenderGallery=renderGallery;
+renderGallery=function(imgs){_origRenderGallery(imgs);renderLivePreview();};
+var _origRenderMetaRows=renderMetaRows;
+renderMetaRows=function(rows){_origRenderMetaRows(rows);renderLivePreview();};
+var _origRenderStory=renderStory;
+renderStory=function(rows){_origRenderStory(rows);renderLivePreview();};
 
 // ── AWARDS ──
 function renderAwardsList(){
