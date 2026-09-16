@@ -112,6 +112,22 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
 .ptab.on{color:var(--gold);border-bottom-color:var(--gold)}
 .ptab-panel{display:none}.ptab-panel.on{display:block}
 
+/* ── UPLOAD PHOTO BOX (used everywhere) ── */
+.up-box{position:relative;cursor:pointer;background:rgba(101,80,70,.05);border:2px dashed rgba(101,80,70,.25);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.up-box:hover{border-color:var(--gold)}
+.up-box img{width:100%;height:100%;object-fit:cover;display:block}
+.up-box__ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;height:100%;width:100%;padding:1rem;text-align:center}
+.up-box__ico{font-size:1.4rem;opacity:.3}
+.up-box__txt{font-size:.62rem;font-weight:600;color:var(--mid)}
+.up-box__sub{font-size:.52rem;color:rgba(138,127,114,.5)}
+.up-box--sm{height:72px}
+.up-box--md{height:110px}
+.up-box--lg{height:160px}
+.up-box__spin{position:absolute;inset:0;background:rgba(247,245,242,.82);display:flex;align-items:center;justify-content:center;display:none}
+.up-box__spin.on{display:flex}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:22px;height:22px;border:2px solid rgba(101,80,70,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+
 /* Gallery grid */
 .gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:.5rem;margin-bottom:.75rem}
 .gal-item{position:relative;border-radius:var(--r);overflow:hidden;background:rgba(101,80,70,.07);border:1px solid rgba(101,80,70,.12);aspect-ratio:4/3}
@@ -123,27 +139,19 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
 .gal-mv{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:.58rem;padding:.18rem .4rem;cursor:pointer;border-radius:2px;font-family:var(--f-sans)}
 .gal-mv:hover{background:rgba(255,255,255,.28)}
 
-/* Upload zone */
-.upload-zone{border:2px dashed rgba(101,80,70,.28);border-radius:var(--r);padding:1.4rem;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:.85rem}
+/* Upload zone (drag-drop area) */
+.upload-zone{border:2px dashed rgba(101,80,70,.28);border-radius:var(--r);padding:1.6rem;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:.85rem}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(101,80,70,.03)}
-.upload-zone__icon{font-size:1.5rem;opacity:.3;margin-bottom:.25rem}
-.upload-zone__text{font-size:.68rem;color:var(--mid)}
-.upload-zone__sub{font-size:.56rem;color:rgba(138,127,114,.5);margin-top:.12rem}
-
-/* Inline image field */
-.img-field{display:flex;flex-direction:column;gap:.45rem}
-.img-field__preview{width:100%;height:100px;object-fit:cover;border-radius:var(--r);display:block;border:1px solid rgba(101,80,70,.15)}
-.img-field__ph{width:100%;height:75px;display:flex;align-items:center;justify-content:center;background:rgba(101,80,70,.05);border:1px solid rgba(101,80,70,.14);border-radius:var(--r);font-size:.58rem;color:rgba(101,80,70,.38)}
-.img-field__row{display:flex;gap:.4rem}
-.img-field__url{flex:1;background:#fff;border:1px solid rgba(101,80,70,.26);padding:.52rem .65rem;font-family:var(--f-sans);font-size:.78rem;color:var(--ink);outline:none;border-radius:var(--r)}
-.img-field__url:focus{border-color:var(--gold)}
-.img-field__up{padding:.52rem .75rem;font-size:.56rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;background:transparent;border:1px solid rgba(101,80,70,.3);color:var(--mid);border-radius:var(--r);transition:all .2s;white-space:nowrap;font-family:var(--f-sans)}
-.img-field__up:hover{border-color:var(--gold);color:var(--ink)}
+.upload-zone__icon{font-size:1.8rem;opacity:.25;margin-bottom:.3rem}
+.upload-zone__text{font-size:.72rem;font-weight:600;color:var(--ink)}
+.upload-zone__sub{font-size:.58rem;color:rgba(138,127,114,.5);margin-top:.18rem}
 
 /* Carousel list */
 .crl-list{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.75rem}
 .crl-item{display:flex;align-items:center;gap:.55rem;padding:.45rem .65rem;background:#fff;border:1px solid rgba(101,80,70,.16);border-radius:var(--r)}
-.crl-thumb{width:60px;height:38px;object-fit:cover;border-radius:2px;background:rgba(101,80,70,.07);flex-shrink:0}
+.crl-thumb{width:70px;height:44px;object-fit:cover;border-radius:2px;background:rgba(101,80,70,.07);flex-shrink:0;cursor:pointer;border:1px dashed rgba(101,80,70,.22);transition:border-color .2s}
+.crl-thumb:hover{border-color:var(--gold)}
+.crl-thumb--ph{display:flex;align-items:center;justify-content:center;font-size:.52rem;color:rgba(101,80,70,.4);background:rgba(101,80,70,.06)}
 .crl-fields{flex:1;display:flex;flex-direction:column;gap:.2rem}
 .crl-inp{border:none;border-bottom:1px solid rgba(101,80,70,.15);background:transparent;font-family:var(--f-sans);font-size:.74rem;color:var(--ink);padding:.08rem 0;outline:none;width:100%}
 .crl-inp:focus{border-bottom-color:var(--gold)}
@@ -224,6 +232,12 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
 .toast{position:fixed;bottom:1.3rem;right:1.3rem;background:var(--darker);color:#f7f5f2;padding:.65rem 1rem;border-radius:var(--r);font-size:.66rem;border-left:3px solid var(--gold);opacity:0;transform:translateY(5px);transition:opacity .25s,transform .25s;z-index:9999;pointer-events:none;max-width:290px}
 .toast.on{opacity:1;transform:translateY(0)}
 .toast.err{border-left-color:#e07070}
+
+/* Upload progress overlay */
+.up-progress{display:none;position:fixed;inset:0;background:rgba(17,16,9,.72);z-index:8000;align-items:center;justify-content:center;flex-direction:column;gap:.8rem}
+.up-progress.on{display:flex}
+.up-progress__txt{color:#f7f5f2;font-size:.72rem;letter-spacing:.08em}
+.up-progress__spin{width:36px;height:36px;border:3px solid rgba(255,255,255,.15);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite}
 </style>
 </head>
 <body>
@@ -277,16 +291,21 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
       <!-- HOME -->
       <div id="sec-home" class="sec on">
         <p class="sec__title">Homepage</p>
-        <p class="sec__desc">Edit the main headline and CTA button. Changes save instantly to the live site.</p>
+        <p class="sec__desc">Edit the main headline, CTA button, and the photos that cycle on the homepage hero.</p>
         <div class="sec__rule"></div>
         <div class="fg">
           <div class="f"><label>Main Headline</label><input type="text" id="home-title" placeholder="Your headline here"></div>
           <div class="f"><label>Button Text</label><input type="text" id="home-cta" placeholder="e.g. See Our Work"></div>
         </div>
-        <p style="font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Hero Slideshow Images</p>
-        <p class="f-hint" style="margin-bottom:.8rem">These photos cycle automatically. Add a label so visitors know what project they're seeing.</p>
+        <p style="font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem">Homepage Photo Slideshow</p>
+        <p class="f-hint" style="margin-bottom:.9rem">These photos cycle in the background of the homepage. Click any thumbnail to change the photo, or drag the arrows to reorder.</p>
+        <div class="upload-zone" id="home-drop" onclick="document.getElementById('home-file').click()">
+          <div class="upload-zone__icon">📷</div>
+          <p class="upload-zone__text">Click here to add new slideshow photos</p>
+          <p class="upload-zone__sub">JPG, PNG, WEBP · select multiple · max 512 MB each</p>
+        </div>
+        <input type="file" id="home-file" style="display:none" accept="image/*" multiple onchange="handleHomeUpload(this)">
         <div id="home-imgs"></div>
-        <button class="add-row" style="margin-top:.35rem" onclick="addHomeImg()">+ Add Image</button>
         <div class="save-row" style="margin-top:1.4rem">
           <button class="sbtn sbtn--p" onclick="saveSec('home')">Save Homepage</button>
           <span class="ok-msg" id="ok-home">Saved!</span>
@@ -297,7 +316,7 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
       <div id="sec-projects" class="sec">
         <div class="proj-list-view" id="projListView">
           <p class="sec__title">Projects</p>
-          <p class="sec__desc">Click any project to edit its photos, copy, and gallery. Everything updates instantly.</p>
+          <p class="sec__desc">Click any project to edit its photos, copy, and gallery. Everything updates instantly on the live site.</p>
           <div class="sec__rule"></div>
           <div class="proj-grid" id="projGrid">
             <div class="add-card" onclick="openProjEditor(null)"><div class="add-card__icon">+</div><div class="add-card__text">New Project</div></div>
@@ -323,76 +342,75 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
           <div class="ptab-panel on" id="ptab-info">
             <div class="fg">
               <div class="frow">
-                <div class="f"><label>Project ID</label><input type="text" id="pe-id" placeholder="e.g. canter"><p class="f-hint">Lowercase, no spaces. Used in the page URL.</p></div>
+                <div class="f"><label>Project Name</label><input type="text" id="pe-title" placeholder="e.g. Canter Hotel" oninput="autoSlug()"></div>
                 <div class="f"><label>Category</label><select id="pe-cat"><option>Hospitality</option><option>Residential</option><option>Commercial &amp; Workplace</option><option>Branded Environments</option></select></div>
               </div>
               <div class="frow">
-                <div class="f"><label>Project Name</label><input type="text" id="pe-title" placeholder="e.g. Canter Hotel"></div>
                 <div class="f"><label>Location</label><input type="text" id="pe-loc" placeholder="e.g. Oklahoma City · USA"></div>
-              </div>
-              <div class="frow">
                 <div class="f"><label>Year</label><input type="text" id="pe-year" placeholder="e.g. 2024"></div>
-                <div class="f"><label>Page Filename</label><input type="text" id="pe-url" placeholder="e.g. canter.html"></div>
               </div>
               <div class="f"><label>Short Tagline</label><input type="text" id="pe-tagline" placeholder="One-line description shown in project cards"></div>
-              <div class="f"><label>Hero Description</label><textarea id="pe-desc" placeholder="Paragraph shown beside the photos on the project page"></textarea></div>
+              <div class="f"><label>Project Description</label><textarea id="pe-desc" placeholder="The paragraph shown on the project page alongside the hero photos"></textarea></div>
               <div class="f">
-                <label>Cover Photo (used in project grid)</label>
-                <div class="img-field">
-                  <div id="pe-cover-preview" class="img-field__ph">No photo selected</div>
-                  <div class="img-field__row">
-                    <input class="img-field__url" type="text" id="pe-cover" placeholder="assets/img/…" oninput="refreshPreview2('pe-cover','pe-cover-preview')">
-                    <label class="img-field__up" for="pe-cover-file">Upload</label>
-                    <input type="file" id="pe-cover-file" style="display:none" accept="image/*" onchange="handleInlineUpload(this,'pe-cover','pe-cover-preview')">
+                <label>Cover Photo <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--mid)">(shown on the projects grid)</span></label>
+                <div class="up-box up-box--lg" id="pe-cover-box" onclick="document.getElementById('pe-cover-file').click()" title="Click to upload cover photo">
+                  <div class="up-box__ph" id="pe-cover-ph">
+                    <div class="up-box__ico">🖼️</div>
+                    <div class="up-box__txt">Click to upload cover photo</div>
+                    <div class="up-box__sub">JPG, PNG or WEBP</div>
                   </div>
+                  <div class="up-box__spin" id="pe-cover-spin"><div class="spinner"></div></div>
                 </div>
+                <input type="hidden" id="pe-cover">
+                <input type="file" id="pe-cover-file" style="display:none" accept="image/*" onchange="handleBoxUpload(this,'pe-cover','pe-cover-box','pe-cover-ph','pe-cover-spin')">
               </div>
               <div class="f"><label><input type="checkbox" id="pe-featured" style="width:auto;margin-right:.35rem"> Feature this project on the homepage</label></div>
+              <!-- Hidden technical fields -->
+              <input type="hidden" id="pe-id">
+              <input type="hidden" id="pe-url">
             </div>
-            <p style="font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Project Specs Table</p>
-            <p class="f-hint" style="margin-bottom:.65rem">The key/value rows shown on the left side of the project page (e.g. "Scale — 180 Keys").</p>
+            <p style="font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Specs Table</p>
+            <p class="f-hint" style="margin-bottom:.65rem">The key/value rows shown on the project page — e.g. "Scale — 180 Keys". Edit the labels and values below.</p>
             <div class="meta-rows" id="pe-meta-rows"></div>
             <button class="svc-add" onclick="addMetaRow()">+ Add row</button>
           </div>
 
           <!-- CAROUSEL TAB -->
           <div class="ptab-panel" id="ptab-carousel">
-            <p class="f-hint" style="margin-bottom:.85rem">These photos cycle in the right half of the hero area when visitors open this project page. First photo shows immediately — put your best shot first.</p>
+            <p class="f-hint" style="margin-bottom:.85rem">These photos cycle in the right side of the hero when visitors open this project page. The first photo shows immediately — put your best shot first.</p>
             <div class="upload-zone" id="crl-drop" onclick="document.getElementById('crl-file').click()">
-              <div class="upload-zone__icon">↑</div>
-              <p class="upload-zone__text">Click to upload slideshow photos</p>
-              <p class="upload-zone__sub">JPG, PNG, WEBP · multiple files OK · max 50 MB each</p>
+              <div class="upload-zone__icon">📷</div>
+              <p class="upload-zone__text">Click here to upload slideshow photos</p>
+              <p class="upload-zone__sub">JPG, PNG, WEBP · select multiple at once · max 512 MB each</p>
             </div>
             <input type="file" id="crl-file" style="display:none" accept="image/*" multiple onchange="handleCrlUpload(this)">
             <div class="crl-list" id="pe-carousel"></div>
-            <button class="add-row" onclick="addCrlItem()">+ Add Photo</button>
           </div>
 
           <!-- STORY TAB -->
           <div class="ptab-panel" id="ptab-story">
-            <p class="f-hint" style="margin-bottom:.85rem">Story sections are the large image + text pairs below the hero. They tell the design narrative. Most projects have 2–3.</p>
+            <p class="f-hint" style="margin-bottom:.85rem">Story sections are the large photo + text pairs below the hero. They tell the design narrative. Most projects have 2–3 sections.</p>
             <div class="story-list" id="pe-story"></div>
-            <button class="add-row" onclick="addStoryItem()">+ Add Section</button>
+            <button class="add-row" onclick="addStoryItem()">+ Add Story Section</button>
           </div>
 
           <!-- GALLERY TAB -->
           <div class="ptab-panel" id="ptab-gallery">
-            <p class="f-hint" style="margin-bottom:.85rem">The full photo grid at the bottom of the project page. Upload or paste URLs. Hover a photo to reorder or delete it.</p>
+            <p class="f-hint" style="margin-bottom:.85rem">The full photo grid at the bottom of the project page. Upload as many photos as you like. Hover over any photo to delete or reorder it.</p>
             <div class="upload-zone" id="gal-drop" onclick="document.getElementById('gal-file').click()">
-              <div class="upload-zone__icon">↑</div>
-              <p class="upload-zone__text">Click or drag photos here to upload</p>
-              <p class="upload-zone__sub">JPG, PNG, WEBP · select multiple · max 50 MB each</p>
+              <div class="upload-zone__icon">📷</div>
+              <p class="upload-zone__text">Click here to upload gallery photos</p>
+              <p class="upload-zone__sub">JPG, PNG, WEBP · select multiple at once · max 512 MB each</p>
             </div>
             <input type="file" id="gal-file" style="display:none" accept="image/*" multiple onchange="handleGalUpload(this)">
             <div class="gal-grid" id="pe-gallery"></div>
-            <button class="add-row" onclick="addGalItem()">+ Add by URL</button>
           </div>
 
           <!-- PREVIEW TAB -->
           <div class="ptab-panel" id="ptab-preview">
             <div class="preview-bar">
-              <button class="sbtn sbtn--g" onclick="refreshPreviewFrame()">↺ Refresh</button>
-              <p class="preview-note">Shows the live project page. Save your changes, then refresh to see them.</p>
+              <button class="sbtn sbtn--g" onclick="refreshPreviewFrame()">↺ Refresh Preview</button>
+              <p class="preview-note">Save your changes first, then click Refresh to see them on the live page.</p>
             </div>
             <div class="preview-wrap"><iframe id="preview-iframe" src="about:blank"></iframe></div>
           </div>
@@ -491,12 +509,12 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
       <!-- MEDIA -->
       <div id="sec-media" class="sec">
         <p class="sec__title">Media Library</p>
-        <p class="sec__desc">Upload photos here, then click any photo to copy its URL for use anywhere on the site.</p>
+        <p class="sec__desc">Upload photos here for use anywhere on the site. Click any photo to copy its link to your clipboard.</p>
         <div class="sec__rule"></div>
         <div class="upload-zone" id="media-drop" onclick="document.getElementById('media-file').click()">
-          <div class="upload-zone__icon">↑</div>
-          <p class="upload-zone__text">Click to upload, or drag and drop photos here</p>
-          <p class="upload-zone__sub">JPG, PNG, WEBP · max 50 MB each</p>
+          <div class="upload-zone__icon">📷</div>
+          <p class="upload-zone__text">Click to upload photos, or drag and drop them here</p>
+          <p class="upload-zone__sub">JPG, PNG, WEBP · select multiple · max 512 MB each</p>
         </div>
         <input type="file" id="media-file" style="display:none" accept="image/*" multiple onchange="handleMediaUpload(this)">
         <div class="media-grid" id="media-grid"></div>
@@ -526,20 +544,28 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
     <p class="modal__title" id="teamModalTitle">Add Team Member</p>
     <div class="fg">
       <div class="frow"><div class="f"><label>Name</label><input type="text" id="tm-name" placeholder="Full name"></div><div class="f"><label>Role</label><input type="text" id="tm-role" placeholder="e.g. Senior Designer"></div></div>
-      <div class="f"><label>Photo</label>
-        <div class="img-field">
-          <div id="tm-photo-preview" class="img-field__ph">No photo selected</div>
-          <div class="img-field__row">
-            <input class="img-field__url" type="text" id="tm-photo" placeholder="assets/img/…" oninput="refreshPreview2('tm-photo','tm-photo-preview')">
-            <label class="img-field__up" for="tm-photo-file">Upload</label>
-            <input type="file" id="tm-photo-file" style="display:none" accept="image/*" onchange="handleInlineUpload(this,'tm-photo','tm-photo-preview')">
+      <div class="f">
+        <label>Photo</label>
+        <div class="up-box up-box--md" id="tm-photo-box" onclick="document.getElementById('tm-photo-file').click()" title="Click to upload photo" style="margin-top:.25rem">
+          <div class="up-box__ph" id="tm-photo-ph">
+            <div class="up-box__ico">👤</div>
+            <div class="up-box__txt">Click to upload photo</div>
           </div>
+          <div class="up-box__spin" id="tm-photo-spin"><div class="spinner"></div></div>
         </div>
+        <input type="hidden" id="tm-photo">
+        <input type="file" id="tm-photo-file" style="display:none" accept="image/*" onchange="handleBoxUpload(this,'tm-photo','tm-photo-box','tm-photo-ph','tm-photo-spin')">
       </div>
       <div class="f"><label><input type="checkbox" id="tm-founder" style="width:auto;margin-right:.35rem"> Mark as Founder</label></div>
     </div>
     <div class="modal__foot"><button class="sbtn sbtn--g" onclick="closeModal('teamModal')">Cancel</button><button class="sbtn sbtn--p" onclick="saveTeam()">Save Member</button></div>
   </div>
+</div>
+
+<!-- UPLOAD PROGRESS OVERLAY -->
+<div class="up-progress" id="upProgress">
+  <div class="up-progress__spin"></div>
+  <div class="up-progress__txt" id="upProgressTxt">Uploading…</div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -550,6 +576,7 @@ var SB_KEY='sb_publishable_CqA9WYVRy2xBOE5Rz2N5xA_Vawf2Qs8';
 var sb=supabase.createClient(SB_URL,SB_KEY);
 var contentMap={},projects=[],awards=[],team=[];
 var editProjId=null,editAwardId=null,editTeamId=null;
+var MAX_FILE_MB=512;
 
 // ── AUTH ──
 (async function(){
@@ -558,7 +585,7 @@ var editProjId=null,editAwardId=null,editTeamId=null;
 })();
 async function doLogin(){
   var e=document.getElementById('lgEmail').value.trim(),p=document.getElementById('lgPw').value;
-  var err=document.getElementById('authErr'); err.classList.remove('on');
+  var err=document.getElementById('authErr');err.classList.remove('on');
   var {error}=await sb.auth.signInWithPassword({email:e,password:p});
   if(error){err.textContent=error.message;err.classList.add('on');return;}
   showScreen('dash');await loadAll();
@@ -642,25 +669,56 @@ function renderHomeImgs(imgs){
   var el=document.getElementById('home-imgs');el.innerHTML='';
   imgs.forEach(function(img,i){
     var row=document.createElement('div');row.className='crl-item';
-    row.innerHTML='<img class="crl-thumb" src="'+(img.src||'')+'" onerror="this.style.opacity=0">'+
+    var hasSrc=!!img.src;
+    row.innerHTML=
+      '<div style="position:relative;flex-shrink:0">'+
+        '<div class="crl-thumb'+(hasSrc?'':'--ph crl-thumb')+'" id="hi-thumb-'+i+'" '+
+          'style="width:70px;height:44px;border-radius:2px;cursor:pointer;overflow:hidden;'+(hasSrc?'':'display:flex;align-items:center;justify-content:center;font-size:.6rem;color:rgba(101,80,70,.45);background:rgba(101,80,70,.06);border:1px dashed rgba(101,80,70,.28)')+'" '+
+          'onclick="document.getElementById(\'hi-f-'+i+'\').click()" title="Click to change photo">'+
+          (hasSrc?'<img src="'+img.src+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'+ Photo\'">':'+ Photo')+
+        '</div>'+
+        '<div id="hi-spin-'+i+'" style="display:none;position:absolute;inset:0;background:rgba(247,245,242,.85);align-items:center;justify-content:center"><div class="spinner" style="width:14px;height:14px;border-width:2px"></div></div>'+
+      '</div>'+
+      '<input type="hidden" class="hi-src" value="'+(img.src||'')+'">'+
+      '<input type="file" id="hi-f-'+i+'" style="display:none" accept="image/*" onchange="homeImgUpload(this,'+i+')">'+
       '<div class="crl-fields">'+
-        '<input class="crl-inp" placeholder="Image path (assets/img/…)" value="'+(img.src||'')+'" oninput="this.closest(\'.crl-item\').querySelector(\'.crl-thumb\').src=this.value">'+
-        '<input class="crl-inp" placeholder="Label shown on hover (e.g. Canter Hotel)" value="'+(img.label||'')+'">'+
+        '<input class="crl-inp" placeholder="Label shown on hover (e.g. Canter Hotel · Oklahoma City)" value="'+(img.label||'')+'">'+
       '</div>'+
       '<div class="crl-acts">'+
-        '<button class="crl-btn" onclick="moveArr(\'home-imgs\','+i+',-1,gatherHomeImgs,renderHomeImgs)">↑</button>'+
-        '<button class="crl-btn" onclick="moveArr(\'home-imgs\','+i+',1,gatherHomeImgs,renderHomeImgs)">↓</button>'+
-        '<button class="crl-btn del" onclick="spliceArr(\'home-imgs\','+i+',gatherHomeImgs,renderHomeImgs)">×</button>'+
+        '<button class="crl-btn" title="Move up" onclick="moveArr(\'home-imgs\','+i+',-1,gatherHomeImgs,renderHomeImgs)">↑</button>'+
+        '<button class="crl-btn" title="Move down" onclick="moveArr(\'home-imgs\','+i+',1,gatherHomeImgs,renderHomeImgs)">↓</button>'+
+        '<button class="crl-btn del" title="Remove" onclick="spliceArr(\'home-imgs\','+i+',gatherHomeImgs,renderHomeImgs)">×</button>'+
       '</div>';
     el.appendChild(row);
   });
 }
+async function homeImgUpload(inp,i){
+  var spin=document.getElementById('hi-spin-'+i);
+  if(spin){spin.style.display='flex';}
+  var u=await uploadFile(inp.files[0]);
+  if(spin){spin.style.display='none';}
+  if(!u){inp.value='';return;}
+  var rows=document.querySelectorAll('#home-imgs .crl-item');
+  var row=rows[i];if(!row){inp.value='';return;}
+  row.querySelector('.hi-src').value=u;
+  var thumb=row.querySelector('[id^="hi-thumb-"]');
+  if(thumb){thumb.innerHTML='<img src="'+u+'" style="width:100%;height:100%;object-fit:cover">';thumb.style.cssText='width:70px;height:44px;border-radius:2px;cursor:pointer;overflow:hidden;';}
+  inp.value='';
+}
 function gatherHomeImgs(){
   return Array.from(document.querySelectorAll('#home-imgs .crl-item')).map(function(r){
-    var ins=r.querySelectorAll('input');return{src:ins[0].value,label:ins[1].value};
-  });
+    return{src:r.querySelector('.hi-src').value,label:r.querySelector('.crl-inp').value};
+  }).filter(function(r){return r.src;});
 }
-function addHomeImg(){renderHomeImgs(gatherHomeImgs().concat([{src:'',label:''}]));}
+async function handleHomeUpload(inp){
+  var files=Array.from(inp.files),imgs=gatherHomeImgs();
+  showProgress('Uploading '+files.length+' photo'+(files.length>1?'s':'')+'…');
+  for(var i=0;i<files.length;i++){
+    updateProgress('Uploading photo '+(i+1)+' of '+files.length+'…');
+    var u=await uploadFile(files[i]);if(u)imgs.push({src:u,label:''});
+  }
+  hideProgress();renderHomeImgs(imgs);inp.value='';
+}
 
 // ── PROJECTS ──
 function renderProjGrid(){
@@ -669,12 +727,19 @@ function renderProjGrid(){
   projects.forEach(function(p){
     var card=document.createElement('div');card.className='proj-card';
     card.onclick=function(){openProjEditor(p.id);};
-    var thumb=p.cover_image
-      ?'<img class="proj-card__thumb" src="'+p.cover_image+'" onerror="this.parentNode.innerHTML=\'<div class=proj-card__ph>No Photo</div>\'">'
-      :'<div class="proj-card__ph">No Photo</div>';
+    var src=p.cover_image||p.hero_image||'';
+    var thumb=src?'<img class="proj-card__thumb" src="'+src+'" onerror="this.parentNode.innerHTML=\'<div class=proj-card__ph>No Photo</div>\'">':'<div class="proj-card__ph">No Photo</div>';
     card.innerHTML=thumb+'<div class="proj-card__body"><p class="proj-card__name">'+p.title+'</p><p class="proj-card__sub">'+(p.category||'')+' · '+(p.year||'')+'</p></div>';
     grid.insertBefore(card,grid.firstChild);
   });
+}
+
+function autoSlug(){
+  if(editProjId) return;
+  var title=gv('pe-title');
+  var slug=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  document.getElementById('pe-id').value=slug;
+  document.getElementById('pe-url').value=slug+'.html';
 }
 
 function openProjEditor(id){
@@ -683,17 +748,19 @@ function openProjEditor(id){
   document.getElementById('projListView').classList.add('off');
   document.getElementById('projEditView').classList.add('on');
   document.getElementById('pevTitle').textContent=p?p.title:'New Project';
-  // reset to first tab
   document.querySelectorAll('.ptab').forEach(function(b,i){b.classList.toggle('on',i===0);});
   document.querySelectorAll('.ptab-panel').forEach(function(p2,i){p2.classList.toggle('on',i===0);});
 
-  var idEl=document.getElementById('pe-id');idEl.value=p?p.id:'';idEl.disabled=!!p;
+  document.getElementById('pe-id').value=p?p.id:'';
+  document.getElementById('pe-url').value=p?p.url||'':'';
   sv('pe-cat',p?p.category:'Hospitality');sv('pe-title',p?p.title:'');
-  sv('pe-loc',p?p.location:'');sv('pe-year',p?p.year:'');sv('pe-url',p?p.url:'');
+  sv('pe-loc',p?p.location:'');sv('pe-year',p?p.year:'');
   sv('pe-tagline',p?p.tagline||'':'');sv('pe-desc',p?p.description||'':'');
-  sv('pe-cover',p?p.cover_image||'':'');
   document.getElementById('pe-featured').checked=p?!!p.featured:false;
-  refreshPreview2('pe-cover','pe-cover-preview');
+
+  var coverSrc=p?(p.cover_image||p.hero_image||''):'';
+  document.getElementById('pe-cover').value=coverSrc;
+  setBoxPhoto('pe-cover-box','pe-cover-ph',coverSrc);
 
   var ps=p&&p.page_sections||{};
   renderMetaRows(ps.meta||[]);
@@ -709,15 +776,20 @@ function closeProjEditor(){
 }
 
 async function saveProjFromEditor(){
-  var id=editProjId||document.getElementById('pe-id').value.trim().toLowerCase().replace(/\s+/g,'-');
-  if(!id){showToast('Please enter a Project ID first.',true);return;}
+  var id=editProjId||document.getElementById('pe-id').value.trim();
+  if(!id){
+    var title=gv('pe-title').trim();
+    if(!title){showToast('Please enter a Project Name first.',true);return;}
+    id=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
   setStatus('Saving…','');
   var existing=editProjId?projects.find(function(x){return x.id===editProjId;}):null;
   var payload={
     id:id,title:gv('pe-title'),display_name:gv('pe-title'),
     category:gv('pe-cat'),location:gv('pe-loc'),year:gv('pe-year'),
-    url:gv('pe-url'),tagline:gv('pe-tagline'),description:gv('pe-desc'),
-    cover_image:gv('pe-cover'),featured:document.getElementById('pe-featured').checked,
+    url:id+'.html',tagline:gv('pe-tagline'),description:gv('pe-desc'),
+    cover_image:gv('pe-cover'),hero_image:gv('pe-cover'),
+    featured:document.getElementById('pe-featured').checked,
     gallery_images:gatherGallery(),
     page_sections:{meta:gatherMetaRows(),carousel_images:gatherCarousel(),detail_rows:gatherStory()},
     sort_order:existing?existing.sort_order:projects.length+1
@@ -727,7 +799,7 @@ async function saveProjFromEditor(){
   var {data}=await sb.from('projects').select('*').order('sort_order');
   projects=data||[];renderProjGrid();
   document.getElementById('pevTitle').textContent=payload.title;
-  editProjId=id;document.getElementById('pe-id').disabled=true;
+  editProjId=id;
   setStatus('<span class="dot"></span>Live','ok');showToast('Project saved!');
 }
 
@@ -753,32 +825,56 @@ function addMetaRow(){renderMetaRows(gatherMetaRows().concat([{key:'',val:''}]))
 function renderCarousel(imgs){
   var el=document.getElementById('pe-carousel');el.innerHTML='';
   imgs.forEach(function(img,i){
+    var hasSrc=!!img.src;
     var row=document.createElement('div');row.className='crl-item';
-    row.innerHTML='<img class="crl-thumb" src="'+(img.src||'')+'" onerror="this.style.opacity=0">'+
+    row.innerHTML=
+      '<div style="position:relative;flex-shrink:0">'+
+        '<div id="ci-thumb-'+i+'" style="width:70px;height:44px;border-radius:2px;cursor:pointer;overflow:hidden;'+(hasSrc?'':'display:flex;align-items:center;justify-content:center;font-size:.52rem;color:rgba(101,80,70,.4);background:rgba(101,80,70,.06);border:1px dashed rgba(101,80,70,.28)')+'" '+
+          'onclick="document.getElementById(\'ci-f-'+i+'\').click()" title="Click to change photo">'+
+          (hasSrc?'<img src="'+img.src+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.opacity=0">':'+ Photo')+
+        '</div>'+
+        '<div id="ci-spin-'+i+'" style="display:none;position:absolute;inset:0;background:rgba(247,245,242,.85);align-items:center;justify-content:center"><div class="spinner" style="width:14px;height:14px;border-width:2px"></div></div>'+
+      '</div>'+
+      '<input type="hidden" class="ci-src" value="'+(img.src||'')+'">'+
+      '<input type="file" id="ci-f-'+i+'" style="display:none" accept="image/*" onchange="crlItemUpload(this,'+i+')">'+
       '<div class="crl-fields">'+
-        '<input class="crl-inp" placeholder="Image path or URL" value="'+(img.src||'')+'" oninput="this.closest(\'.crl-item\').querySelector(\'.crl-thumb\').src=this.value">'+
         '<input class="crl-inp" placeholder="Description (e.g. Bar Interior)" value="'+(img.alt||'')+'">'+
       '</div>'+
       '<div class="crl-acts">'+
-        '<button class="crl-btn" onclick="moveArr(\'pe-carousel\','+i+',-1,gatherCarousel,renderCarousel)">↑</button>'+
-        '<button class="crl-btn" onclick="moveArr(\'pe-carousel\','+i+',1,gatherCarousel,renderCarousel)">↓</button>'+
-        '<button class="crl-btn del" onclick="this.closest(\'.crl-item\').remove()">×</button>'+
-      '</div>'+
-      '<div class="crl-acts"><label class="crl-btn" for="crl-up-'+i+'" style="cursor:pointer">↑</label>'+
-      '<input type="file" id="crl-up-'+i+'" style="display:none" accept="image/*" onchange="(async function(inp,idx){var u=await uploadFile(inp.files[0]);if(u){var c=gatherCarousel();c[idx].src=u;renderCarousel(c);}inp.value=\'\';})(this,'+i+')"></div>';
+        '<button class="crl-btn" title="Move up" onclick="moveArr(\'pe-carousel\','+i+',-1,gatherCarousel,renderCarousel)">↑</button>'+
+        '<button class="crl-btn" title="Move down" onclick="moveArr(\'pe-carousel\','+i+',1,gatherCarousel,renderCarousel)">↓</button>'+
+        '<button class="crl-btn del" title="Remove" onclick="spliceArr(\'pe-carousel\','+i+',gatherCarousel,renderCarousel)">×</button>'+
+      '</div>';
     el.appendChild(row);
   });
 }
+async function crlItemUpload(inp,i){
+  var spin=document.getElementById('ci-spin-'+i);
+  if(spin)spin.style.display='flex';
+  var u=await uploadFile(inp.files[0]);
+  if(spin)spin.style.display='none';
+  if(!u){inp.value='';return;}
+  var rows=document.querySelectorAll('#pe-carousel .crl-item');
+  var row=rows[i];if(!row){inp.value='';return;}
+  row.querySelector('.ci-src').value=u;
+  var thumb=document.getElementById('ci-thumb-'+i);
+  if(thumb){thumb.innerHTML='<img src="'+u+'" style="width:100%;height:100%;object-fit:cover">';thumb.style.cssText='width:70px;height:44px;border-radius:2px;cursor:pointer;overflow:hidden;';}
+  inp.value='';
+}
 function gatherCarousel(){
   return Array.from(document.querySelectorAll('#pe-carousel .crl-item')).map(function(r){
-    var ins=r.querySelectorAll('input');return{src:ins[0].value,alt:ins[1].value};
+    var alt=r.querySelector('.crl-inp').value;
+    return{src:r.querySelector('.ci-src').value,alt:alt};
   }).filter(function(r){return r.src;});
 }
-function addCrlItem(){renderCarousel(gatherCarousel().concat([{src:'',alt:''}]));}
 async function handleCrlUpload(inp){
   var files=Array.from(inp.files),crl=gatherCarousel();
-  for(var i=0;i<files.length;i++){var u=await uploadFile(files[i]);if(u)crl.push({src:u,alt:''});}
-  renderCarousel(crl);inp.value='';
+  showProgress('Uploading '+files.length+' photo'+(files.length>1?'s':'')+'…');
+  for(var i=0;i<files.length;i++){
+    updateProgress('Uploading photo '+(i+1)+' of '+files.length+'…');
+    var u=await uploadFile(files[i]);if(u)crl.push({src:u,alt:''});
+  }
+  hideProgress();renderCarousel(crl);inp.value='';
 }
 
 // ── STORY ──
@@ -787,8 +883,9 @@ function renderStory(rows){
   rows.forEach(function(r,i){
     var item=document.createElement('div');item.className='story-item';
     var preview=r.text?r.text.slice(0,45)+'…':'Empty section';
+    var hasSrc=!!r.image;
     item.innerHTML=
-      '<div class="story-hd" onclick="this.nextSibling.classList.toggle(\'hide\')">'+
+      '<div class="story-hd" onclick="this.nextElementSibling.classList.toggle(\'hide\')">'+
         '<div class="story-num">'+(i+1)+'</div>'+
         '<div class="story-label">Section '+(i+1)+' <span>— '+preview+'</span></div>'+
         '<div style="display:flex;gap:.28rem;margin-left:auto">'+
@@ -798,22 +895,45 @@ function renderStory(rows){
         '</div>'+
       '</div>'+
       '<div class="story-body">'+
-        '<div class="img-field">'+
-          '<div class="img-field__ph" id="si-p-'+i+'">'+(r.image?'<img src="'+r.image+'" style="width:100%;height:100%;object-fit:cover">':'No photo')+'</div>'+
-          '<div class="img-field__row">'+
-            '<input class="img-field__url" placeholder="Image path or URL" value="'+(r.image||'')+'" oninput="document.getElementById(\'si-p-'+i+'\').innerHTML=\'<img src=\\\'\'+this.value+\'\\\' style=\\\"width:100%;height:100%;object-fit:cover\\\">\'">'+
-            '<label class="img-field__up" for="si-f-'+i+'">Upload</label>'+
-            '<input type="file" id="si-f-'+i+'" style="display:none" accept="image/*" onchange="(async function(inp,i){var u=await uploadFile(inp.files[0]);if(u){var el=inp.closest(\'.story-body\').querySelector(\'.img-field__url\');el.value=u;document.getElementById(\'si-p-\'+i).innerHTML=\'<img src=\\\'\'+u+\'\\\' style=\\\"width:100%;height:100%;object-fit:cover\\\">\';}})(this,'+i+')">'+
+        '<div>'+
+          '<div id="si-box-'+i+'" class="up-box up-box--lg" onclick="document.getElementById(\'si-f-'+i+'\').click()" title="Click to upload photo" style="margin-bottom:.4rem">'+
+            '<div class="up-box__ph" id="si-ph-'+i+'" style="'+(hasSrc?'display:none':'')+'">'+
+              '<div class="up-box__ico">🖼️</div>'+
+              '<div class="up-box__txt">Click to upload photo</div>'+
+            '</div>'+
+            (hasSrc?'<img src="'+r.image+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.opacity=0">':'')+
+            '<div class="up-box__spin" id="si-spin-'+i+'"><div class="spinner"></div></div>'+
           '</div>'+
+          '<input type="hidden" class="si-src" id="si-src-'+i+'" value="'+(r.image||'')+'">'+
+          '<input type="file" id="si-f-'+i+'" style="display:none" accept="image/*" onchange="storyImgUpload(this,'+i+')">'+
         '</div>'+
         '<div class="f"><label>Story Text</label><textarea class="story-txt" placeholder="Describe this space or design moment…">'+(r.text||'')+'</textarea></div>'+
       '</div>';
     el.appendChild(item);
   });
 }
+async function storyImgUpload(inp,i){
+  var spin=document.getElementById('si-spin-'+i);
+  if(spin)spin.classList.add('on');
+  var u=await uploadFile(inp.files[0]);
+  if(spin)spin.classList.remove('on');
+  if(!u){inp.value='';return;}
+  document.getElementById('si-src-'+i).value=u;
+  var box=document.getElementById('si-box-'+i);
+  var ph=document.getElementById('si-ph-'+i);
+  if(ph)ph.style.display='none';
+  var img=box.querySelector('img');
+  if(img){img.src=u;}else{
+    var newImg=document.createElement('img');
+    newImg.src=u;newImg.style.cssText='width:100%;height:100%;object-fit:cover';
+    box.insertBefore(newImg,spin);
+  }
+  inp.value='';
+}
 function gatherStory(){
-  return Array.from(document.querySelectorAll('.story-item')).map(function(el){
-    return{image:el.querySelector('.img-field__url').value,text:el.querySelector('textarea').value};
+  return Array.from(document.querySelectorAll('.story-item')).map(function(el,i){
+    var srcEl=el.querySelector('.si-src');
+    return{image:srcEl?srcEl.value:'',text:el.querySelector('textarea').value};
   });
 }
 function addStoryItem(){renderStory(gatherStory().concat([{image:'',text:''}]));}
@@ -822,9 +942,10 @@ function addStoryItem(){renderStory(gatherStory().concat([{image:'',text:''}]));
 function renderGallery(imgs){
   var grid=document.getElementById('pe-gallery');grid.innerHTML='';
   imgs.forEach(function(img,i){
-    var src=img.src||img||'';
+    var src=typeof img==='string'?img:(img.src||'');
+    var alt=typeof img==='object'?img.alt||'':'';
     var item=document.createElement('div');item.className='gal-item';
-    item.innerHTML='<img src="'+src+'" alt="'+(img.alt||'')+'" onerror="this.style.opacity=0">'+
+    item.innerHTML='<img src="'+src+'" alt="'+alt+'" onerror="this.style.opacity=0">'+
       '<div class="gal-item__ctrl">'+
         '<button class="gal-item__del" onclick="spliceArr(\'pe-gallery\','+i+',gatherGallery,renderGallery)">×</button>'+
         '<div class="gal-item__mvs">'+
@@ -838,14 +959,42 @@ function renderGallery(imgs){
 function gatherGallery(){
   return Array.from(document.querySelectorAll('#pe-gallery .gal-item img')).map(function(img){return{src:img.src,alt:img.alt};});
 }
-function addGalItem(){
-  var url=prompt('Paste an image URL:');
-  if(url){var g=gatherGallery();g.push({src:url,alt:''});renderGallery(g);}
-}
 async function handleGalUpload(inp){
   var files=Array.from(inp.files),gal=gatherGallery();
-  for(var i=0;i<files.length;i++){var u=await uploadFile(files[i]);if(u)gal.push({src:u,alt:''});}
-  renderGallery(gal);inp.value='';
+  showProgress('Uploading '+files.length+' photo'+(files.length>1?'s':'')+'…');
+  for(var i=0;i<files.length;i++){
+    updateProgress('Uploading photo '+(i+1)+' of '+files.length+'…');
+    var u=await uploadFile(files[i]);if(u)gal.push({src:u,alt:''});
+  }
+  hideProgress();renderGallery(gal);inp.value='';
+}
+
+// ── COVER PHOTO / INLINE BOX UPLOAD ──
+function setBoxPhoto(boxId,phId,src){
+  var box=document.getElementById(boxId);
+  var ph=document.getElementById(phId);
+  if(!box)return;
+  var existing=box.querySelector('img');
+  if(src){
+    if(existing){existing.src=src;}
+    else{
+      var img=document.createElement('img');img.src=src;img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+      var spin=box.querySelector('.up-box__spin');
+      box.insertBefore(img,spin||null);
+    }
+    if(ph)ph.style.display='none';
+  }else{
+    if(existing)existing.remove();
+    if(ph)ph.style.display='';
+  }
+}
+async function handleBoxUpload(inp,hiddenId,boxId,phId,spinId){
+  var spin=document.getElementById(spinId);
+  if(spin)spin.classList.add('on');
+  var u=await uploadFile(inp.files[0]);
+  if(spin)spin.classList.remove('on');
+  if(u){document.getElementById(hiddenId).value=u;setBoxPhoto(boxId,phId,u);}
+  inp.value='';
 }
 
 // ── PREVIEW ──
@@ -856,13 +1005,15 @@ function switchPTab(name,btn){
   var panel=document.getElementById('ptab-'+name);if(panel)panel.classList.add('on');
   if(name==='preview'){
     var p=editProjId?projects.find(function(x){return x.id===editProjId;}):null;
-    if(p&&p.url&&document.getElementById('preview-iframe').src==='about:blank')
-      document.getElementById('preview-iframe').src=p.url;
+    var url=p&&(p.url||p.id+'.html');
+    if(url&&document.getElementById('preview-iframe').src==='about:blank')
+      document.getElementById('preview-iframe').src=url;
   }
 }
 function refreshPreviewFrame(){
   var p=editProjId?projects.find(function(x){return x.id===editProjId;}):null;
-  if(p&&p.url)document.getElementById('preview-iframe').src=p.url+'?t='+Date.now();
+  var url=p&&(p.url||p.id+'.html');
+  if(url)document.getElementById('preview-iframe').src=url+'?t='+Date.now();
 }
 
 // ── AWARDS ──
@@ -915,9 +1066,10 @@ function openTeamModal(id){
   editTeamId=id;
   document.getElementById('teamModalTitle').textContent=id?'Edit Member':'Add Team Member';
   var m=id?team.find(function(x){return x.id===id;}):null;
-  sv('tm-name',m?m.name:'');sv('tm-role',m?m.role:'');sv('tm-photo',m?m.photo||'':'');
+  sv('tm-name',m?m.name:'');sv('tm-role',m?m.role:'');
+  document.getElementById('tm-photo').value=m?m.photo||'':'';
   document.getElementById('tm-founder').checked=m?!!m.is_founder:false;
-  refreshPreview2('tm-photo','tm-photo-preview');
+  setBoxPhoto('tm-photo-box','tm-photo-ph',m?m.photo||'':'');
   openModal('teamModal');
 }
 async function saveTeam(){
@@ -972,43 +1124,43 @@ async function loadMedia(){
   var grid=document.getElementById('media-grid');grid.innerHTML='';
   (files||[]).filter(function(f){return !f.name.startsWith('.');}).forEach(function(f){
     var url=sb.storage.from('media').getPublicUrl(f.name).data.publicUrl;
-    var item=document.createElement('div');item.className='media-item';item.title='Click to copy URL';
+    var item=document.createElement('div');item.className='media-item';item.title='Click to copy photo link';
     item.innerHTML='<img src="'+url+'" loading="lazy"><div class="media-item__name">'+f.name+'</div>';
-    item.onclick=function(){navigator.clipboard.writeText(url);showToast('URL copied!');};
+    item.onclick=function(){navigator.clipboard.writeText(url);showToast('Photo link copied!');};
     grid.appendChild(item);
   });
+  if(!files||!files.length) grid.innerHTML='<p style="font-size:.7rem;color:var(--mid);padding:.4rem 0">No photos uploaded yet.</p>';
 }
 async function handleMediaUpload(inp){
   var files=Array.from(inp.files);
-  for(var i=0;i<files.length;i++)await uploadFile(files[i]);
-  await loadMedia();showToast('Upload complete!');inp.value='';
+  showProgress('Uploading '+files.length+' photo'+(files.length>1?'s':'')+'…');
+  for(var i=0;i<files.length;i++){
+    updateProgress('Uploading photo '+(i+1)+' of '+files.length+'…');
+    await uploadFile(files[i]);
+  }
+  hideProgress();await loadMedia();showToast('Upload complete!');inp.value='';
 }
 
 // ── UPLOAD ──
-var MAX_FILE_MB = 50;
 async function uploadFile(file){
   if(!file) return null;
-  if(file.size > MAX_FILE_MB * 1024 * 1024){
-    showToast('File too large: ' + (file.size/1024/1024).toFixed(1) + ' MB. Maximum is ' + MAX_FILE_MB + ' MB.', true);
+  if(file.size > MAX_FILE_MB*1024*1024){
+    showToast('File too large: '+(file.size/1024/1024).toFixed(1)+' MB. Maximum is '+MAX_FILE_MB+' MB.',true);
     return null;
   }
-  var ext = file.name.split('.').pop().toLowerCase();
-  var path = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-  var {error} = await sb.storage.from('media').upload(path, file, {upsert:true, contentType: file.type});
-  if(error){showToast('Upload failed: '+error.message, true); return null;}
+  var path=Date.now()+'-'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  var {error}=await sb.storage.from('media').upload(path,file,{upsert:true,contentType:file.type});
+  if(error){showToast('Upload failed: '+error.message,true);return null;}
   return sb.storage.from('media').getPublicUrl(path).data.publicUrl;
 }
-async function handleInlineUpload(inp,urlId,previewId){
-  var url=await uploadFile(inp.files[0]);
-  if(url){document.getElementById(urlId).value=url;refreshPreview2(urlId,previewId);}
-  inp.value='';
+
+// ── UPLOAD PROGRESS ──
+function showProgress(msg){
+  document.getElementById('upProgressTxt').textContent=msg||'Uploading…';
+  document.getElementById('upProgress').classList.add('on');
 }
-function refreshPreview2(urlId,previewId){
-  var src=document.getElementById(urlId).value;
-  var el=document.getElementById(previewId);if(!el)return;
-  el.innerHTML=src?'<img src="'+src+'" style="width:100%;height:100%;object-fit:cover">':'No photo selected';
-  el.className=src?'img-field__preview':'img-field__ph';
-}
+function updateProgress(msg){document.getElementById('upProgressTxt').textContent=msg;}
+function hideProgress(){document.getElementById('upProgress').classList.remove('on');}
 
 // ── ARRAY HELPERS ──
 function moveArr(containerId,i,dir,gather,render){
@@ -1052,7 +1204,7 @@ function showToast(msg,isErr){
 
 // ── DRAG & DROP ──
 (function(){
-  ['media-drop:media-file','gal-drop:gal-file','crl-drop:crl-file'].forEach(function(pair){
+  ['media-drop:media-file','gal-drop:gal-file','crl-drop:crl-file','home-drop:home-file'].forEach(function(pair){
     var p=pair.split(':'),zone=document.getElementById(p[0]);
     if(!zone)return;
     zone.addEventListener('dragover',function(e){e.preventDefault();zone.classList.add('drag');});
