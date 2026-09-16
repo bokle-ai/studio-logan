@@ -361,7 +361,7 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
             <div class="upload-zone" id="crl-drop" onclick="document.getElementById('crl-file').click()">
               <div class="upload-zone__icon">↑</div>
               <p class="upload-zone__text">Click to upload slideshow photos</p>
-              <p class="upload-zone__sub">JPG, PNG, WEBP · multiple files OK</p>
+              <p class="upload-zone__sub">JPG, PNG, WEBP · multiple files OK · max 50 MB each</p>
             </div>
             <input type="file" id="crl-file" style="display:none" accept="image/*" multiple onchange="handleCrlUpload(this)">
             <div class="crl-list" id="pe-carousel"></div>
@@ -381,7 +381,7 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
             <div class="upload-zone" id="gal-drop" onclick="document.getElementById('gal-file').click()">
               <div class="upload-zone__icon">↑</div>
               <p class="upload-zone__text">Click or drag photos here to upload</p>
-              <p class="upload-zone__sub">JPG, PNG, WEBP · select multiple</p>
+              <p class="upload-zone__sub">JPG, PNG, WEBP · select multiple · max 50 MB each</p>
             </div>
             <input type="file" id="gal-file" style="display:none" accept="image/*" multiple onchange="handleGalUpload(this)">
             <div class="gal-grid" id="pe-gallery"></div>
@@ -496,7 +496,7 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
         <div class="upload-zone" id="media-drop" onclick="document.getElementById('media-file').click()">
           <div class="upload-zone__icon">↑</div>
           <p class="upload-zone__text">Click to upload, or drag and drop photos here</p>
-          <p class="upload-zone__sub">JPG, PNG, WEBP · max 10 MB each</p>
+          <p class="upload-zone__sub">JPG, PNG, WEBP · max 50 MB each</p>
         </div>
         <input type="file" id="media-file" style="display:none" accept="image/*" multiple onchange="handleMediaUpload(this)">
         <div class="media-grid" id="media-grid"></div>
@@ -985,11 +985,17 @@ async function handleMediaUpload(inp){
 }
 
 // ── UPLOAD ──
+var MAX_FILE_MB = 50;
 async function uploadFile(file){
-  if(!file)return null;
-  var path=Date.now()+'-'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-  var {error}=await sb.storage.from('media').upload(path,file,{upsert:true});
-  if(error){showToast('Upload failed: '+error.message,true);return null;}
+  if(!file) return null;
+  if(file.size > MAX_FILE_MB * 1024 * 1024){
+    showToast('File too large: ' + (file.size/1024/1024).toFixed(1) + ' MB. Maximum is ' + MAX_FILE_MB + ' MB.', true);
+    return null;
+  }
+  var ext = file.name.split('.').pop().toLowerCase();
+  var path = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  var {error} = await sb.storage.from('media').upload(path, file, {upsert:true, contentType: file.type});
+  if(error){showToast('Upload failed: '+error.message, true); return null;}
   return sb.storage.from('media').getPublicUrl(path).data.publicUrl;
 }
 async function handleInlineUpload(inp,urlId,previewId){
