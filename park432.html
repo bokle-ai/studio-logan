@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root { --bg:#f7f5f2; --ink:#1a1712; --mid:#8a7f72; --gold: #655046; --f-display:"Tenor Sans",sans-serif; --f-sans:"Poppins",system-ui,sans-serif; }
@@ -225,9 +226,10 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 (function(){
   var imgs = document.querySelectorAll('.proj-hero__carousel-img');
   var cur = 0;
-  setInterval(function(){ imgs[cur].classList.remove('is-active'); cur=(cur+1)%imgs.length; imgs[cur].classList.add('is-active'); }, 4500);
+  if(window.__carouselTimer) clearInterval(window.__carouselTimer);
+  if(imgs.length > 1) window.__carouselTimer = setInterval(function(){ imgs[cur].classList.remove('is-active'); cur=(cur+1)%imgs.length; imgs[cur].classList.add('is-active'); }, 4500);
 })();
-(function(){
+window.initLightbox = function(){
   var gImgs = Array.from(document.querySelectorAll('.proj-detail-row__img img, .proj-detail-grid img'));
   var overlay = document.getElementById('lightbox');
   var lbImg = document.getElementById('lbImg');
@@ -236,18 +238,21 @@ document.getElementById('yr').textContent = new Date().getFullYear();
   function close(){ overlay.classList.remove('is-open'); document.body.style.overflow=''; }
   function prev(){ cur=(cur-1+gImgs.length)%gImgs.length; lbImg.src=gImgs[cur].src; lbImg.alt=gImgs[cur].alt; }
   function next(){ cur=(cur+1)%gImgs.length; lbImg.src=gImgs[cur].src; lbImg.alt=gImgs[cur].alt; }
-  gImgs.forEach(function(img,i){ img.addEventListener('click',function(){ open(i); }); });
-  document.getElementById('lbClose').addEventListener('click',close);
-  document.getElementById('lbPrev').addEventListener('click',prev);
-  document.getElementById('lbNext').addEventListener('click',next);
-  overlay.addEventListener('click',function(e){ if(e.target===overlay) close(); });
+  gImgs.forEach(function(img,i){ img.onclick=function(){ open(i); }; });
+  ['lbClose','lbPrev','lbNext'].forEach(function(id,j){
+    var el=document.getElementById(id),clone=el.cloneNode(true);
+    el.parentNode.replaceChild(clone,el);
+    clone.addEventListener('click',[close,prev,next][j]);
+  });
+  overlay.onclick=function(e){ if(e.target===overlay) close(); };
   document.addEventListener('keydown',function(e){
     if(!overlay.classList.contains('is-open')) return;
     if(e.key==='Escape') close();
     if(e.key==='ArrowLeft') prev();
     if(e.key==='ArrowRight') next();
   });
-})();
+};
+window.initLightbox();
 </script>
 <script>
 (function(){
@@ -276,6 +281,61 @@ document.getElementById('yr').textContent = new Date().getFullYear();
   }
   document.addEventListener('DOMContentLoaded', tryPlay);
   document.addEventListener('touchstart', tryPlay, {once: true});
+})();
+</script>
+<script>
+(function(){
+  var SB_URL = 'https://zvpbkcvonvsefghvkyoo.supabase.co';
+  var SB_KEY = 'sb_publishable_CqA9WYVRy2xBOE5Rz2N5xA_Vawf2Qs8';
+  var SLUG   = 'park432';
+
+  if(typeof supabase === 'undefined') return;
+  var sb = supabase.createClient(SB_URL, SB_KEY);
+
+  sb.from('projects').select('*').eq('id', SLUG).single().then(function(r){
+    var d = r.data;
+    if(!d) return;
+    var ps = d.page_sections || {};
+
+    if(d.category){ var lbl=document.querySelector('.proj-hero__label'); if(lbl) lbl.textContent=d.category; }
+    if(d.title){ var nm=document.querySelector('.proj-hero__name'); if(nm) nm.textContent=d.title; }
+    if(d.location){ var loc=document.querySelector('.proj-hero__location'); if(loc) loc.textContent=d.location; }
+    if(d.description){ var desc=document.querySelector('.proj-hero__desc'); if(desc) desc.textContent=d.description; }
+
+    var meta=ps.meta;
+    if(meta&&meta.length){
+      var rows=document.querySelectorAll('.proj-meta__row');
+      meta.forEach(function(item,i){ if(!rows[i]) return; var k=rows[i].querySelector('.proj-meta__key'),v=rows[i].querySelector('.proj-meta__val'); if(k)k.textContent=item.key; if(v)v.textContent=item.val; });
+      for(var i=meta.length;i<rows.length;i++) rows[i].style.display='none';
+    }
+
+    var carouselImgs=ps.carousel_images;
+    if(carouselImgs&&carouselImgs.length){
+      var carousel=document.querySelector('.proj-hero__carousel');
+      if(carousel){
+        Array.from(carousel.querySelectorAll('.proj-hero__carousel-img')).forEach(function(el){ el.remove(); });
+        carouselImgs.forEach(function(item,i){ var img=document.createElement('img'); img.className='proj-hero__carousel-img'+(i===0?' is-active':''); img.src=item.src; img.alt=item.alt||''; carousel.insertBefore(img,carousel.querySelector('video')||null); });
+        if(window.__carouselTimer) clearInterval(window.__carouselTimer);
+        var newImgs=carousel.querySelectorAll('.proj-hero__carousel-img'),cur=0;
+        if(newImgs.length>1) window.__carouselTimer=setInterval(function(){ newImgs[cur].classList.remove('is-active'); cur=(cur+1)%newImgs.length; newImgs[cur].classList.add('is-active'); },4500);
+      }
+    }
+
+    var detailRows=ps.detail_rows;
+    if(detailRows&&detailRows.length){
+      document.querySelectorAll('.proj-detail-row').forEach(function(el){ el.remove(); });
+      var grid=document.querySelector('.proj-detail-grid');
+      detailRows.forEach(function(row){ var div=document.createElement('div'); div.className='proj-detail-row'; div.innerHTML='<div class="proj-detail-row__img"><img src="'+(row.image||'')+'" alt=""></div><div class="proj-detail-row__text"><p class="proj-detail-row__body">'+(row.text||'')+'</p></div>'; if(grid) grid.before(div); else document.querySelector('.proj-hero').after(div); });
+    }
+
+    var gallery=d.gallery_images;
+    if(gallery&&gallery.length){
+      var gridEl=document.querySelector('.proj-detail-grid');
+      if(gridEl){ gridEl.innerHTML=''; gallery.forEach(function(item){ var img=document.createElement('img'); img.src=typeof item==='string'?item:item.src; img.alt=typeof item==='object'&&item.alt?item.alt:''; gridEl.appendChild(img); }); }
+    }
+
+    if(typeof window.initLightbox==='function') window.initLightbox();
+  });
 })();
 </script>
 </body>
