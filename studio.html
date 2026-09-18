@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/img/lion-double.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Quattrocento:wght@400;700&display=swap" rel="stylesheet">
 <!-- original stylesheets for content sections -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/studio.css?v=4">
@@ -47,7 +47,8 @@
 /* ── hide old nav / preloader ── */
 .nav, .menu, .preloader, .curtain, .scroll-progress { display: none !important; }
 
-/* ── CUSTOM CURSOR ── */
+/* ── CUSTOM CURSOR (desktop only) ── */
+@media (pointer: fine) {
 .cursor-dot {
   position: fixed; top: 0; left: 0; z-index: 9999;
   width: 10px; height: 10px; border-radius: 50%;
@@ -64,6 +65,8 @@
   transition: transform .18s ease, width .25s, height .25s, opacity .3s;
 }
 body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
+}
+@media (pointer: coarse) { .cursor-dot, .cursor-ring { display: none !important; } }
 
 /* ── SCROLL DOT INDICATOR ── */
 .scroll-dots {
@@ -82,8 +85,12 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
 }
 @media (max-width: 768px) { .scroll-dots { display: none; } }
 
-/* ── FIX "THE" → "The" ── */
+/* ── TEAM HEADING ── */
 .sp-team__title-display { text-transform: none !important; }
+.sp-team__title { color: var(--gold) !important; }
+.sp-team__title em { color: var(--gold) !important; }
+.sp-team__head { padding-bottom: 1rem; }
+.sp-team__sub { margin-top: 1.4rem !important; position: relative; z-index: 1; }
 
 /* ── STATS: regular font + count-up ── */
 .sp-philosophy__stat strong {
@@ -162,7 +169,7 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
 }
 .top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
 .top-nav__name {
-  font-family: "Tenor Sans", sans-serif;
+  font-family: "Quattrocento", serif;
   font-size: .82rem;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -290,7 +297,7 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
   .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   .top-nav__links {
     display: none; position: fixed; top: 68px; left: 0; right: 0;
-    background: var(--bg); flex-direction: column; padding: 1.8rem 2.5rem;
+    background: var(--gold); flex-direction: column; padding: 1.8rem 2.5rem;
     gap: 1.4rem; border-bottom: 1px solid rgba(255,255,255,.15); z-index: 99;
   }
   .top-nav__links.is-open { display: flex; }
@@ -387,7 +394,7 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
   <!-- ===== TEAM ===== -->
   <section class="sp-team" id="team">
     <div class="sp-team__head">
-      <h2 class="sp-team__title reveal-up"><span class="sp-team__title-display">The </span><em class="script">People</em></h2>
+      <h2 class="sp-team__title reveal-up"><span class="sp-team__title-display">Our </span><em class="script">Team</em></h2>
       <p class="sp-team__sub reveal-up">Each brings a unique perspective to every project.</p>
     </div>
     <div class="sp-team__grid">

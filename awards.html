@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/img/lion-double.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Quattrocento:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -25,7 +25,7 @@ html, body { height: 100vh; overflow: hidden; background: var(--bg); color: var(
 .top-nav { position: fixed; top: 0; left: 0; right: 0; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; background: var(--gold); border-bottom: 1px solid rgba(255,255,255,.15); z-index: 100; }
 .top-nav__brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); }
 .top-nav__mark { width: 28px; height: 28px; object-fit: contain; }
-.top-nav__name { font-family: var(--f-display); font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); }
+.top-nav__name { font-family: "Quattrocento", serif; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); }
 .top-nav__links { display: flex; align-items: center; gap: 2.4rem; }
 .top-nav__links a { font-size: .68rem; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,.72); transition: color .25s; }
 .top-nav__links a:hover { color: #fff; }
@@ -141,7 +141,7 @@ html, body { height: 100vh; overflow: hidden; background: var(--bg); color: var(
   .awards-header { gap: .3rem; }
   .awards-title { font-size: 1.3rem; }
   .awards-rule { margin: 0; }
-  .awards-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; flex: 1; min-height: 0; max-height: none; align-items: start; }
+  .awards-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; flex: 0 0 auto; min-height: 0; max-height: none; align-items: start; align-content: start; }
   .award-card { flex-direction: column; align-items: center; text-align: center; padding: .55rem .4rem .45rem; gap: .25rem; }
   .award-card__trophy { width: 22px; height: 28px; }
   .award-card__body { align-items: center; text-align: center; gap: .18rem; }
