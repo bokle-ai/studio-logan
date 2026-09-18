@@ -136,8 +136,8 @@ html, body { height: 100vh; overflow: hidden; background: var(--bg); color: var(
 
 /* MOBILE */
 @media (max-width: 768px) {
-  html, body { height: 100%; overflow: hidden; }
-  .awards-page { margin-top: 68px; height: calc(100svh - 68px); overflow: hidden; padding: 1rem 1.2rem .5rem; gap: .55rem; max-height: none; }
+  html, body { height: auto; overflow: auto; }
+  .awards-page { margin-top: 68px; height: auto; overflow: visible; padding: 1rem 1.2rem 1.5rem; gap: .55rem; max-height: none; }
   .awards-header { gap: .3rem; }
   .awards-title { font-size: 1.3rem; }
   .awards-rule { margin: 0; }
@@ -152,7 +152,8 @@ html, body { height: 100vh; overflow: hidden; background: var(--bg); color: var(
   .logos-band { margin: 0 -1.2rem; flex-shrink: 0; }
   .logos-band__label { display: none; }
   .logos-marquee img { height: 32px; }
-  .site-footer { display: none; }
+  .site-footer { display: flex; flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 1.5rem 1.2rem; }
+  .site-footer__right { align-items: flex-start; }
   .top-nav__mark { width: 38px; height: 38px; }
   .top-nav__name { font-size: 1rem; }
   .top-nav__links { gap: 1rem; }
