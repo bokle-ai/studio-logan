@@ -93,6 +93,10 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
 .proj-card__body{padding:.65rem .75rem .75rem}
 .proj-card__name{font-family:var(--f-display);font-size:.9rem;color:var(--ink);margin-bottom:.18rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .proj-card__sub{font-size:.54rem;letter-spacing:.07em;color:var(--mid);text-transform:uppercase}
+.proj-card__ord{display:flex;gap:.3rem;margin-top:.4rem;}
+.ord-btn{background:rgba(101,80,70,.08);border:1px solid rgba(101,80,70,.2);border-radius:3px;padding:.1rem .35rem;font-size:.65rem;cursor:pointer;color:var(--ink);line-height:1.2;}
+.ord-btn:hover{background:rgba(101,80,70,.18);}
+.ord-btn--off{display:inline-block;width:1.5rem;}
 .add-card{border:2px dashed rgba(101,80,70,.28);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;cursor:pointer;transition:all .2s;border-radius:var(--r);min-height:165px}
 .add-card:hover{border-color:var(--gold);background:rgba(101,80,70,.03)}
 .add-card__icon{font-size:1.8rem;color:rgba(101,80,70,.28)}
@@ -611,6 +615,7 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
         <input type="hidden" id="tm-photo">
         <input type="file" id="tm-photo-file" style="display:none" accept="image/*" onchange="handleBoxUpload(this,'tm-photo','tm-photo-box','tm-photo-ph','tm-photo-spin')">
       </div>
+      <div class="f"><label>Bio</label><textarea id="tm-bio" rows="4" placeholder="Short biography shown on the Studio page…" style="width:100%;resize:vertical"></textarea></div>
       <div class="f"><label><input type="checkbox" id="tm-founder" style="width:auto;margin-right:.35rem"> Mark as Founder</label></div>
     </div>
     <div class="modal__foot"><button class="sbtn sbtn--g" onclick="closeModal('teamModal')">Cancel</button><button class="sbtn sbtn--p" onclick="saveTeam()">Save Member</button></div>
@@ -779,14 +784,33 @@ async function handleHomeUpload(inp){
 function renderProjGrid(){
   var grid=document.getElementById('projGrid');
   grid.innerHTML='<div class="add-card" onclick="openProjEditor(null)"><div class="add-card__icon">+</div><div class="add-card__text">New Project</div></div>';
-  projects.forEach(function(p){
+  projects.forEach(function(p,idx){
     var card=document.createElement('div');card.className='proj-card';
     card.onclick=function(){openProjEditor(p.id);};
     var src=p.cover_image||p.hero_image||'';
     var thumb=src?'<img class="proj-card__thumb" src="'+src+'" onerror="this.parentNode.innerHTML=\'<div class=proj-card__ph>No Photo</div>\'">':'<div class="proj-card__ph">No Photo</div>';
-    card.innerHTML=thumb+'<div class="proj-card__body"><p class="proj-card__name">'+p.title+'</p><p class="proj-card__sub">'+(p.category||'')+' · '+(p.year||'')+'</p></div>';
-    grid.insertBefore(card,grid.firstChild);
+    var upBtn=idx>0?'<button class="ord-btn" onclick="event.stopPropagation();moveProjOrder(\''+p.id+'\',\'up\')" title="Move up">▲</button>':'<span class="ord-btn ord-btn--off"></span>';
+    var dnBtn=idx<projects.length-1?'<button class="ord-btn" onclick="event.stopPropagation();moveProjOrder(\''+p.id+'\',\'down\')" title="Move down">▼</button>':'<span class="ord-btn ord-btn--off"></span>';
+    card.innerHTML=thumb+'<div class="proj-card__body"><p class="proj-card__name">'+p.title+'</p><p class="proj-card__sub">'+(p.category||'')+' · '+(p.year||'')+'</p><div class="proj-card__ord">'+upBtn+dnBtn+'</div></div>';
+    grid.appendChild(card);
   });
+}
+
+async function moveProjOrder(id,dir){
+  var idx=projects.findIndex(function(p){return p.id===id;});
+  if(idx<0)return;
+  var swapIdx=dir==='up'?idx-1:idx+1;
+  if(swapIdx<0||swapIdx>=projects.length)return;
+  var a=projects[idx],b=projects[swapIdx];
+  var aOrd=a.sort_order!=null?a.sort_order:idx+1;
+  var bOrd=b.sort_order!=null?b.sort_order:swapIdx+1;
+  if(aOrd===bOrd){aOrd=idx+1;bOrd=swapIdx+1;}
+  await Promise.all([
+    sb.from('projects').update({sort_order:bOrd}).eq('id',a.id),
+    sb.from('projects').update({sort_order:aOrd}).eq('id',b.id)
+  ]);
+  var r=await sb.from('projects').select('*').order('sort_order');
+  projects=r.data||[];renderProjGrid();
 }
 
 function autoSlug(){
@@ -1331,15 +1355,25 @@ function openTeamModal(id){
   document.getElementById('tm-photo').value=m?m.photo||'':'';
   document.getElementById('tm-founder').checked=m?!!m.is_founder:false;
   setBoxPhoto('tm-photo-box','tm-photo-ph',m?m.photo||'':'');
+  var bios=contentMap.team_bios||{};
+  document.getElementById('tm-bio').value=id?(bios[id]||''):'';
   openModal('teamModal');
 }
 async function saveTeam(){
+  var bio=document.getElementById('tm-bio').value.trim();
   var payload={name:gv('tm-name'),role:gv('tm-role'),photo:gv('tm-photo'),
     is_founder:document.getElementById('tm-founder').checked,
     sort_order:editTeamId?(team.find(function(x){return x.id===editTeamId;})||{}).sort_order||99:team.length+1};
   if(editTeamId)payload.id=editTeamId;
-  var {error}=await sb.from('team').upsert(payload);
+  var {data:saved,error}=await sb.from('team').upsert(payload).select();
   if(error){showToast('Error: '+error.message,true);return;}
+  var memberId=editTeamId||(saved&&saved[0]&&saved[0].id);
+  if(memberId){
+    var bios=Object.assign({},contentMap.team_bios||{});
+    bios[memberId]=bio;
+    await sb.from('content').upsert({section:'team_bios',data:bios},{onConflict:'section'});
+    contentMap.team_bios=bios;
+  }
   var {data}=await sb.from('team').select('*').order('sort_order');
   team=data||[];renderTeamList();closeModal('teamModal');showToast('Member saved!');
 }

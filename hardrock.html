@@ -302,9 +302,9 @@ window.initLightbox();
 
     var meta=ps.meta;
     if(meta&&meta.length){
-      var rows=document.querySelectorAll('.proj-meta__row');
-      meta.forEach(function(item,i){ if(!rows[i]) return; var k=rows[i].querySelector('.proj-meta__key'),v=rows[i].querySelector('.proj-meta__val'); if(k)k.textContent=item.key; if(v)v.textContent=item.val; });
-      for(var i=meta.length;i<rows.length;i++) rows[i].style.display='none';
+      var existingRows=Array.from(document.querySelectorAll('.proj-meta__row'));
+      var metaContainer=existingRows.length?existingRows[0].parentElement:null;
+      if(metaContainer){existingRows.forEach(function(r){r.remove();});meta.forEach(function(item){if(!item.key&&!item.val)return;var row=document.createElement('div');row.className='proj-meta__row';row.innerHTML='<span class="proj-meta__key">'+item.key+'</span><span class="proj-meta__val">'+item.val+'</span>';metaContainer.appendChild(row);});}
     }
 
     var carouselImgs=ps.carousel_images;

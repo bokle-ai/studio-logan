@@ -292,22 +292,27 @@ html, body {
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
 (function(){
-  fetch('content.json?v=' + Date.now())
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      var grid = document.getElementById('projects-grid');
-      var projects = data.projects || [];
-      if (!projects.length) return;
-      grid.innerHTML = projects.map(function(p){
-        return '<div class="project-item"><a class="project-card" href="' + p.url + '"><img class="project-card__img" src="' + p.coverImage + '" alt="' + p.displayName + '"></a><div class="project-card__meta"><p class="project-card__name">' + p.displayName + '</p><p class="project-card__place">' + p.location + '</p></div></div>';
+  var SB_URL='https://zvpbkcvonvsefghvkyoo.supabase.co';
+  var SB_KEY='sb_publishable_CqA9WYVRy2xBOE5Rz2N5xA_Vawf2Qs8';
+  var sb=supabase.createClient(SB_URL,SB_KEY);
+  var grid=document.getElementById('projects-grid');
+  sb.from('projects').select('id,title,display_name,location,cover_image,hero_image,url').order('sort_order')
+    .then(function(r){
+      var projects=r.data||[];
+      if(!projects.length){grid.innerHTML='<p style="color:var(--mid);padding:2rem">No projects found.</p>';return;}
+      grid.innerHTML=projects.map(function(p){
+        var name=p.display_name||p.title||'';
+        var img=p.cover_image||p.hero_image||'';
+        var href=p.url||(p.id+'.html');
+        return '<div class="project-item"><a class="project-card" href="'+href+'"><img class="project-card__img" src="'+img+'" alt="'+name+'"></a><div class="project-card__meta"><p class="project-card__name">'+name+'</p><p class="project-card__place">'+(p.location||'')+'</p></div></div>';
       }).join('');
     })
     .catch(function(){
-      /* fallback: show placeholder if content.json unavailable */
-      document.getElementById('projects-grid').innerHTML = '<p style="color:var(--mid);padding:2rem">Unable to load projects.</p>';
+      grid.innerHTML='<p style="color:var(--mid);padding:2rem">Unable to load projects.</p>';
     });
 })();
 </script>

@@ -636,5 +636,49 @@ function closeTeamBio(){
 }
 document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeTeamBio(); });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  var SB_URL='https://zvpbkcvonvsefghvkyoo.supabase.co';
+  var SB_KEY='sb_publishable_CqA9WYVRy2xBOE5Rz2N5xA_Vawf2Qs8';
+  var sb=supabase.createClient(SB_URL,SB_KEY);
+  Promise.all([
+    sb.from('team').select('*').order('sort_order'),
+    sb.from('content').select('data').eq('section','team_bios').single()
+  ]).then(function(results){
+    var members=results[0].data||[];
+    var bios=(results[1].data&&results[1].data.data)||{};
+    if(!members.length)return;
+    var grid=document.querySelector('.sp-team__grid');
+    if(!grid)return;
+    grid.innerHTML=members.map(function(m){
+      var bio=bios[m.id]||'';
+      var isFounder=m.is_founder?'sp-team__member--founder ':'';
+      var photoDiv=m.photo
+        ?'<div class="sp-team__photo"><img src="'+m.photo+'" alt="'+m.name+'"></div>'
+        :'<div class="sp-team__photo sp-team__photo--ph"></div>';
+      return '<div class="sp-team__member '+isFounder+'reveal-up" onclick="openTeamBio(this)"'
+        +' data-name="'+m.name+'"'
+        +' data-role="'+m.role+'"'
+        +' data-photo="'+(m.photo||'')+'"'
+        +' data-bio="'+bio.replace(/"/g,'&quot;')+'">'
+        +photoDiv
+        +'<span class="sp-team__name">'+m.name+'</span>'
+        +'<span class="sp-team__role">'+m.role+'</span>'
+        +'</div>';
+    }).join('');
+    // re-apply hover labels
+    grid.querySelectorAll('.sp-team__member').forEach(function(member){
+      var photo=member.querySelector('.sp-team__photo');
+      if(!photo)return;
+      var lbl=document.createElement('div');lbl.className='sp-team__hover-label';
+      lbl.innerHTML='<span class="sp-team__hover-label__name">'+member.dataset.name+'</span>'
+        +'<span class="sp-team__hover-label__role">'+member.dataset.role+'</span>';
+      photo.appendChild(lbl);
+    });
+  }).catch(function(){/* keep hardcoded fallback */});
+})();
+</script>
 </body>
 </html>
