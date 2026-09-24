@@ -60,7 +60,7 @@
 .sp-team__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.4rem,3vw,2.4rem);margin-bottom:2.4rem}
 .sp-team__member{cursor:pointer}
 .sp-team__photo{aspect-ratio:3/4;overflow:hidden;border-radius:2px;margin-bottom:1rem;background:var(--cream-3);position:relative}
-.sp-team__photo img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .7s var(--ease)}
+.sp-team__photo img{width:100%;height:100%;object-fit:cover;object-position:center center;transition:transform .7s var(--ease)}
 .sp-team__member:hover .sp-team__photo img{transform:scale(1.06)}
 .sp-team__photo::before{display:none}
 .sp-team__photo .sp-team__hover-label{display:none}
