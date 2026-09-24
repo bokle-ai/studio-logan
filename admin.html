@@ -602,7 +602,7 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
     <button class="modal__x" onclick="closeModal('teamModal')">×</button>
     <p class="modal__title" id="teamModalTitle">Add Team Member</p>
     <div class="fg">
-      <div class="frow"><div class="f"><label>Name</label><input type="text" id="tm-name" placeholder="Full name"></div><div class="f"><label>Role</label><input type="text" id="tm-role" placeholder="e.g. Senior Designer"></div></div>
+      <div class="frow"><div class="f"><label>Name</label><input type="text" id="tm-name" placeholder="Full name" oninput="updatePreviewText()"></div><div class="f"><label>Role</label><input type="text" id="tm-role" placeholder="e.g. Senior Designer" oninput="updatePreviewText()"></div></div>
       <div class="f">
         <label>Photo</label>
         <div class="up-box up-box--md" id="tm-photo-box" onclick="document.getElementById('tm-photo-file').click()" title="Click to upload photo" style="margin-top:.25rem">
@@ -615,35 +615,73 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
         <input type="hidden" id="tm-photo">
         <input type="file" id="tm-photo-file" style="display:none" accept="image/*" onchange="handleTeamPhotoUpload(this)">
         <p style="font-size:.58rem;color:var(--mid);margin-top:.4rem;line-height:1.5">📐 Best: <strong>portrait orientation</strong>, 800 × 1000 px (4:5).</p>
-        <!-- focal point + card previews -->
+        <!-- focal point + tabbed preview -->
         <div id="tm-photo-preview" style="display:none;margin-top:1rem">
-          <p style="font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem">Drag to set crop focus &nbsp;·&nbsp; <span style="font-size:.52rem;text-transform:none;letter-spacing:0;opacity:.7">previews update live</span></p>
-          <div style="display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap">
-            <!-- focal point full image -->
-            <div id="tm-focal-container" style="position:relative;flex:1;min-width:120px;max-height:220px;overflow:hidden;border-radius:3px;background:#1a1712;cursor:crosshair;user-select:none;touch-action:none" onmousedown="startFocalDrag(event)" ontouchstart="startFocalDrag(event)">
-              <img id="tm-focal-img" src="" alt="" style="width:100%;height:100%;object-fit:contain;display:block;max-height:220px;opacity:.9;pointer-events:none">
-              <div id="tm-focal-dot" style="position:absolute;width:22px;height:22px;border-radius:50%;background:rgba(101,80,70,.85);border:2.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.5);transform:translate(-50%,-50%);pointer-events:none;left:50%;top:50%"></div>
-              <div style="position:absolute;bottom:.4rem;left:50%;transform:translateX(-50%);font-size:.48rem;color:rgba(255,255,255,.7);background:rgba(0,0,0,.45);padding:.15rem .5rem;border-radius:20px;white-space:nowrap;pointer-events:none">drag to reposition</div>
+          <!-- focal point tool -->
+          <p style="font-size:.56rem;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:.45rem">Drag to set crop focus <span style="text-transform:none;letter-spacing:0;opacity:.65">· previews update live</span></p>
+          <div id="tm-focal-container" style="position:relative;width:100%;max-height:200px;overflow:hidden;border-radius:3px;background:#1a1712;cursor:crosshair;user-select:none;touch-action:none" onmousedown="startFocalDrag(event)" ontouchstart="startFocalDrag(event)">
+            <img id="tm-focal-img" src="" alt="" style="width:100%;max-height:200px;object-fit:contain;display:block;opacity:.88;pointer-events:none">
+            <div id="tm-focal-dot" style="position:absolute;width:22px;height:22px;border-radius:50%;background:rgba(101,80,70,.85);border:2.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.5);transform:translate(-50%,-50%);pointer-events:none;left:50%;top:50%"></div>
+            <div style="position:absolute;bottom:.4rem;left:50%;transform:translateX(-50%);font-size:.46rem;color:rgba(255,255,255,.75);background:rgba(0,0,0,.5);padding:.12rem .5rem;border-radius:20px;white-space:nowrap;pointer-events:none">drag to reposition</div>
+          </div>
+          <!-- view toggle -->
+          <div style="display:flex;margin-top:.9rem;margin-bottom:.7rem;border:1px solid rgba(101,80,70,.25);border-radius:4px;overflow:hidden;width:fit-content">
+            <button id="tm-tab-mob" onclick="setTeamTab('mob')" style="padding:.3rem .9rem;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;background:var(--gold);color:#fff;transition:background .2s,color .2s">📱 Mobile</button>
+            <button id="tm-tab-desk" onclick="setTeamTab('desk')" style="padding:.3rem .9rem;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;background:none;color:var(--mid);transition:background .2s,color .2s">🖥 Desktop</button>
+          </div>
+          <!-- MOBILE preview -->
+          <div id="tm-pv-mob" style="display:flex;gap:.9rem;align-items:flex-start;flex-wrap:wrap">
+            <div>
+              <p style="font-size:.46rem;color:var(--mid);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.3rem">Card</p>
+              <div style="width:95px;aspect-ratio:3/4;overflow:hidden;border-radius:2px;background:#2b1f16;box-shadow:0 2px 6px rgba(0,0,0,.18)">
+                <img id="tm-pm-c" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block">
+              </div>
+              <p id="tm-pm-name" style="font-size:.68rem;font-family:var(--f-display);color:var(--ink);margin-top:.3rem"></p>
+              <p id="tm-pm-role" style="font-size:.42rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)"></p>
             </div>
-            <!-- preview cards -->
-            <div style="display:flex;flex-direction:column;gap:.7rem">
-              <div>
-                <p style="font-size:.5rem;color:var(--mid);margin-bottom:.3rem;letter-spacing:.06em;text-transform:uppercase">Mobile card</p>
-                <div style="width:90px;aspect-ratio:3/4;overflow:hidden;border-radius:2px;background:#2b1f16;box-shadow:0 2px 8px rgba(0,0,0,.18)">
-                  <img id="tm-prev-mobile" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block">
+            <div style="flex:1;min-width:160px">
+              <p style="font-size:.46rem;color:var(--mid);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.3rem">Popup</p>
+              <div style="border:1px solid rgba(101,80,70,.18);border-radius:2px;overflow:hidden;background:#f7f5f2;box-shadow:0 2px 8px rgba(0,0,0,.1)">
+                <div style="width:100%;height:115px;overflow:hidden">
+                  <img id="tm-pm-mi" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block">
+                </div>
+                <div style="padding:.55rem .7rem">
+                  <p id="tm-pm-mn" style="font-family:var(--f-display);font-size:.82rem;color:var(--ink);margin-bottom:.1rem"></p>
+                  <p id="tm-pm-mr" style="font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem"></p>
+                  <p id="tm-pm-mb" style="font-size:.55rem;line-height:1.55;color:var(--mid);overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical"></p>
                 </div>
               </div>
-              <div>
-                <p style="font-size:.5rem;color:var(--mid);margin-bottom:.3rem;letter-spacing:.06em;text-transform:uppercase">Desktop card</p>
-                <div style="width:135px;aspect-ratio:3/4;overflow:hidden;border-radius:2px;background:#2b1f16;box-shadow:0 2px 8px rgba(0,0,0,.18)">
-                  <img id="tm-prev-desktop" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block">
+            </div>
+          </div>
+          <!-- DESKTOP preview -->
+          <div id="tm-pv-desk" style="display:none">
+            <div style="margin-bottom:.7rem">
+              <p style="font-size:.46rem;color:var(--mid);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.3rem">Card</p>
+              <div style="display:inline-block">
+                <div style="width:140px;aspect-ratio:3/4;overflow:hidden;border-radius:2px;background:#2b1f16;box-shadow:0 2px 6px rgba(0,0,0,.18)">
+                  <img id="tm-pd-c" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block">
+                </div>
+                <p id="tm-pd-name" style="font-size:.78rem;font-family:var(--f-display);color:var(--ink);margin-top:.3rem"></p>
+                <p id="tm-pd-role" style="font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)"></p>
+              </div>
+            </div>
+            <div>
+              <p style="font-size:.46rem;color:var(--mid);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.3rem">Popup</p>
+              <div style="display:grid;grid-template-columns:120px 1fr;border:1px solid rgba(101,80,70,.18);border-radius:2px;overflow:hidden;background:#f7f5f2;max-height:185px;box-shadow:0 2px 8px rgba(0,0,0,.1)">
+                <div style="overflow:hidden">
+                  <img id="tm-pd-mi" src="" alt="" style="width:100%;height:100%;min-height:185px;object-fit:cover;object-position:50% 50%;display:block">
+                </div>
+                <div style="padding:.75rem .9rem;overflow:hidden">
+                  <p id="tm-pd-mn" style="font-family:var(--f-display);font-size:.88rem;color:var(--ink);margin-bottom:.1rem"></p>
+                  <p id="tm-pd-mr" style="font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.45rem"></p>
+                  <p id="tm-pd-mb" style="font-size:.56rem;line-height:1.6;color:var(--mid);overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical"></p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="f"><label>Bio</label><textarea id="tm-bio" rows="4" placeholder="Short biography shown on the Studio page…" style="width:100%;resize:vertical"></textarea></div>
+      <div class="f"><label>Bio</label><textarea id="tm-bio" rows="4" placeholder="Short biography shown on the Studio page…" style="width:100%;resize:vertical" oninput="updatePreviewText()"></textarea></div>
       <div class="f"><label><input type="checkbox" id="tm-founder" style="width:auto;margin-right:.35rem"> Mark as Founder</label></div>
     </div>
     <div class="modal__foot"><button class="sbtn sbtn--g" onclick="closeModal('teamModal')">Cancel</button><button class="sbtn sbtn--p" onclick="saveTeam()">Save Member</button></div>
@@ -1393,25 +1431,47 @@ function openTeamModal(id){
   openModal('teamModal');
 }
 var tmFocalPos={x:50,y:50};
+var tmActiveTab='mob';
+function setTeamTab(tab){
+  tmActiveTab=tab;
+  document.getElementById('tm-pv-mob').style.display=tab==='mob'?'flex':'none';
+  document.getElementById('tm-pv-desk').style.display=tab==='desk'?'block':'none';
+  var bm=document.getElementById('tm-tab-mob');
+  var bd=document.getElementById('tm-tab-desk');
+  bm.style.background=tab==='mob'?'var(--gold)':'none';
+  bm.style.color=tab==='mob'?'#fff':'var(--mid)';
+  bd.style.background=tab==='desk'?'var(--gold)':'none';
+  bd.style.color=tab==='desk'?'#fff':'var(--mid)';
+}
+function updatePreviewText(){
+  var name=document.getElementById('tm-name').value||'';
+  var role=document.getElementById('tm-role').value||'';
+  var bio=document.getElementById('tm-bio').value||'';
+  ['tm-pm-name','tm-pd-name'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=name;});
+  ['tm-pm-role','tm-pd-role'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=role;});
+  ['tm-pm-mn','tm-pd-mn'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=name;});
+  ['tm-pm-mr','tm-pd-mr'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=role;});
+  ['tm-pm-mb','tm-pd-mb'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=bio;});
+}
 function updateTeamPhotoPreview(src){
   var wrap=document.getElementById('tm-photo-preview');
   if(!wrap)return;
   if(src){
-    document.getElementById('tm-focal-img').src=src;
-    document.getElementById('tm-prev-mobile').src=src;
-    document.getElementById('tm-prev-desktop').src=src;
+    ['tm-focal-img','tm-pm-c','tm-pm-mi','tm-pd-c','tm-pd-mi'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.src=src;
+    });
     applyFocalPos();
     wrap.style.display='block';
+    updatePreviewText();
   }else{wrap.style.display='none';}
 }
 function applyFocalPos(){
   var pos=tmFocalPos.x+'% '+tmFocalPos.y+'%';
   var dot=document.getElementById('tm-focal-dot');
   if(dot){dot.style.left=tmFocalPos.x+'%';dot.style.top=tmFocalPos.y+'%';}
-  var mob=document.getElementById('tm-prev-mobile');
-  var desk=document.getElementById('tm-prev-desktop');
-  if(mob)mob.style.objectPosition=pos;
-  if(desk)desk.style.objectPosition=pos;
+  ['tm-pm-c','tm-pm-mi','tm-pd-c','tm-pd-mi'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.style.objectPosition=pos;
+  });
 }
 function startFocalDrag(e){
   e.preventDefault();
