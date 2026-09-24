@@ -62,12 +62,8 @@
 .sp-team__photo{aspect-ratio:3/4;overflow:hidden;border-radius:2px;margin-bottom:1rem;background:var(--cream-3);position:relative}
 .sp-team__photo img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .7s var(--ease)}
 .sp-team__member:hover .sp-team__photo img{transform:scale(1.06)}
-.sp-team__photo::before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(26,23,18,.65) 0%,rgba(26,23,18,.2) 50%,transparent 100%);clip-path:inset(100% 0 0% 0);transition:clip-path .55s ease;z-index:1;pointer-events:none}
-.sp-team__member:hover .sp-team__photo::before{clip-path:inset(0% 0 0 0)}
-.sp-team__photo .sp-team__hover-label{position:absolute;bottom:1rem;left:1.1rem;right:1.1rem;z-index:2;opacity:0;transform:translateY(8px);transition:opacity .4s ease .1s,transform .4s ease .1s;pointer-events:none}
-.sp-team__hover-label__name{display:block;font-family:var(--f-display);font-size:.95rem;color:#fff;margin-bottom:.2rem}
-.sp-team__hover-label__role{display:block;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,215,180,.85)}
-.sp-team__member:hover .sp-team__hover-label{opacity:1;transform:translateY(0)}
+.sp-team__photo::before{display:none}
+.sp-team__photo .sp-team__hover-label{display:none}
 .sp-team__photo--ph{background:var(--espresso-3);position:relative;overflow:hidden}
 .sp-team__photo--ph::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:65%;height:85%;background:radial-gradient(ellipse 80% 100% at 50% 100%,rgba(101,80,70,.18),transparent 70%);border-top:1px solid rgba(101,80,70,.15)}
 .sp-team__name{display:block;font-family:var(--f-display);font-size:1.1rem;color:var(--espresso-3);margin-bottom:.2rem}
@@ -120,9 +116,7 @@
   .sp-philosophy__block{grid-template-columns:1fr}
   .sp-founder__grid{grid-template-columns:1fr}
   .sp-founder__portrait{max-height:60vw}
-  .sp-team__photo::before{clip-path:inset(0% 0 0 0)}
-  .sp-team__photo .sp-team__hover-label{opacity:1;transform:translateY(0)}
-  .sp-team__name,.sp-team__role{display:none}
+  .sp-team__name,.sp-team__role{display:block}
 }
 @media(max-width:480px){
   .sp-team__grid{grid-template-columns:1fr 1fr}
