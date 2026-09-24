@@ -333,5 +333,8 @@ document.getElementById('yr').textContent = new Date().getFullYear();
   });
 })();
 </script>
+<script>
+(function(){var sb=supabase.createClient('https://zvpbkcvonvsefghvkyoo.supabase.co','sb_publishable_CqA9WYVRy2xBOE5Rz2N5xA_Vawf2Qs8');sb.from('content').select('data').eq('section','contact').single().then(function(r){var sl=(r.data&&r.data.data&&r.data.data.socialLinks)||{};var m={'Instagram':sl.instagram,'LinkedIn':sl.linkedin,'Pinterest':sl.pinterest};Object.keys(m).forEach(function(k){if(m[k]){var a=document.querySelector('.site-footer__social[aria-label="'+k+'"]');if(a){a.href=m[k];a.target='_blank';a.rel='noopener noreferrer';}}});});})();
+</script>
 </body>
 </html>
