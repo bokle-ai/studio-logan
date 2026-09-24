@@ -110,16 +110,17 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
 .team-modal-overlay.open { display: flex; }
 .team-modal {
   background: #f7f5f2; max-width: 720px; width: 100%;
-  display: grid; grid-template-columns: 240px 1fr;
+  display: grid; grid-template-columns: 260px 1fr;
   position: relative; overflow: hidden;
   border: 1px solid rgba(101,80,70,.25);
   animation: modalIn .3s ease;
+  max-height: 88vh;
 }
 @keyframes modalIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-.team-modal__left { overflow: hidden; min-height: 340px; background: var(--ink); }
-.team-modal__left img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.team-modal__left { overflow: hidden; background: var(--ink); min-height: 0; }
+.team-modal__left img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
 .team-modal__left-ph { width: 100%; height: 100%; min-height: 340px; background: #2b1f16; position: relative; overflow: hidden; }
-.team-modal__right { padding: 2.5rem 2.2rem; display: flex; flex-direction: column; justify-content: center; }
+.team-modal__right { padding: 2.5rem 2.2rem; display: flex; flex-direction: column; justify-content: flex-start; overflow-y: auto; }
 .team-modal__close {
   position: absolute; top: .8rem; right: .8rem; z-index: 10;
   background: rgba(247,245,242,.85); border: none; width: 32px; height: 32px;
@@ -138,13 +139,14 @@ body:hover .cursor-dot, body:hover .cursor-ring { opacity: 1; }
 }
 .team-modal__bio {
   font-size: .88rem; font-weight: 300; line-height: 1.8;
-  color: var(--mid);
+  color: var(--mid); white-space: pre-line;
 }
 @media (max-width: 600px) {
-  .team-modal { grid-template-columns: 1fr; }
-  .team-modal__left { height: 220px; min-height: auto; }
-  .team-modal__left-ph { min-height: 220px; }
-  .team-modal__right { padding: 1.8rem 1.5rem; }
+  .team-modal-overlay { align-items: flex-start; overflow-y: auto; padding: 1rem; }
+  .team-modal { grid-template-columns: 1fr; max-height: none; }
+  .team-modal__left { height: 62vw; min-height: auto; }
+  .team-modal__left-ph { min-height: 62vw; }
+  .team-modal__right { padding: 1.6rem 1.4rem; overflow-y: visible; justify-content: flex-start; }
 }
 
 /* ── TOP NAV ── */
