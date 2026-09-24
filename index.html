@@ -434,7 +434,7 @@ var e=document.getElementById('yr');if(e)e.textContent=new Date().getFullYear();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-(function(){var sb=supabase.createClient('https://zvpbkcvonvsefghvkyoo.supabase.co','sb_publishable_CqA9WYVRy2xBOE5Rz2N5xA_Vawf2Qs8');sb.from('content').select('data').eq('section','contact').single().then(function(r){var sl=(r.data&&r.data.data&&r.data.data.socialLinks)||{};var m={'Instagram':sl.instagram,'LinkedIn':sl.linkedin,'Pinterest':sl.pinterest};Object.keys(m).forEach(function(k){if(m[k]){var a=document.querySelector('.site-footer__social[aria-label="'+k+'"]');if(a){a.href=m[k];a.target='_blank';a.rel='noopener noreferrer';}}});});})();
+(function(){var ks=['Instagram','LinkedIn','Pinterest'];ks.forEach(function(k){var a=document.querySelector('.site-footer__social[aria-label="'+k+'"]');if(a){a.removeAttribute('href');a.style.cursor='default';}});var sb=supabase.createClient('https://zvpbkcvonvsefghvkyoo.supabase.co','sb_publishable_CqA9WYVRy2xBOE5Rz2N5xA_Vawf2Qs8');sb.from('content').select('data').eq('section','contact').single().then(function(r){var sl=(r.data&&r.data.data&&r.data.data.socialLinks)||{};ks.forEach(function(k){var a=document.querySelector('.site-footer__social[aria-label="'+k+'"]');if(!a)return;var u=sl[k.toLowerCase()];if(u){a.href=u;a.target='_blank';a.rel='noopener noreferrer';a.style.cursor='';}});});})();
 </script>
 </body>
 </html>
