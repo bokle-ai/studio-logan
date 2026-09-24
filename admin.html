@@ -613,8 +613,26 @@ html,body{height:100%;font-family:var(--f-sans);background:var(--bg);color:var(-
           <div class="up-box__spin" id="tm-photo-spin"><div class="spinner"></div></div>
         </div>
         <input type="hidden" id="tm-photo">
-        <input type="file" id="tm-photo-file" style="display:none" accept="image/*" onchange="handleBoxUpload(this,'tm-photo','tm-photo-box','tm-photo-ph','tm-photo-spin')">
-        <p style="font-size:.58rem;color:var(--mid);margin-top:.4rem;line-height:1.5">📐 Best size: <strong>portrait orientation</strong> (e.g. 800 × 1000 px or 4:5 ratio). Keep the face centred vertically — the top 15 % of the image shows in the card and modal.</p>
+        <input type="file" id="tm-photo-file" style="display:none" accept="image/*" onchange="handleTeamPhotoUpload(this)">
+        <p style="font-size:.58rem;color:var(--mid);margin-top:.4rem;line-height:1.5">📐 Best: <strong>portrait orientation</strong>, 800 × 1000 px (4:5). Face centred — the card crops to the middle of the image.</p>
+        <!-- card previews -->
+        <div id="tm-photo-preview" style="display:none;margin-top:.9rem">
+          <p style="font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);margin-bottom:.55rem">How it appears on the page</p>
+          <div style="display:flex;gap:1.2rem;align-items:flex-end;flex-wrap:wrap">
+            <div>
+              <p style="font-size:.5rem;color:var(--mid);margin-bottom:.3rem;letter-spacing:.06em;text-transform:uppercase">Mobile card</p>
+              <div style="width:105px;aspect-ratio:3/4;overflow:hidden;border-radius:2px;background:#2b1f16;box-shadow:0 2px 8px rgba(0,0,0,.18)">
+                <img id="tm-prev-mobile" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
+              </div>
+            </div>
+            <div>
+              <p style="font-size:.5rem;color:var(--mid);margin-bottom:.3rem;letter-spacing:.06em;text-transform:uppercase">Desktop card</p>
+              <div style="width:155px;aspect-ratio:3/4;overflow:hidden;border-radius:2px;background:#2b1f16;box-shadow:0 2px 8px rgba(0,0,0,.18)">
+                <img id="tm-prev-desktop" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="f"><label>Bio</label><textarea id="tm-bio" rows="4" placeholder="Short biography shown on the Studio page…" style="width:100%;resize:vertical"></textarea></div>
       <div class="f"><label><input type="checkbox" id="tm-founder" style="width:auto;margin-right:.35rem"> Mark as Founder</label></div>
@@ -1356,9 +1374,22 @@ function openTeamModal(id){
   document.getElementById('tm-photo').value=m?m.photo||'':'';
   document.getElementById('tm-founder').checked=m?!!m.is_founder:false;
   setBoxPhoto('tm-photo-box','tm-photo-ph',m?m.photo||'':'');
+  updateTeamPhotoPreview(m?m.photo||'':'');
   var bios=contentMap.team_bios||{};
   document.getElementById('tm-bio').value=id?(bios[id]||''):'';
   openModal('teamModal');
+}
+function updateTeamPhotoPreview(src){
+  var wrap=document.getElementById('tm-photo-preview');
+  var mob=document.getElementById('tm-prev-mobile');
+  var desk=document.getElementById('tm-prev-desktop');
+  if(!wrap)return;
+  if(src){mob.src=src;desk.src=src;wrap.style.display='block';}
+  else{wrap.style.display='none';}
+}
+async function handleTeamPhotoUpload(inp){
+  await handleBoxUpload(inp,'tm-photo','tm-photo-box','tm-photo-ph','tm-photo-spin');
+  updateTeamPhotoPreview(document.getElementById('tm-photo').value);
 }
 async function saveTeam(){
   var bio=document.getElementById('tm-bio').value.trim();
